@@ -1,0 +1,827 @@
+<!-- ==================== categories.html ==================== -->
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التصنيفات - متجرنا</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --bg-dark: #0a0a1a;
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== Animated Colorful Background ===== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+
+        .bg-animation .blob:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation .blob:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -7s;
+        }
+
+        .bg-animation .blob:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 40%;
+            left: 60%;
+            animation-delay: -14s;
+        }
+
+        .bg-animation .blob:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 10%;
+            right: 20%;
+            animation-delay: -4s;
+        }
+
+        .bg-animation .blob:nth-child(5) {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, #ffd93d, transparent 70%);
+            bottom: 10%;
+            left: 10%;
+            animation-delay: -11s;
+            opacity: 0.2;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -50px) scale(1.15); }
+            50% { transform: translate(-40px, 40px) scale(0.9); }
+            75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 10, 26, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            animation: slideDown 0.7s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navbar .logo {
+            font-size: 28px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.4s;
+        }
+
+        .navbar .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar .logo i {
+            color: var(--primary);
+            font-size: 32px;
+            animation: logoPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.35s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.35s ease;
+            border-radius: 2px;
+        }
+
+        .navbar .nav-links a:hover::after,
+        .navbar .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .navbar .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px 60px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.35s;
+            margin-bottom: 30px;
+            cursor: pointer;
+            animation: fadeInLeft 0.7s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+            transform: translateX(-6px);
+        }
+
+        .back-btn i {
+            transition: 0.35s;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-4px);
+        }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.9s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header .tags-icon-big {
+            font-size: 60px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 15px;
+            animation: tagsBounce 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5));
+        }
+
+        @keyframes tagsBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-12px) rotate(-6deg) scale(1.08); }
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 6s ease infinite;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* ===== Categories Grid ===== */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px 25px;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: cardPopIn 0.55s ease-out both;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes cardPopIn {
+            0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+            70% { transform: translateY(-5px) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.08), transparent, rgba(108, 92, 231, 0.08), transparent);
+            animation: rotateGlow 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 107, 107, 0.35);
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), 0 0 35px rgba(255, 107, 107, 0.15);
+        }
+
+        .category-card .category-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: inline-block;
+            transition: 0.5s;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ألوان مختلفة لكل أيقونة حسب ترتيب الكارت */
+        .category-card:nth-child(6n+1) .category-icon { color: #ff6b6b; filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.5)); }
+        .category-card:nth-child(6n+2) .category-icon { color: #6c5ce7; filter: drop-shadow(0 0 12px rgba(108, 92, 231, 0.5)); }
+        .category-card:nth-child(6n+3) .category-icon { color: #00cec9; filter: drop-shadow(0 0 12px rgba(0, 206, 201, 0.5)); }
+        .category-card:nth-child(6n+4) .category-icon { color: #fd79a8; filter: drop-shadow(0 0 12px rgba(253, 121, 168, 0.5)); }
+        .category-card:nth-child(6n+5) .category-icon { color: #ffd93d; filter: drop-shadow(0 0 12px rgba(255, 217, 61, 0.5)); }
+        .category-card:nth-child(6n+6) .category-icon { color: #a29bfe; filter: drop-shadow(0 0 12px rgba(162, 155, 254, 0.5)); }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.25) rotate(-8deg);
+            animation: iconWiggle 0.6s ease-in-out;
+        }
+
+        @keyframes iconWiggle {
+            0%, 100% { transform: scale(1.25) rotate(-8deg); }
+            50% { transform: scale(1.3) rotate(8deg); }
+        }
+
+        .category-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            transition: 0.4s;
+        }
+
+        .category-card:hover h3 {
+            color: var(--secondary);
+        }
+
+        .category-card .category-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            transition: 0.4s;
+        }
+
+        .category-card:hover .category-desc {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .category-card .product-count {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.15);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            transition: 0.4s;
+        }
+
+        .category-card:hover .product-count {
+            background: rgba(255, 107, 107, 0.3);
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .category-card .product-count i {
+            margin-left: 4px;
+        }
+
+        .category-card .category-id {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-card .click-hint {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 12px;
+            transition: 0.35s;
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-card:hover .click-hint {
+            color: var(--primary);
+        }
+
+        .category-card .click-hint i {
+            transition: 0.4s;
+        }
+
+        .category-card:hover .click-hint i {
+            transform: translateX(5px);
+        }
+
+        /* ===== Loading Spinner ===== */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 0;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .loading-spinner i {
+            animation: spin 1s linear infinite;
+            font-size: 32px;
+            color: var(--primary);
+            filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.6));
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.4);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .footer i {
+            color: var(--primary);
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.2); }
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 18px 28px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 100;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            color: #6bcb77;
+            font-size: 22px;
+            animation: toastIconPop 0.5s ease-out;
+        }
+
+        @keyframes toastIconPop {
+            0% { transform: scale(0) rotate(-90deg); }
+            70% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .navbar .logo {
+                font-size: 22px;
+            }
+            .navbar .nav-links {
+                gap: 12px;
+            }
+            .navbar .nav-links a {
+                font-size: 13px;
+            }
+            .page-header h1 {
+                font-size: 30px;
+            }
+            .main-content {
+                padding: 30px 15px;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .toast {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                padding: 14px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .page-header .tags-icon-big {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Colorful Background -->
+    <div class="bg-animation">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-store"></i>
+            متجرنا
+        </a>
+        <div class="nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="products.html"><i class="fas fa-box"></i> المنتجات</a>
+            <a href="categories.html" class="active"><i class="fas fa-tags"></i> التصنيفات</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> تعرف علينا</a>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للرئيسية
+        </a>
+
+        <div class="page-header">
+            <i class="fas fa-tags tags-icon-big"></i>
+            <h1>التصنيفات</h1>
+            <p>اختر تصنيفاً لتصفح المنتجات</p>
+        </div>
+
+        <div id="categoriesContainer">
+            <div class="loading-spinner">
+                <i class="fas fa-circle-notch"></i>
+                جاري تحميل التصنيفات...
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage">جاري التحميل...</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>
+            <i class="fas fa-heart"></i>
+            جميع الحقوق محفوظة © 2024 متجرنا
+        </p>
+    </div>
+
+    <script>
+        (function() {
+            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
+
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            let toastTimeout;
+
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+
+            function safeToString(value) {
+                if (value === null || value === undefined) return '';
+                return String(value);
+            }
+
+            function getCategoryIcon(index) {
+                const icons = [
+                    'fa-layer-group', 'fa-tag', 'fa-cube', 'fa-boxes',
+                    'fa-th-large', 'fa-list', 'fa-grid', 'fa-table',
+                    'fa-border-all', 'fa-square', 'fa-circle', 'fa-gem',
+                    'fa-star', 'fa-heart', 'fa-crown', 'fa-fire'
+                ];
+                return icons[index % icons.length];
+            }
+
+            function goToCategoryProducts(categoryId, categoryName, categoryDesc) {
+                showToast(`📂 جاري تحميل منتجات "${categoryName}"...`);
+
+                setTimeout(() => {
+                    window.location.href = `category-products.html?id=${encodeURIComponent(categoryId)}&name=${encodeURIComponent(categoryName)}&desc=${encodeURIComponent(categoryDesc || '')}`;
+                }, 400);
+            }
+
+            async function loadCategories() {
+                try {
+                    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+                    const { data: categories, error: categoriesError } = await supabase
+                        .from('Category')
+                        .select('*');
+
+                    if (categoriesError) throw new Error(categoriesError.message);
+
+                    console.log('✅ تم تحميل التصنيفات:', categories);
+
+                    const { data: products, error: productsError } = await supabase
+                        .from('Product')
+                        .select('Category_ID');
+
+                    if (productsError) throw new Error(productsError.message);
+
+                    const productCounts = {};
+                    if (products) {
+                        products.forEach(product => {
+                            const categoryId = product.Category_ID;
+                            if (categoryId) {
+                                productCounts[categoryId] = (productCounts[categoryId] || 0) + 1;
+                            }
+                        });
+                    }
+
+                    if (!categories || categories.length === 0) {
+                        categoriesContainer.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-folder-open"></i>
+                                <p>لا توجد تصنيفات حالياً</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    let html = `<div class="categories-grid">`;
+
+                    categories.forEach((item, index) => {
+                        const categoryName = safeToString(item.Category_Name) || 'بدون اسم';
+                        const description = safeToString(item.Description) || 'لا يوجد وصف';
+                        const categoryId = item.Category_ID || item.id || index + 1;
+                        const icon = getCategoryIcon(index);
+                        const productCount = productCounts[categoryId] || 0;
+
+                        html += `
+                            <div class="category-card" style="animation-delay: ${index * 0.07}s"
+                                 onclick="goToCategoryProducts('${categoryId}', '${escapeHtml(categoryName)}', '${escapeHtml(description)}')">
+                                <i class="fas ${icon} category-icon"></i>
+                                <h3>${escapeHtml(categoryName)}</h3>
+                                <p class="category-desc">${escapeHtml(description)}</p>
+                                <span class="product-count">
+                                    <i class="fas fa-box"></i> ${productCount} منتج
+                                </span>
+                                <span class="category-id">#${escapeHtml(String(categoryId))}</span>
+                                <div class="click-hint">
+                                    <i class="fas fa-arrow-left"></i> اضغط للتصفح
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div>`;
+                    categoriesContainer.innerHTML = html;
+
+                    window.goToCategoryProducts = goToCategoryProducts;
+
+                } catch (error) {
+                    console.error('❌ خطأ:', error);
+                    categoriesContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle" style="color:#ff6b6b;"></i>
+                            <p style="color:#ff6b6b;">${error.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            loadCategories();
+
+        })();
+    </script>
+
+</body>
+</html>

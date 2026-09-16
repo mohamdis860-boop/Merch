@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجرنا - أهلاً بك</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffd93d;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== Animated Colorful Background ===== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blobFloat 22s infinite ease-in-out;
+        }
+
+        .bg-animation .blob:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation .blob:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6c5ce7, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -7s;
+        }
+
+        .bg-animation .blob:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #00cec9, transparent 70%);
+            top: 40%;
+            left: 60%;
+            animation-delay: -14s;
+        }
+
+        .bg-animation .blob:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #fd79a8, transparent 70%);
+            top: 10%;
+            right: 20%;
+            animation-delay: -4s;
+        }
+
+        .bg-animation .blob:nth-child(5) {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, #ffd93d, transparent 70%);
+            bottom: 10%;
+            left: 10%;
+            animation-delay: -11s;
+            opacity: 0.25;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -50px) scale(1.15); }
+            50% { transform: translate(-40px, 40px) scale(0.9); }
+            75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        /* ===== Main Container ===== */
+        .splash-container {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            max-width: 520px;
+            text-align: center;
+            padding: 30px 20px;
+            animation: splashEnter 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes splashEnter {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== Logo ===== */
+        .logo-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            animation: logoPulse 2.5s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(255, 107, 107, 0.6),
+                        0 0 80px rgba(255, 107, 107, 0.3);
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 40px rgba(255, 107, 107, 0.6),
+                            0 0 80px rgba(255, 107, 107, 0.3);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 60px rgba(255, 107, 107, 0.9),
+                            0 0 110px rgba(255, 107, 107, 0.5);
+            }
+        }
+
+        .logo-circle i {
+            font-size: 60px;
+            color: white;
+            animation: iconSpin 3s ease-in-out infinite;
+        }
+
+        @keyframes iconSpin {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(-8deg) scale(1.08); }
+        }
+
+        /* حلقات دوّارة */
+        .logo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+
+        .logo-ring.ring-1 {
+            width: 155px;
+            height: 155px;
+            border-top-color: var(--secondary);
+            border-right-color: var(--secondary);
+            animation: ringRotate 2.5s linear infinite;
+        }
+
+        .logo-ring.ring-2 {
+            width: 185px;
+            height: 185px;
+            border-bottom-color: var(--accent2);
+            border-left-color: var(--accent2);
+            animation: ringRotate 3.5s linear infinite reverse;
+        }
+
+        @keyframes ringRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ===== Store Name ===== */
+        .store-name {
+            font-size: 46px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6c5ce7, #00cec9, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 5s ease infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .welcome-text i {
+            color: var(--secondary);
+            animation: waveHand 2s ease-in-out infinite;
+            display: inline-block;
+            margin: 0 6px;
+        }
+
+        @keyframes waveHand {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-20deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Options Cards ===== */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            cursor: pointer;
+            transition: 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            animation: cardSlideIn 0.7s ease-out both;
+        }
+
+        .option-card:nth-child(1) { animation-delay: 0.4s; }
+        .option-card:nth-child(2) { animation-delay: 0.5s; }
+        .option-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes cardSlideIn {
+            0% { opacity: 0; transform: translateX(-40px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.1), transparent, rgba(108, 92, 231, 0.1), transparent);
+            animation: rotateGlow 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .option-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .option-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 107, 107, 0.35);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 107, 107, 0.15);
+        }
+
+        /* أيقونة الخيار */
+        .option-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+            transition: 0.5s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .option-card:hover .option-icon {
+            transform: scale(1.12) rotate(-6deg);
+        }
+
+        /* ألوان مختلفة لكل خيار */
+        .option-card.login .option-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .option-card.register .option-icon {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .option-card.guest .option-icon {
+            background: linear-gradient(135deg, #00cec9, #00b894);
+            box-shadow: 0 6px 20px rgba(0, 206, 201, 0.4);
+        }
+
+        /* نص الخيار */
+        .option-text {
+            flex: 1;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+
+        .option-text h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            transition: 0.4s;
+        }
+
+        .option-card:hover .option-text h3 {
+            color: var(--secondary);
+        }
+
+        .option-text p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: 0.4s;
+        }
+
+        .option-card:hover .option-text p {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* سهم الخيار */
+        .option-arrow {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.3);
+            transition: 0.4s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .option-card:hover .option-arrow {
+            color: var(--primary);
+            transform: translateX(-6px);
+        }
+
+        /* ===== Divider ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 13px;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        /* ===== Footer Note ===== */
+        .footer-note {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            line-height: 1.8;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .footer-note i {
+            color: var(--primary);
+            margin: 0 4px;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.2); }
+        }
+
+        /* ===== Floating Icons ===== */
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.06);
+            font-size: 40px;
+            animation: floatIcon 7s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-icon:nth-child(1) { top: 12%; left: 8%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 75%; left: 6%; animation-delay: -1.5s; }
+        .floating-icon:nth-child(3) { top: 18%; right: 10%; animation-delay: -3s; }
+        .floating-icon:nth-child(4) { top: 80%; right: 12%; animation-delay: -4.5s; }
+        .floating-icon:nth-child(5) { top: 48%; left: 4%; animation-delay: -2s; font-size: 28px; }
+        .floating-icon:nth-child(6) { top: 55%; right: 5%; animation-delay: -5s; font-size: 32px; }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+        }
+
+        /* ===== Version ===== */
+        .version {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 1px;
+            z-index: 5;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .version i {
+            color: var(--primary);
+            margin-left: 4px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 500px) {
+            .splash-container {
+                padding: 20px 15px;
+            }
+            .logo-circle {
+                width: 100px;
+                height: 100px;
+            }
+            .logo-circle i {
+                font-size: 48px;
+            }
+            .logo-ring.ring-1 {
+                width: 130px;
+                height: 130px;
+            }
+            .logo-ring.ring-2 {
+                width: 155px;
+                height: 155px;
+            }
+            .store-name {
+                font-size: 36px;
+            }
+            .welcome-text {
+                font-size: 14px;
+                margin-bottom: 30px;
+            }
+            .option-card {
+                padding: 16px 18px;
+                gap: 14px;
+                border-radius: 16px;
+            }
+            .option-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                border-radius: 12px;
+            }
+            .option-text h3 {
+                font-size: 16px;
+            }
+            .option-text p {
+                font-size: 12px;
+            }
+            .floating-icon {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Colorful Background -->
+    <div class="bg-animation">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
+    <!-- Floating Icons -->
+    <i class="fas fa-shopping-bag floating-icon"></i>
+    <i class="fas fa-tags floating-icon"></i>
+    <i class="fas fa-cart-plus floating-icon"></i>
+    <i class="fas fa-gift floating-icon"></i>
+    <i class="fas fa-star floating-icon"></i>
+    <i class="fas fa-heart floating-icon"></i>
+
+    <!-- Main Content -->
+    <div class="splash-container">
+
+        <!-- Logo -->
+        <div class="logo-wrapper">
+            <div class="logo-ring ring-1"></div>
+            <div class="logo-ring ring-2"></div>
+            <div class="logo-circle">
+                <i class="fas fa-store"></i>
+            </div>
+        </div>
+
+        <!-- Store Name -->
+        <h1 class="store-name">متجرنا</h1>
+        <p class="welcome-text">
+            <i class="fas fa-hand-peace"></i>
+            أهلاً بك، اختر طريقة الدخول
+        </p>
+
+        <!-- Options -->
+        <div class="options-container">
+
+            <!-- تسجيل الدخول -->
+            <a href="../Auth/login.html" class="option-card login">
+                <div class="option-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <div class="option-text">
+                    <h3>تسجيل الدخول</h3>
+                    <p>لديك حساب بالفعل؟ ادخل بياناتك</p>
+                </div>
+                <i class="fas fa-chevron-left option-arrow"></i>
+            </a>
+
+            <!-- إنشاء حساب جديد -->
+            <a href="../Auth/register.html" class="option-card register">
+                <div class="option-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="option-text">
+                    <h3>إنشاء حساب جديد</h3>
+                    <p>مستخدم جديد؟ سجّل الآن مجاناً</p>
+                </div>
+                <i class="fas fa-chevron-left option-arrow"></i>
+            </a>
+
+            <!-- الدخول كزائر -->
+            <a href="../index.html" class="option-card guest" onclick="setGuestMode(event)">
+                <div class="option-icon">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="option-text">
+                    <h3>الدخول كزائر</h3>
+                    <p>تصفّح المتجر بدون تسجيل</p>
+                </div>
+                <i class="fas fa-chevron-left option-arrow"></i>
+            </a>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">أو</div>
+
+        <!-- Footer Note -->
+        <p class="footer-note">
+            بتسجيلك في المتجر، أنت توافق على
+            <br>
+            <i class="fas fa-file-contract"></i>
+            الشروط والأحكام وسياسة الخصوصية
+        </p>
+
+    </div>
+
+    <!-- Version -->
+    <div class="version">
+        <i class="fas fa-code"></i> الإصدار 1.0.0
+    </div>
+
+    <script>
+        (function() {
+            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
+
+            // ===== التحقق من الجلسة الحالية =====
+            async function checkExistingSession() {
+                try {
+                    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    const { data: { session } } = await supabase.auth.getSession();
+
+                    if (session && session.user) {
+                        console.log('✅ يوجد مستخدم مسجل دخول:', session.user.email);
+                        showWelcomeBack(session.user.email);
+                    }
+                } catch (err) {
+                    console.warn('⚠️ لا يوجد مستخدم مسجل');
+                }
+            }
+
+            // ===== إشعار "أهلاً بعودتك" =====
+            function showWelcomeBack(email) {
+                const banner = document.createElement('div');
+                banner.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(-100px);
+                    background: linear-gradient(135deg, #6bcb77, #4caf50);
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 50px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    z-index: 1000;
+                    box-shadow: 0 10px 30px rgba(107, 203, 119, 0.4);
+                    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-family: 'Cairo', sans-serif;
+                `;
+                banner.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    أهلاً بعودتك! ${email}
+                    <button onclick="continueAsUser()" style="
+                        background: rgba(255,255,255,0.25);
+                        border: none;
+                        color: white;
+                        padding: 4px 12px;
+                        border-radius: 20px;
+                        font-family: 'Cairo', sans-serif;
+                        font-weight: 600;
+                        font-size: 12px;
+                        cursor: pointer;
+                        margin-right: 8px;
+                    ">دخول سريع</button>
+                `;
+                document.body.appendChild(banner);
+
+                // أنيميشن الدخول
+                setTimeout(() => {
+                    banner.style.transform = 'translateX(-50%) translateY(0)';
+                }, 100);
+
+                // إخفاء تلقائي بعد 8 ثواني
+                setTimeout(() => {
+                    banner.style.transform = 'translateX(-50%) translateY(-100px)';
+                    setTimeout(() => banner.remove(), 500);
+                }, 8000);
+
+                // ✅ دالة الدخول السريع (بعد التعديل)
+                window.continueAsUser = function() {
+                    window.location.href = '../index.html';
+                };
+            }
+
+            // ===== تفعيل وضع الزائر =====
+            window.setGuestMode = function(event) {
+                event.preventDefault();
+                localStorage.setItem('guestMode', 'true');
+                console.log('👤 تم تفعيل وضع الزائر');
+
+                // تأثير fade out
+                document.body.style.transition = 'opacity 0.4s ease';
+                document.body.style.opacity = '0';
+
+                // ✅ التعديل هنا (بعد التعديل)
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 400);
+            };
+
+            // تشغيل التحقق عند فتح الصفحة
+            checkExistingSession();
+
+            // log ترحيبي
+            console.log('%c🛍️ متجرنا', 'color: #ff6b6b; font-size: 24px; font-weight: bold;');
+            console.log('%cأهلاً بك! اختر طريقة الدخول', 'color: #ffd93d; font-size: 14px;');
+
+        })();
+    </script>
+
+</body>
+</html>
