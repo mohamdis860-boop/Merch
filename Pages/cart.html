@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سلة التسوق - متجرنا</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
@@ -412,13 +413,59 @@
         .cart-item {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             animation: itemSlideIn 0.45s ease-out both;
             position: relative;
             z-index: 1;
             transition: 0.35s;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .cart-item:active {
+            cursor: grabbing;
+        }
+
+        /* ===== Drag Handle ===== */
+        .drag-handle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 40px;
+            color: rgba(255, 255, 255, 0.25);
+            cursor: grab;
+            transition: 0.3s;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .drag-handle:hover {
+            color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .cart-item:active .drag-handle {
+            cursor: grabbing;
+        }
+
+        /* ===== SortableJS States ===== */
+        .cart-item.sortable-ghost {
+            opacity: 0.4;
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+        }
+
+        .cart-item.sortable-drag {
+            opacity: 0.95;
+            transform: rotate(2deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            background: rgba(30, 30, 60, 0.95);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 107, 0.5);
         }
 
         .cart-item:hover {
@@ -477,6 +524,7 @@
 
         .cart-item .item-details {
             flex: 1;
+            min-width: 0;
         }
 
         .cart-item .item-details h3 {
@@ -675,6 +723,33 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
         }
 
+        /* ===== Reorder Toast ===== */
+        .reorder-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 9999;
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .reorder-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* ===== Footer ===== */
         .footer {
             position: relative;
@@ -805,6 +880,9 @@
             .page-header h1 {
                 font-size: 24px;
             }
+            .drag-handle {
+                width: 24px;
+            }
         }
     </style>
 </head>
@@ -821,7 +899,7 @@
 
     <!-- Navbar -->
     <nav class="navbar">
-        <a href="index.html" class="logo">
+        <a href="../index.html" class="logo">
             <i class="fas fa-store"></i>
             متجرنا
         </a>
@@ -837,9 +915,9 @@
     <!-- Main Content -->
     <div class="main-content">
 
-        <div class="back-btn" onclick="window.location.href='index.html'">
+        <div class="back-btn" onclick="window.location.href='products.html'">
             <i class="fas fa-arrow-right"></i>
-            العودة للرئيسية
+            العودة للمنتجات
         </div>
 
         <div class="page-header">
@@ -918,6 +996,24 @@
                 return div.innerHTML;
             }
 
+            // ===== Reorder Toast =====
+            function showReorderToast(message) {
+                const existingToast = document.querySelector('.reorder-toast');
+                if (existingToast) existingToast.remove();
+
+                const toastEl = document.createElement('div');
+                toastEl.className = 'reorder-toast';
+                toastEl.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                document.body.appendChild(toastEl);
+
+                setTimeout(() => toastEl.classList.add('show'), 50);
+
+                setTimeout(() => {
+                    toastEl.classList.remove('show');
+                    setTimeout(() => toastEl.remove(), 400);
+                }, 2500);
+            }
+
             // ===== إضافة منتج للسلة =====
             window.addToCart = function(productId, productName, price, imageUrl) {
                 const existing = cart.find(item => item.id === productId);
@@ -968,11 +1064,50 @@
             // ===== تفريغ السلة =====
             window.clearCart = function() {
                 if (cart.length === 0) return;
+                if (!confirm('هل أنت متأكد من تفريغ السلة؟')) return;
                 showToast('🗑️ تم تفريغ السلة');
                 cart = [];
                 saveCart();
                 updateCartDisplay();
             };
+
+            // ===== SortableJS - تفعيل السحب والإفلات =====
+            function initializeSortable() {
+                const container = document.getElementById('cartContainer');
+                if (!container) return;
+
+                // تدمير أي Sortable قديم
+                if (window.cartSortable) {
+                    window.cartSortable.destroy();
+                }
+
+                window.cartSortable = new Sortable(container, {
+                    animation: 300,
+                    handle: '.drag-handle',
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    filter: '.cart-summary, .cart-empty',
+                    preventOnFilter: false,
+                    onEnd: function(evt) {
+                        const itemElements = container.querySelectorAll('.cart-item');
+                        const newOrder = [];
+
+                        itemElements.forEach(el => {
+                            const id = el.getAttribute('data-id');
+                            if (id) {
+                                const item = cart.find(i => String(i.id) === String(id));
+                                if (item) newOrder.push(item);
+                            }
+                        });
+
+                        if (newOrder.length === cart.length) {
+                            cart = newOrder;
+                            saveCart();
+                            showReorderToast('تم تحديث ترتيب المنتجات بنجاح');
+                        }
+                    }
+                });
+            }
 
             // ===== عرض السلة =====
             function updateCartDisplay() {
@@ -999,7 +1134,10 @@
                     const imageUrl = getImageUrl(item.image);
 
                     html += `
-                        <div class="cart-item" style="animation-delay: ${index * 0.08}s">
+                        <div class="cart-item" data-id="${escapeHtml(item.id)}" style="animation-delay: ${index * 0.08}s">
+                            <div class="drag-handle" title="اسحب لتغيير الترتيب">
+                                <i class="fas fa-grip-vertical"></i>
+                            </div>
                             <div class="item-image">
                                 ${imageUrl ?
                                     `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(item.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'><i class=\\'fas fa-image\\'></i></div>'">` :
@@ -1035,11 +1173,16 @@
                                 <i class="fas fa-trash-alt"></i> تفريغ السلة
                             </button>
                             <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+                                <i class="fas fa-credit-card"></i> إتمام الشراء
+                            </button>
                         </div>
                     </div>
                 `;
 
                 cartContainer.innerHTML = html;
+
+                // تفعيل SortableJS بعد عرض المنتجات
+                setTimeout(() => initializeSortable(), 100);
             }
 
             // ===== تحميل السلة عند فتح الصفحة =====
@@ -1048,7 +1191,7 @@
             // ===== جعل الدوال عامة =====
             window.updateCartDisplay = updateCartDisplay;
 
-            console.log('🛒 السلة جاهزة! عدد المنتجات:', cart.length);
+            console.log('🛒 السلة جاهزة مع SortableJS! عدد المنتجات:', cart.length);
 
         })();
     </script>
