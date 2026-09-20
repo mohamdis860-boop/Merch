@@ -1,3 +1,4 @@
+<!-- ==================== product-details.html (نسخة نهائية) ==================== -->
 <!DOCTYPE html>
 <html lang="ar" dir="ltr">
 <head>
@@ -95,7 +96,7 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Navbar ===== */
+        /* ===== Navbar (نفس باقي الصفحات) ===== */
         .navbar {
             position: relative;
             z-index: 10;
@@ -164,7 +165,7 @@
         .navbar .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -2px; left: 0;
+            bottom: -2px; right: 0;
             width: 0; height: 2px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             transition: width 0.35s ease;
@@ -186,7 +187,7 @@
 
         .cart-badge .badge-count {
             position: absolute;
-            top: -8px; right: -12px;
+            top: -8px; left: -12px;
             background: linear-gradient(135deg, var(--primary), #ee5a24);
             color: white;
             font-size: 10px;
@@ -197,6 +198,51 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
+        }
+
+        /* زر البروفايل */
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 6px 6px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            text-decoration: none;
+            color: white !important;
+            transition: 0.4s;
+            font-weight: 600;
+        }
+
+        .profile-btn:hover {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .profile-btn::after { display: none !important; }
+
+        .profile-btn .profile-avatar-mini {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .profile-btn .profile-name-nav {
+            font-size: 14px;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* ===== Main Content ===== */
@@ -222,7 +268,7 @@
 
         .back-btn:hover {
             color: var(--primary);
-            transform: translateX(-6px);
+            transform: translateX(6px);
         }
 
         /* ===== Loading ===== */
@@ -299,9 +345,7 @@
             z-index: 1;
         }
 
-        .product-swiper .swiper-wrapper {
-            align-items: center;
-        }
+        .product-swiper .swiper-wrapper { align-items: center; }
 
         .product-swiper .swiper-slide {
             display: flex;
@@ -319,17 +363,14 @@
             transition: transform 0.5s ease;
         }
 
-        .product-swiper .swiper-slide:hover img {
-            transform: scale(1.05);
-        }
+        .product-swiper .swiper-slide:hover img { transform: scale(1.05); }
 
         .product-swiper .swiper-button-prev,
         .product-swiper .swiper-button-next {
             color: var(--primary);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            width: 42px;
-            height: 42px;
+            width: 42px; height: 42px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: 0.35s;
@@ -352,8 +393,7 @@
         .product-swiper .swiper-pagination-bullet {
             background: rgba(255, 255, 255, 0.4);
             opacity: 1;
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             transition: 0.35s;
         }
 
@@ -386,9 +426,7 @@
             transition: 0.3s;
         }
 
-        .product-breadcrumb a:hover {
-            color: var(--primary);
-        }
+        .product-breadcrumb a:hover { color: var(--primary); }
 
         .product-name {
             font-size: 34px;
@@ -458,9 +496,7 @@
             border-color: rgba(255, 107, 107, 0.3);
         }
 
-        .meta-badge i {
-            color: var(--primary);
-        }
+        .meta-badge i { color: var(--primary); }
 
         .meta-badge.available {
             background: rgba(107, 203, 119, 0.12);
@@ -778,7 +814,7 @@
         }
 
         .review-card:hover {
-            transform: translateX(-6px);
+            transform: translateX(6px);
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 107, 107, 0.2);
         }
@@ -860,7 +896,7 @@
             border-radius: 16px;
             padding: 15px;
             cursor: pointer;
-            transition: 
+            transition:
                 transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
                 box-shadow 0.4s ease,
                 background 0.4s ease,
@@ -886,8 +922,8 @@
             transform: translateY(-15px) scale(1.03);
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 107, 107, 0.5);
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.4), 
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.4),
                 0 0 40px rgba(255, 107, 107, 0.25);
             z-index: 10;
         }
@@ -911,9 +947,7 @@
             transition: 0.5s;
         }
 
-        .similar-card:hover .img-wrapper img {
-            transform: scale(1.1);
-        }
+        .similar-card:hover .img-wrapper img { transform: scale(1.1); }
 
         .similar-card .img-wrapper .no-image {
             font-size: 50px;
@@ -928,9 +962,7 @@
             transition: 0.4s;
         }
 
-        .similar-card:hover h4 {
-            color: var(--secondary);
-        }
+        .similar-card:hover h4 { color: var(--secondary); }
 
         .similar-card .similar-price {
             font-size: 17px;
@@ -942,7 +974,7 @@
         .toast {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            left: 30px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1032,12 +1064,13 @@
             .actions-row { flex-direction: column; align-items: stretch; }
             .wishlist-btn { width: 100%; height: 50px; }
             .similar-grid { grid-template-columns: 1fr 1fr; }
-            .toast { bottom: 20px; right: 20px; left: 20px; }
+            .toast { bottom: 20px; left: 20px; right: 20px; }
             .product-swiper .swiper-button-prev,
             .product-swiper .swiper-button-next {
                 width: 36px;
                 height: 36px;
             }
+            .profile-btn .profile-name-nav { display: none; }
         }
 
         @media (max-width: 500px) {
@@ -1071,6 +1104,11 @@
             <a href="cart.html" class="cart-badge">
                 <i class="fas fa-shopping-cart"></i> السلة
                 <span class="badge-count" id="cartBadge">0</span>
+            </a>
+            <!-- زر البروفايل -->
+            <a href="../Auth/profile.html" class="profile-btn" id="profileBtn" style="display: none;">
+                <span class="profile-avatar-mini" id="profileAvatarMini">م</span>
+                <span class="profile-name-nav" id="profileNameNav">حسابي</span>
             </a>
         </div>
     </nav>
@@ -1307,15 +1345,68 @@
                 return html;
             }
 
-            function updateCartBadge() {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-                const badge = document.getElementById('cartBadge');
-                if (badge) {
-                    badge.textContent = total;
-                    badge.style.display = total > 0 ? 'flex' : 'none';
+            // ===== عدّاد السلة =====
+            (function() {
+                const cartBadge = document.getElementById('cartBadge');
+
+                window.updateCartBadge = function() {
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                    if (cartBadge) {
+                        cartBadge.textContent = totalItems;
+                        cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
+                    }
+                };
+
+                window.updateCartBadge();
+
+                window.addEventListener('storage', function(e) {
+                    if (e.key === 'cart') {
+                        window.updateCartBadge();
+                    }
+                });
+            })();
+
+            // ===== التحقق من تسجيل الدخول =====
+            (function() {
+                const profileBtn = document.getElementById('profileBtn');
+                const profileAvatarMini = document.getElementById('profileAvatarMini');
+                const profileNameNav = document.getElementById('profileNameNav');
+
+                async function checkAuth() {
+                    try {
+                        if (!window.supabase) return;
+
+                        const { data: { session } } = await supabase.auth.getSession();
+                        currentUser = session?.user || null;
+
+                        if (session && session.user) {
+                            const userName = session.user.user_metadata?.name || session.user.email.split('@')[0];
+                            const userInitial = userName.charAt(0).toUpperCase();
+
+                            profileAvatarMini.textContent = userInitial;
+                            profileNameNav.textContent = userName.split(' ')[0];
+                            profileBtn.style.display = 'flex';
+                        } else {
+                            profileBtn.style.display = 'none';
+
+                            const loginBtn = document.createElement('a');
+                            loginBtn.href = '../Auth/login.html';
+                            loginBtn.className = 'profile-btn';
+                            loginBtn.style.display = 'flex';
+                            loginBtn.innerHTML = `
+                                <i class="fas fa-sign-in-alt" style="color: var(--primary); font-size: 16px;"></i>
+                                <span class="profile-name-nav">دخول</span>
+                            `;
+                            profileBtn.parentElement.appendChild(loginBtn);
+                        }
+                    } catch (err) {
+                        console.warn('⚠️ Auth check failed:', err);
+                    }
                 }
-            }
+
+                checkAuth();
+            })();
 
             function addToCart(product, quantity) {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -1334,8 +1425,7 @@
                 }
 
                 localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartBadge();
-                window.dispatchEvent(new Event('storage'));
+                window.updateCartBadge();
             }
 
             function getWishlist() {
@@ -1370,9 +1460,6 @@
                 }
 
                 try {
-                    const { data: { session } } = await supabase.auth.getSession();
-                    currentUser = session?.user || null;
-
                     const { data: product, error } = await supabase
                         .from('Product')
                         .select('*')
@@ -1441,7 +1528,7 @@
                     if (productSwiper) {
                         productSwiper.destroy(true, true);
                     }
-                    
+
                     productSwiper = new Swiper('.product-swiper', {
                         loop: false,
                         spaceBetween: 10,
@@ -1858,11 +1945,6 @@
                     console.error('Similar products error:', err);
                 }
             }
-
-            updateCartBadge();
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'cart') updateCartBadge();
-            });
 
             loadProduct();
 

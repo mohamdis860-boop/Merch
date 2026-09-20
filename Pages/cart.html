@@ -212,6 +212,83 @@
             color: var(--primary);
         }
 
+        /* ===== عداد السلة ===== */
+        .cart-badge {
+            position: relative;
+        }
+
+        .cart-badge .badge-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: linear-gradient(135deg, var(--primary), #ee5a24);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
+            animation: badgePop 0.4s ease-out;
+        }
+
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== زر البروفايل ===== */
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 16px 6px 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            text-decoration: none;
+            color: white !important;
+            transition: 0.4s;
+            font-weight: 600;
+        }
+
+        .profile-btn:hover {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .profile-btn::after {
+            display: none !important;
+        }
+
+        .profile-btn .profile-avatar-mini {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .profile-btn .profile-name-nav {
+            font-size: 14px;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         /* ===== Main Content ===== */
         .main-content {
             position: relative;
@@ -867,6 +944,9 @@
                 padding: 14px 20px;
                 font-size: 14px;
             }
+            .profile-btn .profile-name-nav {
+                display: none;
+            }
         }
 
         @media (max-width: 500px) {
@@ -909,6 +989,11 @@
             <a href="categories.html"><i class="fas fa-tags"></i> التصنيفات</a>
             <a href="about.html"><i class="fas fa-info-circle"></i> تعرف علينا</a>
             <a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i> السلة</a>
+            <!-- زر البروفايل -->
+            <a href="../Auth/profile.html" class="profile-btn" id="profileBtn" style="display: none;">
+                <span class="profile-avatar-mini" id="profileAvatarMini">م</span>
+                <span class="profile-name-nav" id="profileNameNav">حسابي</span>
+            </a>
         </div>
     </nav>
 
@@ -963,7 +1048,6 @@
             const toastMessage = document.getElementById('toastMessage');
             let toastTimeout;
 
-            // ===== إدارة السلة في LocalStorage =====
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             const STORAGE_BUCKET = 'products';
@@ -996,7 +1080,6 @@
                 return div.innerHTML;
             }
 
-            // ===== Reorder Toast =====
             function showReorderToast(message) {
                 const existingToast = document.querySelector('.reorder-toast');
                 if (existingToast) existingToast.remove();
@@ -1014,7 +1097,6 @@
                 }, 2500);
             }
 
-            // ===== إضافة منتج للسلة =====
             window.addToCart = function(productId, productName, price, imageUrl) {
                 const existing = cart.find(item => item.id === productId);
                 if (existing) {
@@ -1034,7 +1116,6 @@
                 updateCartDisplay();
             };
 
-            // ===== حذف منتج من السلة =====
             window.removeFromCart = function(productId) {
                 const item = cart.find(i => i.id === productId);
                 if (item) {
@@ -1045,7 +1126,6 @@
                 updateCartDisplay();
             };
 
-            // ===== تغيير الكمية =====
             window.updateQuantity = function(productId, change) {
                 const item = cart.find(i => i.id === productId);
                 if (item) {
@@ -1061,7 +1141,6 @@
                 }
             };
 
-            // ===== تفريغ السلة =====
             window.clearCart = function() {
                 if (cart.length === 0) return;
                 if (!confirm('هل أنت متأكد من تفريغ السلة؟')) return;
@@ -1071,12 +1150,10 @@
                 updateCartDisplay();
             };
 
-            // ===== SortableJS - تفعيل السحب والإفلات =====
             function initializeSortable() {
                 const container = document.getElementById('cartContainer');
                 if (!container) return;
 
-                // تدمير أي Sortable قديم
                 if (window.cartSortable) {
                     window.cartSortable.destroy();
                 }
@@ -1109,7 +1186,6 @@
                 });
             }
 
-            // ===== عرض السلة =====
             function updateCartDisplay() {
                 if (cart.length === 0) {
                     cartContainer.innerHTML = `
@@ -1181,18 +1257,61 @@
 
                 cartContainer.innerHTML = html;
 
-                // تفعيل SortableJS بعد عرض المنتجات
                 setTimeout(() => initializeSortable(), 100);
             }
 
             // ===== تحميل السلة عند فتح الصفحة =====
             updateCartDisplay();
 
-            // ===== جعل الدوال عامة =====
             window.updateCartDisplay = updateCartDisplay;
 
             console.log('🛒 السلة جاهزة مع SortableJS! عدد المنتجات:', cart.length);
 
+        })();
+
+        // ===== التحقق من تسجيل الدخول + عرض البروفايل =====
+        (function() {
+            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
+
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const profileBtn = document.getElementById('profileBtn');
+            const profileAvatarMini = document.getElementById('profileAvatarMini');
+            const profileNameNav = document.getElementById('profileNameNav');
+
+            async function checkAuth() {
+                try {
+                    const { data: { session } } = await supabase.auth.getSession();
+
+                    if (session && session.user) {
+                        const userName = session.user.user_metadata?.name || session.user.email.split('@')[0];
+                        const userInitial = userName.charAt(0).toUpperCase();
+
+                        profileAvatarMini.textContent = userInitial;
+                        profileNameNav.textContent = userName.split(' ')[0];
+                        profileBtn.style.display = 'flex';
+
+                        console.log('✅ User logged in:', userName);
+                    } else {
+                        console.log('👤 No user session');
+                        profileBtn.style.display = 'none';
+
+                        const loginBtn = document.createElement('a');
+                        loginBtn.href = '../Auth/login.html';
+                        loginBtn.className = 'profile-btn';
+                        loginBtn.style.display = 'flex';
+                        loginBtn.innerHTML = `
+                            <i class="fas fa-sign-in-alt" style="color: var(--primary); font-size: 16px;"></i>
+                            <span class="profile-name-nav">دخول</span>
+                        `;
+                        profileBtn.parentElement.appendChild(loginBtn);
+                    }
+                } catch (err) {
+                    console.warn('⚠️ Auth check failed:', err);
+                }
+            }
+
+            checkAuth();
         })();
     </script>
 
