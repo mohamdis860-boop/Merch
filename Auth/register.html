@@ -6,6 +6,10 @@
     <title>إنشاء حساب - متجرنا</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ✅ Shared Styles (مسار من Auth/) -->
+    <link rel="stylesheet" href="../shared/toast.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -159,7 +163,8 @@
 
         .back-btn {
             position: absolute;
-            top: 20px; right: 20px;
+            top: 20px;
+            right: 20px;
             width: 40px; height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.06);
@@ -249,6 +254,10 @@
             font-weight: 600;
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 6px;
+        }
+
+        .input-group label i {
+            margin-right: 6px;
         }
 
         .input-wrapper {
@@ -536,54 +545,6 @@
             text-decoration: underline;
         }
 
-        .toast {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px 26px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            z-index: 1000;
-            opacity: 0;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .toast.success { border-color: rgba(107, 203, 119, 0.4); }
-        .toast.success i { color: var(--success); }
-        .toast.error { border-color: rgba(255, 71, 87, 0.4); }
-        .toast.error i { color: var(--error); }
-        .toast.info { border-color: rgba(108, 92, 231, 0.4); }
-        .toast.info i { color: var(--accent); }
-
-        .toast i {
-            font-size: 20px;
-            animation: toastIconPop 0.5s ease-out;
-        }
-
-        @keyframes toastIconPop {
-            0% { transform: scale(0) rotate(-90deg); }
-            70% { transform: scale(1.3) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
         .spinner {
             width: 18px; height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -643,7 +604,7 @@
     <div class="register-container">
         <div class="register-card">
 
-            <!-- Back Button → index.html (خارج فولدر Auth) -->
+            <!-- Back Button -->
             <a href="../index.html" class="back-btn" title="العودة">
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -660,7 +621,7 @@
 
                 <div class="input-group fade-in-item">
                     <label for="name">
-                        <i class="fas fa-user" style="color: var(--accent); margin-left: 6px;"></i>
+                        <i class="fas fa-user" style="color: var(--accent);"></i>
                         الاسم بالكامل
                     </label>
                     <div class="input-wrapper" id="nameWrapper">
@@ -671,7 +632,7 @@
 
                 <div class="input-group fade-in-item">
                     <label for="email">
-                        <i class="fas fa-envelope" style="color: var(--accent); margin-left: 6px;"></i>
+                        <i class="fas fa-envelope" style="color: var(--accent);"></i>
                         البريد الإلكتروني
                     </label>
                     <div class="input-wrapper" id="emailWrapper">
@@ -682,7 +643,7 @@
 
                 <div class="input-group fade-in-item">
                     <label for="phone">
-                        <i class="fas fa-phone" style="color: var(--accent); margin-left: 6px;"></i>
+                        <i class="fas fa-phone" style="color: var(--accent);"></i>
                         رقم الموبايل
                     </label>
                     <div class="input-wrapper" id="phoneWrapper">
@@ -694,7 +655,7 @@
                 <div class="form-row fade-in-item">
                     <div class="input-group">
                         <label for="address">
-                            <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-left: 6px;"></i>
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
                             العنوان
                         </label>
                         <div class="input-wrapper" id="addressWrapper">
@@ -705,7 +666,7 @@
 
                     <div class="input-group">
                         <label for="city">
-                            <i class="fas fa-city" style="color: var(--accent); margin-left: 6px;"></i>
+                            <i class="fas fa-city" style="color: var(--accent);"></i>
                             المدينة
                         </label>
                         <div class="input-wrapper" id="cityWrapper">
@@ -717,7 +678,7 @@
 
                 <div class="input-group fade-in-item">
                     <label for="password">
-                        <i class="fas fa-lock" style="color: var(--accent); margin-left: 6px;"></i>
+                        <i class="fas fa-lock" style="color: var(--accent);"></i>
                         كلمة المرور
                     </label>
                     <div class="input-wrapper" id="passwordWrapper">
@@ -737,7 +698,7 @@
 
                 <div class="input-group fade-in-item">
                     <label for="confirmPassword">
-                        <i class="fas fa-lock" style="color: var(--accent); margin-left: 6px;"></i>
+                        <i class="fas fa-lock" style="color: var(--accent);"></i>
                         تأكيد كلمة المرور
                     </label>
                     <div class="input-wrapper" id="confirmPasswordWrapper">
@@ -774,7 +735,6 @@
                 <a href="#" class="social-btn facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             </div>
 
-            <!-- Login Link → نفس الفولدر -->
             <p class="login-link">
                 لديك حساب بالفعل؟
                 <a href="login.html">سجّل دخولك</a>
@@ -783,17 +743,17 @@
         </div>
     </div>
 
-    <div class="toast" id="toast">
-        <i class="fas fa-info-circle" id="toastIcon"></i>
-        <span id="toastMessage">رسالة</span>
-    </div>
+    <!-- ✅ Shared Scripts (مسار من Auth/) -->
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
 
     <script>
         (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
-
-            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
+            }
 
             const registerForm = document.getElementById('registerForm');
             const nameInput = document.getElementById('name');
@@ -812,25 +772,8 @@
             const spinner = document.getElementById('spinner');
             const passwordStrength = document.getElementById('passwordStrength');
             const strengthText = document.getElementById('strengthText');
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const toastIcon = document.getElementById('toastIcon');
-            let toastTimeout;
 
-            function showToast(message, type = 'info') {
-                toastMessage.textContent = message;
-                toast.className = 'toast show ' + type;
-
-                if (type === 'success') toastIcon.className = 'fas fa-check-circle';
-                else if (type === 'error') toastIcon.className = 'fas fa-exclamation-circle';
-                else toastIcon.className = 'fas fa-info-circle';
-
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3500);
-            }
-
+            // Toggle passwords
             togglePasswordBtn.addEventListener('click', function() {
                 const type = passwordInput.type === 'password' ? 'text' : 'password';
                 passwordInput.type = type;
@@ -843,6 +786,7 @@
                 this.querySelector('i').className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
             });
 
+            // Password strength
             passwordInput.addEventListener('input', function() {
                 const password = this.value;
                 let strength = 0;
@@ -903,38 +847,38 @@
                 const password = passwordInput.value;
                 const confirmPassword = confirmPasswordInput.value;
 
-                if (!name) { showToast('❌ من فضلك اكتب اسمك بالكامل', 'error'); nameInput.focus(); return false; }
-                if (name.length < 3) { showToast('❌ الاسم قصير جداً', 'error'); nameInput.focus(); return false; }
+                if (!name) { window.showToast('❌ من فضلك اكتب اسمك بالكامل', 'error'); nameInput.focus(); return false; }
+                if (name.length < 3) { window.showToast('❌ الاسم قصير جداً', 'error'); nameInput.focus(); return false; }
                 setFieldState('nameWrapper', 'success');
 
-                if (!email) { showToast('❌ من فضلك اكتب البريد الإلكتروني', 'error'); emailInput.focus(); return false; }
-                if (!isValidEmail(email)) { showToast('❌ صيغة البريد الإلكتروني غير صحيحة', 'error'); emailInput.focus(); return false; }
+                if (!email) { window.showToast('❌ من فضلك اكتب البريد الإلكتروني', 'error'); emailInput.focus(); return false; }
+                if (!isValidEmail(email)) { window.showToast('❌ صيغة البريد الإلكتروني غير صحيحة', 'error'); emailInput.focus(); return false; }
                 setFieldState('emailWrapper', 'success');
 
-                if (!phone) { showToast('❌ من فضلك اكتب رقم الموبايل', 'error'); phoneInput.focus(); return false; }
-                if (!isValidPhone(phone)) { showToast('❌ رقم الموبايل غير صحيح (01xxxxxxxxx)', 'error'); phoneInput.focus(); return false; }
+                if (!phone) { window.showToast('❌ من فضلك اكتب رقم الموبايل', 'error'); phoneInput.focus(); return false; }
+                if (!isValidPhone(phone)) { window.showToast('❌ رقم الموبايل غير صحيح (01xxxxxxxxx)', 'error'); phoneInput.focus(); return false; }
                 setFieldState('phoneWrapper', 'success');
 
-                if (!address) { showToast('❌ من فضلك اكتب العنوان', 'error'); addressInput.focus(); return false; }
+                if (!address) { window.showToast('❌ من فضلك اكتب العنوان', 'error'); addressInput.focus(); return false; }
                 setFieldState('addressWrapper', 'success');
 
-                if (!city) { showToast('❌ من فضلك اكتب المدينة', 'error'); cityInput.focus(); return false; }
+                if (!city) { window.showToast('❌ من فضلك اكتب المدينة', 'error'); cityInput.focus(); return false; }
                 setFieldState('cityWrapper', 'success');
 
-                if (!password) { showToast('❌ من فضلك اكتب كلمة المرور', 'error'); passwordInput.focus(); return false; }
-                if (password.length < 6) { showToast('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error'); passwordInput.focus(); return false; }
+                if (!password) { window.showToast('❌ من فضلك اكتب كلمة المرور', 'error'); passwordInput.focus(); return false; }
+                if (password.length < 6) { window.showToast('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error'); passwordInput.focus(); return false; }
                 setFieldState('passwordWrapper', 'success');
 
-                if (!confirmPassword) { showToast('❌ من فضلك أكد كلمة المرور', 'error'); confirmPasswordInput.focus(); return false; }
+                if (!confirmPassword) { window.showToast('❌ من فضلك أكد كلمة المرور', 'error'); confirmPasswordInput.focus(); return false; }
                 if (password !== confirmPassword) {
-                    showToast('❌ كلمتا المرور غير متطابقتين', 'error');
+                    window.showToast('❌ كلمتا المرور غير متطابقتين', 'error');
                     setFieldState('confirmPasswordWrapper', 'error');
                     confirmPasswordInput.focus();
                     return false;
                 }
                 setFieldState('confirmPasswordWrapper', 'success');
 
-                if (!termsCheckbox.checked) { showToast('❌ من فضلك وافق على الشروط والأحكام', 'error'); return false; }
+                if (!termsCheckbox.checked) { window.showToast('❌ من فضلك وافق على الشروط والأحكام', 'error'); return false; }
 
                 return true;
             }
@@ -981,12 +925,11 @@
                     setLoading(false);
 
                     if (authData.user && authData.session) {
-                        showToast(`✅ تم إنشاء حسابك بنجاح، أهلاً ${name}!`, 'success');
+                        window.showToast(`✅ تم إنشاء حسابك بنجاح، أهلاً ${name}!`, 'success');
                     } else {
-                        showToast(`📧 تم إنشاء الحساب! افتح بريدك لتأكيد الإيميل`, 'info');
+                        window.showToast(`📧 تم إنشاء الحساب! افتح بريدك لتأكيد الإيميل`, 'info');
                     }
 
-                    // التوجيه (خارج فولدر Auth)
                     setTimeout(() => {
                         if (authData.session) {
                             window.location.href = '../index.html';
@@ -998,7 +941,7 @@
                 } catch (error) {
                     console.error('❌ خطأ:', error);
                     setLoading(false);
-                    showToast('❌ ' + error.message, 'error');
+                    window.showToast('❌ ' + error.message, 'error');
                 }
             });
 
@@ -1030,7 +973,7 @@
                 }
             });
 
-            console.log('%c📝 صفحة إنشاء الحساب (Auth/)', 'color: #6c5ce7; font-size: 20px; font-weight: bold;');
+            console.log('%c📝 Register page loaded', 'color: #6c5ce7; font-size: 18px; font-weight: bold;');
 
         })();
     </script>

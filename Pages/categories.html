@@ -1,4 +1,3 @@
-<!-- ==================== categories.html (نسخة مصححة كاملة) ==================== -->
 <!DOCTYPE html>
 <html lang="ar" dir="ltr">
 <head>
@@ -8,6 +7,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    
+    <!-- ✅ Shared Styles (مسار من Pages/) -->
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -116,177 +120,6 @@
             25% { transform: translate(60px, -50px) scale(1.15); }
             50% { transform: translate(-40px, 40px) scale(0.9); }
             75% { transform: translate(30px, -30px) scale(1.08); }
-        }
-
-        /* ===== Navbar ===== */
-        .navbar {
-            position: relative;
-            z-index: 10;
-            background: rgba(10, 10, 26, 0.55);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            animation: slideDown 0.7s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .navbar .logo {
-            font-size: 28px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #fff;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-
-        .navbar .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .navbar .logo i {
-            color: var(--primary);
-            font-size: 32px;
-            animation: logoPulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
-        }
-
-        .navbar .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .navbar .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: 0.35s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            padding: 4px 0;
-        }
-
-        .navbar .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            right: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.35s ease;
-            border-radius: 2px;
-        }
-
-        .navbar .nav-links a:hover::after,
-        .navbar .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .navbar .nav-links a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .navbar .nav-links a.active {
-            color: var(--primary);
-        }
-
-        /* ===== عداد السلة ===== */
-        .cart-badge {
-            position: relative;
-        }
-
-        .cart-badge .badge-count {
-            position: absolute;
-            top: -8px;
-            left: -12px;
-            background: linear-gradient(135deg, var(--primary), #ee5a24);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
-            animation: badgePop 0.4s ease-out;
-        }
-
-        @keyframes badgePop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        /* ===== زر البروفايل ===== */
-        .profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 6px 6px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            text-decoration: none;
-            color: white !important;
-            transition: 0.4s;
-            font-weight: 600;
-        }
-
-        .profile-btn:hover {
-            background: rgba(108, 92, 231, 0.2);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
-        }
-
-        .profile-btn::after {
-            display: none !important;
-        }
-
-        .profile-btn .profile-avatar-mini {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 800;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .profile-btn .profile-name-nav {
-            font-size: 14px;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         /* ===== Main Content ===== */
@@ -504,7 +337,7 @@
         }
 
         .category-card .product-count i {
-            margin-left: 4px;
+            margin-right: 4px;
         }
 
         .category-card .category-id {
@@ -608,54 +441,8 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Toast ===== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 18px 28px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            z-index: 100;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast i {
-            color: #6bcb77;
-            font-size: 22px;
-        }
-
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            .navbar .logo {
-                font-size: 22px;
-            }
-            .navbar .nav-links {
-                gap: 12px;
-            }
-            .navbar .nav-links a {
-                font-size: 13px;
-            }
             .page-header h1 {
                 font-size: 30px;
             }
@@ -664,16 +451,6 @@
             }
             .categories-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-            .toast {
-                bottom: 20px;
-                left: 20px;
-                right: 20px;
-                padding: 14px 20px;
-                font-size: 14px;
-            }
-            .profile-btn .profile-name-nav {
-                display: none;
             }
         }
 
@@ -701,28 +478,7 @@
         <div class="blob"></div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="../index.html" class="logo">
-            <i class="fas fa-store"></i>
-            متجرنا
-        </a>
-        <div class="nav-links">
-            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
-            <a href="products.html"><i class="fas fa-box"></i> المنتجات</a>
-            <a href="categories.html" class="active"><i class="fas fa-tags"></i> التصنيفات</a>
-            <a href="about.html"><i class="fas fa-info-circle"></i> تعرف علينا</a>
-            <a href="cart.html" class="cart-badge">
-                <i class="fas fa-shopping-cart"></i> السلة
-                <span class="badge-count" id="cartBadge">0</span>
-            </a>
-            <!-- زر البروفايل -->
-            <a href="../Auth/profile.html" class="profile-btn" id="profileBtn" style="display: none;">
-                <span class="profile-avatar-mini" id="profileAvatarMini">م</span>
-                <span class="profile-name-nav" id="profileNameNav">حسابي</span>
-            </a>
-        </div>
-    </nav>
+    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
 
     <!-- Main Content -->
     <div class="main-content">
@@ -747,12 +503,6 @@
 
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i class="fas fa-info-circle"></i>
-        <span id="toastMessage">جاري التحميل...</span>
-    </div>
-
     <!-- Footer -->
     <div class="footer">
         <p>
@@ -772,98 +522,23 @@
         });
     </script>
 
+    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
+
     <script>
-        // ===== عدّاد السلة =====
         (function() {
-            const cartBadge = document.getElementById('cartBadge');
-
-            function updateCartBadge() {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
-                if (cartBadge) {
-                    cartBadge.textContent = totalItems;
-                    cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-                }
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
             }
-
-            updateCartBadge();
-
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'cart') {
-                    updateCartBadge();
-                }
-            });
-        })();
-
-        // ===== التحقق من تسجيل الدخول + عرض البروفايل =====
-        (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
-
-            const profileBtn = document.getElementById('profileBtn');
-            const profileAvatarMini = document.getElementById('profileAvatarMini');
-            const profileNameNav = document.getElementById('profileNameNav');
-
-            async function checkAuth() {
-                try {
-                    if (!window.supabase) {
-                        console.warn('⚠️ Supabase library not loaded');
-                        return;
-                    }
-
-                    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                    const { data: { session } } = await supabase.auth.getSession();
-
-                    if (session && session.user) {
-                        const userName = session.user.user_metadata?.name || session.user.email.split('@')[0];
-                        const userInitial = userName.charAt(0).toUpperCase();
-
-                        profileAvatarMini.textContent = userInitial;
-                        profileNameNav.textContent = userName.split(' ')[0];
-                        profileBtn.style.display = 'flex';
-
-                        console.log('✅ User logged in:', userName);
-                    } else {
-                        console.log('👤 No user session');
-                        profileBtn.style.display = 'none';
-
-                        const loginBtn = document.createElement('a');
-                        loginBtn.href = '../Auth/login.html';
-                        loginBtn.className = 'profile-btn';
-                        loginBtn.style.display = 'flex';
-                        loginBtn.innerHTML = `
-                            <i class="fas fa-sign-in-alt" style="color: var(--primary); font-size: 16px;"></i>
-                            <span class="profile-name-nav">دخول</span>
-                        `;
-                        profileBtn.parentElement.appendChild(loginBtn);
-                    }
-                } catch (err) {
-                    console.warn('⚠️ Auth check failed:', err);
-                }
-            }
-
-            checkAuth();
-        })();
-
-        // ===== تحميل التصنيفات من Supabase =====
-        (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
 
             const categoriesContainer = document.getElementById('categoriesContainer');
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            let toastTimeout;
 
-            function showToast(message) {
-                toastMessage.textContent = message;
-                toast.classList.add('show');
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2000);
-            }
-
+            // ===== أدوات مساعدة =====
             function safeToString(value) {
                 if (value === null || value === undefined) return '';
                 return String(value);
@@ -887,29 +562,87 @@
             }
 
             function goToCategoryProducts(categoryId, categoryName, categoryDesc) {
-                showToast(`📂 جاري تحميل منتجات "${categoryName}"...`);
+                window.showToast(`📂 جاري تحميل منتجات "${categoryName}"...`, 'info');
 
                 setTimeout(() => {
                     window.location.href = `category-products.html?id=${encodeURIComponent(categoryId)}&name=${encodeURIComponent(categoryName)}&desc=${encodeURIComponent(categoryDesc || '')}`;
                 }, 400);
             }
 
-            async function loadCategories() {
-                // فحص تحميل مكتبة Supabase
-                if (!window.supabase) {
-                    categoriesContainer.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-wifi"></i>
-                            <p>فشل تحميل المكتبة، تحقق من اتصال الإنترنت</p>
-                        </div>
-                    `;
-                    return;
+            // ===== إنشاء كارت تصنيف =====
+            function createCategoryCard(item, index, productCounts) {
+                const categoryName = safeToString(item.Category_Name) || 'بدون اسم';
+                const description = safeToString(item.Description) || 'لا يوجد وصف';
+                const categoryId = item.Category_ID ?? item.id ?? null;
+
+                if (categoryId === null) {
+                    console.warn('⚠️ تصنيف بدون ID:', item);
+                    return null;
                 }
 
-                try {
-                    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                const icon = getCategoryIcon(index);
+                const productCount = productCounts[categoryId] || 0;
 
-                    // تحميل التصنيفات والمنتجات بالتوازي (أسرع)
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.style.animationDelay = `${index * 0.08}s`;
+                card.setAttribute('data-aos', 'zoom-in-up');
+                card.setAttribute('data-aos-delay', String(Math.min(index * 50, 400)));
+                card.dataset.id = String(categoryId);
+                card.dataset.name = categoryName;
+                card.dataset.desc = description;
+
+                // الأيقونة
+                const iconEl = document.createElement('i');
+                iconEl.className = `fas ${icon} category-icon`;
+
+                // العنوان
+                const title = document.createElement('h3');
+                title.textContent = categoryName;
+
+                // الوصف
+                const descEl = document.createElement('p');
+                descEl.className = 'category-desc';
+                descEl.textContent = description;
+
+                // عدد المنتجات
+                const countEl = document.createElement('span');
+                countEl.className = 'product-count';
+                countEl.innerHTML = `<i class="fas fa-box"></i> ${productCount} منتج`;
+
+                // ID
+                const idEl = document.createElement('span');
+                idEl.className = 'category-id';
+                idEl.textContent = `#${categoryId}`;
+
+                // Hint
+                const hintEl = document.createElement('div');
+                hintEl.className = 'click-hint';
+                hintEl.innerHTML = `<i class="fas fa-arrow-left"></i> اضغط للتصفح`;
+
+                card.appendChild(iconEl);
+                card.appendChild(title);
+                card.appendChild(descEl);
+                card.appendChild(countEl);
+                card.appendChild(idEl);
+                card.appendChild(hintEl);
+
+                // حدث النقر
+                card.addEventListener('click', function() {
+                    goToCategoryProducts(
+                        this.dataset.id,
+                        this.dataset.name,
+                        this.dataset.desc
+                    );
+                });
+
+                return card;
+            }
+
+            // ===== تحميل التصنيفات =====
+            async function loadCategories() {
+                try {
+                    // تحميل التصنيفات والمنتجات بالتوازي
                     const [catRes, prodRes] = await Promise.all([
                         supabase.from('Category').select('*'),
                         supabase.from('Product').select('Category_ID')
@@ -941,58 +674,19 @@
                         return;
                     }
 
-                    // بناء الكروت
-                    const cardsHtml = categories.map((item, index) => {
-                        const categoryName = safeToString(item.Category_Name) || 'بدون اسم';
-                        const description = safeToString(item.Description) || 'لا يوجد وصف';
-                        const categoryId = item.Category_ID ?? item.id ?? null;
+                    // بناء الشبكة
+                    const grid = document.createElement('div');
+                    grid.className = 'categories-grid';
 
-                        // تجاهل أي تصنيف بدون ID حقيقي
-                        if (categoryId === null) {
-                            console.warn('⚠️ تصنيف بدون ID:', item);
-                            return '';
-                        }
-
-                        const icon = getCategoryIcon(index);
-                        const productCount = productCounts[categoryId] || 0;
-
-                        return `
-                            <div class="category-card"
-                                 data-aos="zoom-in-up"
-                                 data-aos-delay="${Math.min(index * 50, 400)}"
-                                 data-id="${escapeHtml(String(categoryId))}"
-                                 data-name="${escapeHtml(categoryName)}"
-                                 data-desc="${escapeHtml(description)}"
-                                 style="animation-delay: ${index * 0.08}s">
-                                <i class="fas ${icon} category-icon"></i>
-                                <h3>${escapeHtml(categoryName)}</h3>
-                                <p class="category-desc">${escapeHtml(description)}</p>
-                                <span class="product-count">
-                                    <i class="fas fa-box"></i> ${productCount} منتج
-                                </span>
-                                <span class="category-id">#${escapeHtml(String(categoryId))}</span>
-                                <div class="click-hint">
-                                    <i class="fas fa-arrow-left"></i> اضغط للتصفح
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-
-                    categoriesContainer.innerHTML = `<div class="categories-grid">${cardsHtml}</div>`;
-
-                    // ربط الأحداث بطريقة آمنة (Event Delegation)
-                    categoriesContainer.addEventListener('click', (e) => {
-                        const card = e.target.closest('.category-card');
-                        if (!card) return;
-
-                        goToCategoryProducts(
-                            card.dataset.id,
-                            card.dataset.name,
-                            card.dataset.desc
-                        );
+                    categories.forEach((item, index) => {
+                        const card = createCategoryCard(item, index, productCounts);
+                        if (card) grid.appendChild(card);
                     });
 
-                    // تحديث AOS بعد إدراج العناصر
+                    categoriesContainer.innerHTML = '';
+                    categoriesContainer.appendChild(grid);
+
+                    // تحديث AOS
                     if (window.AOS && typeof AOS.refresh === 'function') {
                         AOS.refresh();
                     }
@@ -1009,6 +703,8 @@
             }
 
             loadCategories();
+
+            console.log('%c🏷️ Categories page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>

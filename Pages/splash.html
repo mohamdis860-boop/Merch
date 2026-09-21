@@ -6,6 +6,10 @@
     <title>متجرنا - أهلاً بك</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ✅ Shared Styles (مسار من Pages/) -->
+    <link rel="stylesheet" href="../shared/toast.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -185,7 +189,6 @@
             50% { transform: rotate(-8deg) scale(1.08); }
         }
 
-        /* حلقات دوّارة */
         .logo-ring {
             position: absolute;
             top: 50%;
@@ -327,7 +330,6 @@
             box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 107, 107, 0.15);
         }
 
-        /* أيقونة الخيار */
         .option-icon {
             width: 55px;
             height: 55px;
@@ -347,7 +349,6 @@
             transform: scale(1.12) rotate(-6deg);
         }
 
-        /* ألوان مختلفة لكل خيار */
         .option-card.login .option-icon {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
@@ -363,7 +364,6 @@
             box-shadow: 0 6px 20px rgba(0, 206, 201, 0.4);
         }
 
-        /* نص الخيار */
         .option-text {
             flex: 1;
             text-align: right;
@@ -392,7 +392,6 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
-        /* سهم الخيار */
         .option-arrow {
             font-size: 18px;
             color: rgba(255, 255, 255, 0.3);
@@ -633,15 +632,18 @@
         <i class="fas fa-code"></i> الإصدار 1.0.0
     </div>
 
+    <!-- ✅ Shared Scripts (مسار من Pages/) -->
+    <script src="../shared/config.js"></script>
+    <script src="../shared/toast.js"></script>
+
     <script>
         (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
-
             // ===== التحقق من الجلسة الحالية =====
             async function checkExistingSession() {
                 try {
-                    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    const supabase = window.getSupabase();
+                    if (!supabase) return;
+
                     const { data: { session } } = await supabase.auth.getSession();
 
                     if (session && session.user) {
@@ -693,18 +695,16 @@
                 `;
                 document.body.appendChild(banner);
 
-                // أنيميشن الدخول
                 setTimeout(() => {
                     banner.style.transform = 'translateX(-50%) translateY(0)';
                 }, 100);
 
-                // إخفاء تلقائي بعد 8 ثواني
                 setTimeout(() => {
                     banner.style.transform = 'translateX(-50%) translateY(-100px)';
                     setTimeout(() => banner.remove(), 500);
                 }, 8000);
 
-                // ✅ دالة الدخول السريع (بعد التعديل)
+                // ✅ مسار معدّل: من Pages/ نرجع للـ Root
                 window.continueAsUser = function() {
                     window.location.href = '../index.html';
                 };
@@ -716,20 +716,18 @@
                 localStorage.setItem('guestMode', 'true');
                 console.log('👤 تم تفعيل وضع الزائر');
 
-                // تأثير fade out
                 document.body.style.transition = 'opacity 0.4s ease';
                 document.body.style.opacity = '0';
 
-                // ✅ التعديل هنا (بعد التعديل)
+                // ✅ مسار معدّل: من Pages/ نرجع للـ Root
                 setTimeout(() => {
                     window.location.href = '../index.html';
                 }, 400);
             };
 
-            // تشغيل التحقق عند فتح الصفحة
+            // تشغيل التحقق
             checkExistingSession();
 
-            // log ترحيبي
             console.log('%c🛍️ متجرنا', 'color: #ff6b6b; font-size: 24px; font-weight: bold;');
             console.log('%cأهلاً بك! اختر طريقة الدخول', 'color: #ffd93d; font-size: 14px;');
 

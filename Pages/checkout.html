@@ -6,6 +6,11 @@
     <title>إتمام الطلب - متجرنا</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ✅ Shared Styles (مسار من Pages/) -->
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -84,75 +89,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* Navbar */
-        .navbar {
-            position: relative;
-            z-index: 10;
-            background: rgba(10, 10, 26, 0.55);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            animation: slideDown 0.7s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .navbar .logo {
-            font-size: 26px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #fff;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-
-        .navbar .logo:hover { transform: scale(1.05); }
-
-        .navbar .logo i {
-            color: var(--primary);
-            font-size: 30px;
-            animation: logoPulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
-        }
-
-        .navbar .nav-links {
-            display: flex;
-            gap: 22px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .navbar .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: 0.35s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar .nav-links a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
         /* Main */
         .main-content {
             position: relative;
@@ -182,7 +118,7 @@
 
         .back-btn:hover {
             color: var(--primary);
-            transform: translateX(-6px);
+            transform: translateX(6px);
         }
 
         /* Page Header */
@@ -319,7 +255,7 @@
 
         .form-group label i {
             color: var(--accent);
-            margin-left: 4px;
+            margin-right: 4px;
         }
 
         .form-input {
@@ -651,54 +587,6 @@
             box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
         }
 
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px 26px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            z-index: 1000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.success { border-color: rgba(107, 203, 119, 0.4); }
-        .toast.success i { color: var(--success); }
-        .toast.error { border-color: rgba(255, 71, 87, 0.4); }
-        .toast.error i { color: var(--error); }
-        .toast.info { border-color: rgba(108, 92, 231, 0.4); }
-        .toast.info i { color: var(--accent); }
-
-        .toast i {
-            font-size: 20px;
-            animation: toastIconPop 0.5s ease-out;
-        }
-
-        @keyframes toastIconPop {
-            0% { transform: scale(0) rotate(-90deg); }
-            70% { transform: scale(1.3) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
         /* Responsive */
         @media (max-width: 900px) {
             .checkout-layout {
@@ -710,14 +598,9 @@
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 15px 20px; }
-            .navbar .logo { font-size: 22px; }
-            .navbar .nav-links { gap: 12px; }
-            .navbar .nav-links a { font-size: 13px; }
             .main-content { padding: 20px 15px 40px; }
             .page-header h1 { font-size: 26px; }
             .checkout-card { padding: 20px; }
-            .toast { bottom: 20px; right: 20px; left: 20px; }
         }
     </style>
 </head>
@@ -731,18 +614,7 @@
         <div class="blob"></div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="../index.html" class="logo">
-            <i class="fas fa-store"></i>
-            متجرنا
-        </a>
-        <div class="nav-links">
-            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
-            <a href="products.html"><i class="fas fa-box"></i> المنتجات</a>
-            <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
-        </div>
-    </nav>
+    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
 
     <!-- Main -->
     <div class="main-content">
@@ -894,55 +766,32 @@
 
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i class="fas fa-info-circle" id="toastIcon"></i>
-        <span id="toastMessage">رسالة</span>
-    </div>
+    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/navbar.js"></script>
 
     <script>
         (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';            const STORAGE_BUCKET = 'products';
-            const STORAGE_URL = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/`;
-            const SHIPPING_FEE = 30;
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
+            }
 
-            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const SHIPPING_FEE = 30;
 
             let cart = [];
             let currentUser = null;
             let currentCustomer = null;
             let selectedPayment = 'cod';
-            let toastTimeout;
-
-            // Toast
-            function showToast(message, type = 'info') {
-                const toast = document.getElementById('toast');
-                const toastMessage = document.getElementById('toastMessage');
-                const toastIcon = document.getElementById('toastIcon');
-
-                toastMessage.textContent = message;
-                toast.className = 'toast show ' + type;
-
-                if (type === 'success') toastIcon.className = 'fas fa-check-circle';
-                else if (type === 'error') toastIcon.className = 'fas fa-exclamation-circle';
-                else toastIcon.className = 'fas fa-info-circle';
-
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
-            }
 
             function escapeHtml(text) {
                 if (!text) return '';
                 const div = document.createElement('div');
                 div.textContent = text;
                 return div.innerHTML;
-            }
-
-            function getImageUrl(imagePath) {
-                if (!imagePath || imagePath.trim() === '') return null;
-                if (imagePath.startsWith('http')) return imagePath;
-                return STORAGE_URL + imagePath;
             }
 
             function formatPrice(price) {
@@ -954,7 +803,7 @@
                 // 1. Check auth
                 const { data: { session } } = await supabase.auth.getSession();
                 if (!session) {
-                    showToast('❌ لازم تسجل دخول الأول', 'error');
+                    window.showToast('❌ لازم تسجل دخول الأول', 'error');
                     setTimeout(() => {
                         window.location.href = '../Auth/login.html';
                     }, 1500);
@@ -977,8 +826,8 @@
                     City: currentUser.user_metadata?.city || ''
                 };
 
-                // 3. Load cart
-                cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // 3. Load cart (✅ من shared/cart.js)
+                cart = window.getCart();
 
                 if (cart.length === 0) {
                     document.getElementById('emptyCart').style.display = 'block';
@@ -1010,14 +859,13 @@
                 cart.forEach(item => {
                     const itemTotal = item.price * item.quantity;
                     subtotal += itemTotal;
-                    const imgUrl = getImageUrl(item.image);
+                    const imgUrl = window.getImageUrl(item.image);
 
                     html += `
                         <div class="cart-item">
                             <div class="cart-item-image">
-                                ${imgUrl ? 
-                                    `<img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(item.name)}" 
-                                          onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image no-img\\'></i>'">` :
+                                ${imgUrl ?
+                                    `<img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(item.name)}">` :
                                     `<i class="fas fa-image no-img"></i>`
                                 }
                             </div>
@@ -1065,15 +913,14 @@
                 const phone = document.getElementById('phone').value.trim();
                 const address = document.getElementById('address').value.trim();
                 const city = document.getElementById('city').value.trim();
-                const notes = document.getElementById('notes').value.trim();
 
                 if (!fullName || !phone || !address || !city) {
-                    showToast('❌ املأ كل الحقول المطلوبة', 'error');
+                    window.showToast('❌ املأ كل الحقول المطلوبة', 'error');
                     return;
                 }
 
                 if (!/^01[0-2,5]{1}[0-9]{8}$/.test(phone)) {
-                    showToast('❌ رقم الموبايل غير صحيح', 'error');
+                    window.showToast('❌ رقم الموبايل غير صحيح', 'error');
                     return;
                 }
 
@@ -1082,26 +929,20 @@
                 btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري تأكيد الطلب...';
 
                 try {
-                    // Calculate totals
                     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
                     const grandTotal = subtotal + SHIPPING_FEE;
 
-                    // Build shipping address string
                     const shippingAddress = `${fullName} | ${phone} | ${address} | ${city}`;
 
-                    // 1) Create Order
                     const orderPayload = {
                         Customer_ID: currentUser.id,
                         Total_Amount: grandTotal,
                         Status: 'pending',
                         Shipping_Address: shippingAddress,
                         Payment_Method: selectedPayment,
-                        Payment_Status: selectedPayment === 'cod' ? 'pending' : 'pending',
+                        Payment_Status: 'pending',
                         Order_Date: new Date().toISOString()
                     };
-
-                    // Add notes if column exists (we'll try, but won't fail if not)
-                    // orderPayload.Notes = notes; // عمود Notes ممكن مش موجود
 
                     console.log('📦 Creating order...', orderPayload);
 
@@ -1117,7 +958,7 @@
 
                     const orderId = orderData.Order_ID || orderData.order_id;
 
-                    // 2) Create Order_Items
+                    // Create Order_Items
                     const itemsPayload = cart.map(item => ({
                         Order_ID: orderId,
                         Product_ID: parseInt(item.id),
@@ -1136,21 +977,18 @@
 
                     console.log('✅ Order items created');
 
-                    // 3) Clear cart
-                    localStorage.removeItem('cart');
-                    window.dispatchEvent(new Event('storage'));
+                    // ✅ امسح السلة من shared/cart.js
+                    window.clearCartItems();
 
-                    // 4) Success
-                    showToast('✅ تم تأكيد طلبك بنجاح!', 'success');
+                    window.showToast('✅ تم تأكيد طلبك بنجاح!', 'success');
 
-                    // 5) Redirect to profile (orders tab)
                     setTimeout(() => {
                         window.location.href = '../Auth/profile.html?tab=orders&success=1&order=' + orderId;
                     }, 1500);
 
                 } catch (error) {
                     console.error('❌ Order error:', error);
-                    showToast('❌ ' + (error.message || 'حصل خطأ في تأكيد الطلب'), 'error');
+                    window.showToast('❌ ' + (error.message || 'حصل خطأ في تأكيد الطلب'), 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الطلب';
                 }
@@ -1158,7 +996,7 @@
 
             init();
 
-            console.log('%c💳 Checkout Page', 'color: #6bcb77; font-size: 20px; font-weight: bold;');
+            console.log('%c💳 Checkout Page loaded', 'color: #6bcb77; font-size: 18px; font-weight: bold;');
 
         })();
     </script>

@@ -7,6 +7,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    
+    <!-- ✅ Shared Styles (من Root، مفيش ../) -->
+    <link rel="stylesheet" href="shared/navbar.css">
+    <link rel="stylesheet" href="shared/toast.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -115,177 +120,6 @@
             25% { transform: translate(60px, -50px) scale(1.15); }
             50% { transform: translate(-40px, 40px) scale(0.9); }
             75% { transform: translate(30px, -30px) scale(1.08); }
-        }
-
-        /* ===== Navbar ===== */
-        .navbar {
-            position: relative;
-            z-index: 10;
-            background: rgba(10, 10, 26, 0.55);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            animation: slideDown 0.7s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .navbar .logo {
-            font-size: 28px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #fff;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-
-        .navbar .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .navbar .logo i {
-            color: var(--primary);
-            font-size: 32px;
-            animation: logoPulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 18px rgba(255, 107, 107, 0.9)); }
-        }
-
-        .navbar .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .navbar .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: 0.35s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            padding: 4px 0;
-        }
-
-        .navbar .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.35s ease;
-            border-radius: 2px;
-        }
-
-        .navbar .nav-links a:hover::after,
-        .navbar .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .navbar .nav-links a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .navbar .nav-links a.active {
-            color: var(--primary);
-        }
-
-        /* ===== عداد السلة ===== */
-        .cart-badge {
-            position: relative;
-        }
-
-        .cart-badge .badge-count {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            background: linear-gradient(135deg, var(--primary), #ee5a24);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.5);
-            animation: badgePop 0.4s ease-out;
-        }
-
-        @keyframes badgePop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        /* ===== زر البروفايل ===== */
-        .profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 16px 6px 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            text-decoration: none;
-            color: white !important;
-            transition: 0.4s;
-            font-weight: 600;
-        }
-
-        .profile-btn:hover {
-            background: rgba(108, 92, 231, 0.2);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
-        }
-
-        .profile-btn::after {
-            display: none !important;
-        }
-
-        .profile-btn .profile-avatar-mini {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 800;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .profile-btn .profile-name-nav {
-            font-size: 14px;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         /* ===== Main Content ===== */
@@ -563,7 +397,7 @@
             flex-wrap: wrap;
         }
 
-        .section-title i {
+        .section-title > i {
             color: var(--primary);
             animation: boxBounce 2.5s ease-in-out infinite;
         }
@@ -694,7 +528,7 @@
         .product-card h4 i {
             color: var(--primary);
             font-size: 14px;
-            margin-left: 8px;
+            margin-right: 8px;
             transition: 0.4s;
         }
 
@@ -813,54 +647,8 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Toast ===== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 18px 28px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            z-index: 100;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast i {
-            color: #6bcb77;
-            font-size: 22px;
-        }
-
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            .navbar .logo {
-                font-size: 22px;
-            }
-            .navbar .nav-links {
-                gap: 12px;
-            }
-            .navbar .nav-links a {
-                font-size: 13px;
-            }
             .hero-section h1 {
                 font-size: 36px;
             }
@@ -881,16 +669,6 @@
             }
             .product-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-            .toast {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                padding: 14px 20px;
-                font-size: 14px;
-            }
-            .profile-btn .profile-name-nav {
-                display: none;
             }
         }
 
@@ -922,27 +700,7 @@
         <div class="blob"></div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <i class="fas fa-store"></i>
-            متجرنا
-        </a>
-        <div class="nav-links">
-            <a href="index.html" class="active"><i class="fas fa-home"></i> الرئيسية</a>
-            <a href="Pages/products.html"><i class="fas fa-box"></i> المنتجات</a>
-            <a href="Pages/categories.html"><i class="fas fa-tags"></i> التصنيفات</a>
-            <a href="Pages/about.html"><i class="fas fa-info-circle"></i> تعرف علينا</a>
-            <a href="Pages/cart.html" class="cart-badge">
-                <i class="fas fa-shopping-cart"></i> السلة
-                <span class="badge-count" id="cartBadge">0</span>
-            </a>
-            <a href="Auth/profile.html" class="profile-btn" id="profileBtn" style="display: none;">
-                <span class="profile-avatar-mini" id="profileAvatarMini">م</span>
-                <span class="profile-name-nav" id="profileNameNav">حسابي</span>
-            </a>
-        </div>
-    </nav>
+    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
 
     <!-- Main Content -->
     <div class="main-content">
@@ -1033,12 +791,6 @@
         </p>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">تمت الإضافة</span>
-    </div>
-
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -1050,69 +802,26 @@
         });
     </script>
 
+    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
+    <script src="shared/config.js"></script>
+    <script src="shared/cart.js"></script>
+    <script src="shared/toast.js"></script>
+    <script src="shared/navbar.js"></script>
+
     <script>
         (function() {
-            const SUPABASE_URL = 'https://cqdgqawjxofbwzcoliut.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZGdxYXdqeG9mYnd6Y29saXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjI2NDgsImV4cCI6MjA3OTYzODY0OH0.0HM9teLT_16Cdx_SwQlNj7QguBcVcdunhJ1kcIPq19s';
-
-            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const supabase = window.getSupabase();
+            if (!supabase) {
+                console.warn('⚠️ Supabase not available');
+                return;
+            }
 
             const productsContainer = document.getElementById('productsContainer');
             const productCountEl = document.getElementById('productCount');
             const categoryCountEl = document.getElementById('categoryCount');
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const cartBadge = document.getElementById('cartBadge');
-            const profileBtn = document.getElementById('profileBtn');
-            const profileAvatarMini = document.getElementById('profileAvatarMini');
-            const profileNameNav = document.getElementById('profileNameNav');
             const greeting = document.getElementById('greeting');
-            let toastTimeout;
 
-            // ===== إدارة السلة =====
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            function updateCartBadge() {
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                if (cartBadge) {
-                    cartBadge.textContent = totalItems;
-                    cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-                }
-            }
-
-            function showToast(message) {
-                toastMessage.textContent = message;
-                toast.classList.add('show');
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
-
-            function saveCart() {
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartBadge();
-                window.dispatchEvent(new Event('storage'));
-            }
-
-            window.addToCart = function(productId, productName, price, imageUrl) {
-                const existing = cart.find(item => item.id === productId);
-                if (existing) {
-                    existing.quantity += 1;
-                    showToast(`✅ تم زيادة كمية "${productName}"`);
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productName,
-                        price: price,
-                        image: imageUrl || null,
-                        quantity: 1
-                    });
-                    showToast(`✅ تم إضافة "${productName}" إلى السلة`);
-                }
-                saveCart();
-            };
-
+            // ===== أدوات مساعدة =====
             function escapeHtml(text) {
                 if (!text) return '';
                 const div = document.createElement('div');
@@ -1120,41 +829,20 @@
                 return div.innerHTML;
             }
 
-            // ===== التحقق من تسجيل الدخول + عرض البروفايل =====
-            async function checkAuth() {
+            // ===== تحديث الـ Greeting لو المستخدم مسجل =====
+            async function updateGreeting() {
                 try {
                     const { data: { session } } = await supabase.auth.getSession();
-
                     if (session && session.user) {
                         const userName = session.user.user_metadata?.name || session.user.email.split('@')[0];
-                        const userInitial = userName.charAt(0).toUpperCase();
-
-                        profileAvatarMini.textContent = userInitial;
-                        profileNameNav.textContent = userName.split(' ')[0];
-                        profileBtn.style.display = 'flex';
-
-                        greeting.innerHTML = `<i class="fas fa-hand-peace"></i> أهلاً بك، ${userName}`;
-
-                        console.log('✅ User logged in:', userName);
-                    } else {
-                        console.log('👤 No user session');
-                        profileBtn.style.display = 'none';
-
-                        const loginBtn = document.createElement('a');
-                        loginBtn.href = 'Auth/login.html';
-                        loginBtn.className = 'profile-btn';
-                        loginBtn.style.display = 'flex';
-                        loginBtn.innerHTML = `
-                            <i class="fas fa-sign-in-alt" style="color: var(--primary); font-size: 16px;"></i>
-                            <span class="profile-name-nav">دخول</span>
-                        `;
-                        profileBtn.parentElement.appendChild(loginBtn);
+                        greeting.innerHTML = `<i class="fas fa-hand-peace"></i> أهلاً بك، ${escapeHtml(userName)}`;
                     }
                 } catch (err) {
-                    console.warn('⚠️ Auth check failed:', err);
+                    console.warn('⚠️ Greeting update failed:', err);
                 }
             }
 
+            // ===== تحميل البيانات =====
             async function loadData() {
                 try {
                     const { data: products, error: productsError } = await supabase
@@ -1179,8 +867,6 @@
                         categoryCountEl.textContent = categories.length;
                     }
 
-                    updateCartBadge();
-
                     if (!products || products.length === 0) {
                         productsContainer.innerHTML = `
                             <div style="text-align:center;padding:40px 0;color:rgba(255,255,255,0.4);">
@@ -1191,62 +877,73 @@
                         return;
                     }
 
-                    let html = `<div class="product-grid">`;
+                    // بناء المنتجات بـ DOM آمن
+                    const grid = document.createElement('div');
+                    grid.className = 'product-grid';
                     const icons = ['fa-tag', 'fa-box', 'fa-cube', 'fa-gem', 'fa-star', 'fa-circle', 'fa-square', 'fa-crown'];
 
                     products.forEach((item, index) => {
-                        const productId = item.Product_ID || '—';
-                        const productName = item.Product_Name || 'بدون اسم';
-                        const price = item.Selling_Price || 0;
+                        const productId = item.Product_ID ?? '—';
+                        const productName = item.Product_Name ?? 'بدون اسم';
+                        const price = parseFloat(item.Selling_Price) || 0;
                         const icon = icons[index % icons.length];
                         const imageUrl = item.Image_URL || '';
 
-                        html += `
-                                <div class="product-card">
-                                <div class="product-id-badge">
-                                    <i class="fas fa-barcode"></i> ${escapeHtml(String(productId))}
-                                </div>
-                                <h4>
-                                    <i class="fas ${icon}"></i>
-                                    ${escapeHtml(String(productName))}
-                                </h4>
-                                <div class="price">
-                                    <i class="fas fa-tag"></i>
-                                    ${price > 0 ? Number(price).toLocaleString('en-US') + ' ج.م' : '—'}
-                                </div>
-                                <button class="add-to-cart-btn" onclick="addToCart('${escapeHtml(String(productId))}', '${escapeHtml(String(productName))}', ${price}, '${escapeHtml(imageUrl)}')">
-                                    <i class="fas fa-cart-plus"></i> أضف للسلة
-                                </button>
-                            </div>
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+
+                        const badge = document.createElement('div');
+                        badge.className = 'product-id-badge';
+                        badge.innerHTML = `<i class="fas fa-barcode"></i> ${escapeHtml(String(productId))}`;
+
+                        const title = document.createElement('h4');
+                        title.innerHTML = `<i class="fas ${icon}"></i> ${escapeHtml(String(productName))}`;
+
+                        const priceEl = document.createElement('div');
+                        priceEl.className = 'price';
+                        priceEl.innerHTML = `
+                            <i class="fas fa-tag"></i>
+                            ${price > 0 ? Number(price).toLocaleString('en-US') + ' ج.م' : '—'}
                         `;
+
+                        const btn = document.createElement('button');
+                        btn.className = 'add-to-cart-btn';
+                        btn.innerHTML = `<i class="fas fa-cart-plus"></i> أضف للسلة`;
+                        btn.addEventListener('click', function() {
+                            // ✅ استخدم الدالة الموحّدة من shared/cart.js
+                            window.addToCartItem(productId, productName, price, imageUrl);
+                        });
+
+                        card.appendChild(badge);
+                        card.appendChild(title);
+                        card.appendChild(priceEl);
+                        card.appendChild(btn);
+                        grid.appendChild(card);
                     });
 
-                    html += `</div>`;
-                    productsContainer.innerHTML = html;
+                    productsContainer.innerHTML = '';
+                    productsContainer.appendChild(grid);
 
-                    // إعادة تفعيل AOS للعناصر الجديدة
-                    setTimeout(() => AOS.refresh(), 100);
+                    if (window.AOS && typeof AOS.refresh === 'function') {
+                        AOS.refresh();
+                    }
 
                 } catch (error) {
                     console.error('خطأ:', error);
                     productsContainer.innerHTML = `
                         <div style="text-align:center;padding:40px 0;color:#ff6b6b;">
                             <i class="fas fa-exclamation-circle" style="font-size:40px;display:block;margin-bottom:15px;"></i>
-                            ${error.message}
+                            ${escapeHtml(error.message)}
                         </div>
                     `;
                 }
             }
 
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'cart') {
-                    cart = JSON.parse(e.newValue) || [];
-                    updateCartBadge();
-                }
-            });
-
-            checkAuth();
+            // ===== تشغيل =====
+            updateGreeting();
             loadData();
+
+            console.log('%c🏠 Home page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>
