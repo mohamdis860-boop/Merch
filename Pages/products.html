@@ -907,8 +907,19 @@
             searchInput.addEventListener('input', filterAndSort);
             sortFilter.addEventListener('change', filterAndSort);
 
+                        // ===== قراءة q من URL =====
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialQuery = urlParams.get('q');
+            if (initialQuery && searchInput) {
+                searchInput.value = initialQuery;
+            }
+
             // ===== تشغيل =====
-            loadProducts();
+            loadProducts().then(() => {
+                if (initialQuery) {
+                    filterAndSort();
+                }
+            });
 
             console.log('%c🛍️ Products page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 

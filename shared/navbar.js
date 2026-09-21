@@ -39,6 +39,18 @@
                 <a href="${BASE}Pages/about.html" data-nav="about">
                     <i class="fas fa-info-circle"></i> <span class="nav-text">تعرف علينا</span>
                 </a>
+
+                <!-- ✅ مربع البحث -->
+                <form class="nav-search" id="navSearchForm" role="search" autocomplete="off">
+                    <i class="fas fa-search"></i>
+                    <input 
+                        type="text" 
+                        id="navSearchInput" 
+                        placeholder="ابحث عن منتج..." 
+                        autocomplete="off"
+                    >
+                </form>
+
                 <a href="${BASE}Pages/cart.html" class="cart-badge" data-nav="cart">
                     <i class="fas fa-shopping-cart"></i> <span class="nav-text">السلة</span>
                     <span class="badge-count" id="cartBadge" style="display: none;">0</span>
@@ -161,6 +173,36 @@
         profileBtn.parentElement.appendChild(loginBtn);
     }
 
+    // ===== منطق البحث =====
+    function setupNavSearch() {
+        const form = document.getElementById('navSearchForm');
+        const input = document.getElementById('navSearchInput');
+
+        if (!form || !input) return;
+
+        // ✅ املأ الـ input لو فيه q في URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentQ = urlParams.get('q');
+        if (currentQ) {
+            input.value = currentQ;
+        }
+
+        // ✅ امنع الـ submit الافتراضي + روّح لصفحة المنتجات
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = input.value.trim();
+
+            if (!query) {
+                // لو فاضي، روح لصفحة المنتجات عادي
+                window.location.href = `${BASE}Pages/products.html`;
+                return;
+            }
+
+            // روح لصفحة المنتجات مع كلمة البحث
+            window.location.href = `${BASE}Pages/products.html?q=${encodeURIComponent(query)}`;
+        });
+    }
+
     // ===== التهيئة =====
     function init() {
         buildNavbar();
@@ -175,6 +217,7 @@
         }
 
         checkAuth();
+        setupNavSearch();  // ✅ البحث
 
         // استمع لتحديثات السلة من أي مكان
         window.addEventListener('cartUpdated', updateCartBadge);
