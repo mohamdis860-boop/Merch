@@ -1138,14 +1138,17 @@
                 const strId = String(productId);
 
                 if (wishlist.includes(strId)) {
-                    wishlist = wishlist.filter(id => id !== strId);
-                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                    return false;
-                } else {
-                    wishlist.push(strId);
-                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                    return true;
-                }
+                wishlist = wishlist.filter(id => id !== strId);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                return false;
+                }  
+                else {
+                wishlist.push(strId);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                return true;
+}
             }
 
             // ===== تحميل بيانات المستخدم =====

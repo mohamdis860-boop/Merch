@@ -1,5 +1,5 @@
 /* ==================== shared/navbar.js ==================== */
-/* بناء الـ Navbar + السلة + Auth — تلقائياً في كل الصفحات */
+/* بناء الـ Navbar + السلة + المفضلة + Auth — تلقائياً في كل الصفحات */
 
 (function() {
     'use strict';
@@ -51,10 +51,19 @@
                     >
                 </form>
 
+                <!-- ✅ المفضلة -->
+                <a href="${BASE}Pages/wishlist.html" class="wishlist-badge" data-nav="wishlist" title="المفضلة">
+                    <i class="fas fa-heart"></i> <span class="nav-text">المفضلة</span>
+                    <span class="badge-count" id="wishlistBadge" style="display: none;">0</span>
+                </a>
+
+                <!-- ✅ السلة -->
                 <a href="${BASE}Pages/cart.html" class="cart-badge" data-nav="cart">
                     <i class="fas fa-shopping-cart"></i> <span class="nav-text">السلة</span>
                     <span class="badge-count" id="cartBadge" style="display: none;">0</span>
                 </a>
+
+                <!-- ✅ البروفايل -->
                 <a href="${BASE}Auth/profile.html" class="profile-btn" id="profileBtn" style="display: none;">
                     <span class="profile-avatar-mini" id="profileAvatarMini">م</span>
                     <span class="profile-name-nav" id="profileNameNav">حسابي</span>
@@ -79,6 +88,7 @@
             'about.html': 'about',
             'cart.html': 'cart',
             'checkout.html': 'cart',
+            'wishlist.html': 'wishlist',
             'product-details.html': 'products'
         };
 
@@ -89,7 +99,7 @@
         }
     }
 
-    // ===== عدّاد السلة (يستخدم getCart) =====
+    // ===== عدّاد السلة =====
     function updateCartBadge() {
         const cartBadge = document.getElementById('cartBadge');
         if (!cartBadge) return;
@@ -107,6 +117,24 @@
 
     window.updateCartBadge = updateCartBadge;
 
+    // ===== ✅ عدّاد المفضلة =====
+    function updateWishlistBadge() {
+        const wishlistBadge = document.getElementById('wishlistBadge');
+        if (!wishlistBadge) return;
+
+        try {
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            const count = wishlist.length;
+            wishlistBadge.textContent = count;
+            wishlistBadge.style.display = count > 0 ? 'flex' : 'none';
+        } catch (e) {
+            console.warn('⚠️ فشل قراءة المفضلة:', e);
+            wishlistBadge.style.display = 'none';
+        }
+    }
+
+    window.updateWishlistBadge = updateWishlistBadge;
+
     // ===== التحقق من تسجيل الدخول =====
     async function checkAuth() {
         const profileBtn = document.getElementById('profileBtn');
@@ -118,6 +146,7 @@
         if (!window.supabase || !window.getSupabase) {
             addLoginButton();
             updateCartBadge();
+            updateWishlistBadge();
             return;
         }
 
@@ -135,24 +164,25 @@
 
                 window.currentUser = session.user;
 
-                // ✅ دمج سلة الزائر مع المستخدم
                 if (window.mergeGuestCart) {
                     window.mergeGuestCart(session.user.id);
                 }
 
-                // ✅ تحديث العدّاد بعد الدمج
                 updateCartBadge();
+                updateWishlistBadge();
 
             } else {
                 window.currentUser = null;
                 profileBtn.style.display = 'none';
                 addLoginButton();
                 updateCartBadge();
+                updateWishlistBadge();
             }
         } catch (err) {
             console.warn('⚠️ Auth check failed:', err);
             addLoginButton();
             updateCartBadge();
+            updateWishlistBadge();
         }
     }
 
@@ -180,25 +210,21 @@
 
         if (!form || !input) return;
 
-        // ✅ املأ الـ input لو فيه q في URL
         const urlParams = new URLSearchParams(window.location.search);
         const currentQ = urlParams.get('q');
         if (currentQ) {
             input.value = currentQ;
         }
 
-        // ✅ امنع الـ submit الافتراضي + روّح لصفحة المنتجات
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const query = input.value.trim();
 
             if (!query) {
-                // لو فاضي، روح لصفحة المنتجات عادي
                 window.location.href = `${BASE}Pages/products.html`;
                 return;
             }
 
-            // روح لصفحة المنتجات مع كلمة البحث
             window.location.href = `${BASE}Pages/products.html?q=${encodeURIComponent(query)}`;
         });
     }
@@ -208,24 +234,31 @@
         buildNavbar();
         setActiveLink();
 
-        // استنى cart.js يتحمّل الأول
         if (window.getCart) {
             updateCartBadge();
         } else {
-            // لو مش متحمّل، استنى 100ms وجرب تاني
             setTimeout(updateCartBadge, 100);
         }
 
+        updateWishlistBadge();
         checkAuth();
-        setupNavSearch();  // ✅ البحث
+        setupNavSearch();
 
-        // استمع لتحديثات السلة من أي مكان
+        // استمع لتحديثات السلة
         window.addEventListener('cartUpdated', updateCartBadge);
+
+        // ✅ استمع لتحديثات المفضلة
         window.addEventListener('storage', function(e) {
             if (e.key && e.key.startsWith('cart')) {
                 updateCartBadge();
             }
+            if (e.key === 'wishlist') {
+                updateWishlistBadge();
+            }
         });
+
+        // ✅ استمع لحدث مخصص للمفضلة (لما تتغير من نفس التاب)
+        window.addEventListener('wishlistUpdated', updateWishlistBadge);
     }
 
     if (document.readyState === 'loading') {

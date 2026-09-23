@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجرنا - الرئيسية</title>
+    
+    <!-- ===== PWA & Favicons ===== -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="متجرنا">
+    
+    <!-- ===== Libraries ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     
-    <!-- ✅ Shared Styles (من Root، مفيش ../) -->
+    <!-- ===== Shared Styles (من Root، مفيش ../) ===== -->
     <link rel="stylesheet" href="shared/navbar.css">
     <link rel="stylesheet" href="shared/toast.css">
     
@@ -650,43 +662,20 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 36px;
-            }
-            .hero-section .subtitle {
-                font-size: 18px;
-            }
-            .hero-stats {
-                gap: 30px;
-            }
-            .hero-stats .stat .number {
-                font-size: 30px;
-            }
-            .main-content {
-                padding: 30px 15px;
-            }
-            .cards-section {
-                grid-template-columns: 1fr 1fr;
-            }
-            .product-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .hero-section h1 { font-size: 36px; }
+            .hero-section .subtitle { font-size: 18px; }
+            .hero-stats { gap: 30px; }
+            .hero-stats .stat .number { font-size: 30px; }
+            .main-content { padding: 30px 15px; }
+            .cards-section { grid-template-columns: 1fr 1fr; }
+            .product-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 500px) {
-            .cards-section {
-                grid-template-columns: 1fr;
-            }
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-buttons .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .hero-section h1 {
-                font-size: 28px;
-            }
+            .cards-section { grid-template-columns: 1fr; }
+            .product-grid { grid-template-columns: 1fr; }
+            .hero-buttons .btn { width: 100%; justify-content: center; }
+            .hero-section h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -809,6 +798,7 @@
     <script src="shared/toast.js"></script>
     <script src="shared/navbar.js"></script>
 
+    <!-- ===== Page Scripts ===== -->
     <script>
         (function() {
             const supabase = window.getSupabase();
@@ -860,13 +850,8 @@
 
                     if (categoriesError) throw new Error(categoriesError.message);
 
-                    if (products) {
-                        productCountEl.textContent = products.length;
-                    }
-
-                    if (categories) {
-                        categoryCountEl.textContent = categories.length;
-                    }
+                    if (products) productCountEl.textContent = products.length;
+                    if (categories) categoryCountEl.textContent = categories.length;
 
                     if (!products || products.length === 0) {
                         productsContainer.innerHTML = `
@@ -911,7 +896,6 @@
                         btn.className = 'add-to-cart-btn';
                         btn.innerHTML = `<i class="fas fa-cart-plus"></i> أضف للسلة`;
                         btn.addEventListener('click', function() {
-                            // ✅ استخدم الدالة الموحّدة من shared/cart.js
                             window.addToCartItem(productId, productName, price, imageUrl);
                         });
 
@@ -947,6 +931,21 @@
             console.log('%c🏠 Home page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
+    </script>
+
+    <!-- ✅ Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.warn('⚠️ Service Worker registration failed:', error);
+                    });
+            });
+        }
     </script>
 
 </body>

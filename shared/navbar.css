@@ -311,3 +311,45 @@
         gap: 15px;
     }
 }
+    /* ===== عداد المفضلة ===== */
+.navbar .wishlist-badge {
+    position: relative;
+}
+
+.navbar .wishlist-badge .badge-count {
+    position: absolute;
+    top: -8px;
+    left: -12px;
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(253, 121, 168, 0.5);
+    animation: navbarBadgePop 0.4s ease-out;
+    pointer-events: none;
+}
+
+/* الأيقونة تبقى حمرا */
+.navbar .wishlist-badge i.fa-heart {
+    color: rgba(253, 121, 168, 0.8);
+}
+
+.navbar .wishlist-badge:hover i.fa-heart {
+    color: #fd79a8;
+}
+
+.navbar .wishlist-badge.active i.fa-heart {
+    color: #fd79a8;
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
