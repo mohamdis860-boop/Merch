@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     
-    <!-- ✅ Shared Styles (مسار من Pages/) -->
+    <!-- ✅ Shared Styles -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/skeleton.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
@@ -46,7 +47,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Background ===== */
         .bg-animation {
             position: fixed;
             inset: 0;
@@ -101,7 +101,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main Content ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -127,25 +126,36 @@
             transform: translateX(6px);
         }
 
-        /* ===== Loading ===== */
-        .loading-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* ===== Error State ===== */
+        .error-state {
+            text-align: center;
             padding: 100px 20px;
-            gap: 20px;
-            color: rgba(255, 255, 255, 0.5);
         }
 
-        .loading-screen i {
-            font-size: 45px;
-            color: var(--primary);
-            animation: spin 1s linear infinite;
-            filter: drop-shadow(0 0 15px rgba(255, 107, 107, 0.6));
+        .error-state i {
+            font-size: 80px;
+            color: var(--error);
+            margin-bottom: 20px;
+            display: block;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-state h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: var(--error);
+        }
+
+        .error-state a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+        }
 
         /* ===== Product Layout ===== */
         .product-layout {
@@ -155,7 +165,6 @@
             margin-bottom: 60px;
         }
 
-        /* Image */
         .product-image-box {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(14px);
@@ -192,7 +201,6 @@
             z-index: 1;
         }
 
-        /* ===== Swiper Gallery ===== */
         .product-swiper {
             width: 100%;
             height: 100%;
@@ -327,7 +335,6 @@
             font-size: 16px;
         }
 
-        /* Meta Info */
         .product-meta {
             display: flex;
             flex-wrap: wrap;
@@ -370,7 +377,6 @@
 
         .meta-badge.unavailable i { color: var(--error); }
 
-        /* Price */
         .price-box {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -397,7 +403,6 @@
             text-shadow: 0 0 20px rgba(255, 217, 61, 0.5);
         }
 
-        /* Description */
         .description-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -422,7 +427,6 @@
             white-space: pre-wrap;
         }
 
-        /* Quantity + Buttons */
         .actions-row {
             display: flex;
             align-items: center;
@@ -826,37 +830,6 @@
             color: var(--secondary);
         }
 
-        /* Error State */
-        .error-state {
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .error-state i {
-            font-size: 80px;
-            color: var(--error);
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .error-state h2 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: var(--error);
-        }
-
-        .error-state a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-        }
-
         /* Footer */
         .footer {
             position: relative;
@@ -910,7 +883,7 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
+    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
 
     <!-- Main Content -->
     <div class="main-content">
@@ -920,10 +893,38 @@
             العودة للمنتجات
         </a>
 
-        <!-- Loading -->
-        <div class="loading-screen" id="loadingScreen">
-            <i class="fas fa-circle-notch"></i>
-            <p>جاري تحميل المنتج...</p>
+        <!-- ===== Skeleton Loading ===== -->
+        <div id="skeletonContainer">
+            <div class="skeleton-details-layout">
+                <div class="skeleton skeleton-details-image"></div>
+                <div class="skeleton-details-info">
+                    <div class="skeleton skeleton-breadcrumb"></div>
+                    <div class="skeleton skeleton-name"></div>
+                    <div class="skeleton skeleton-rating"></div>
+                    <div class="skeleton skeleton-price-box"></div>
+                    <div class="skeleton skeleton-desc"></div>
+                    <div class="skeleton skeleton-actions"></div>
+                </div>
+            </div>
+
+            <!-- Reviews Skeleton -->
+            <div class="reviews-section" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                <div class="skeleton" style="width: 200px; height: 26px; margin-bottom: 25px; border-radius: 8px;"></div>
+                <div class="skeleton" style="width: 100%; height: 200px; border-radius: 20px; margin-bottom: 20px;"></div>
+                <div class="skeleton" style="width: 100%; height: 100px; border-radius: 16px; margin-bottom: 15px;"></div>
+                <div class="skeleton" style="width: 100%; height: 100px; border-radius: 16px;"></div>
+            </div>
+
+            <!-- Similar Skeleton -->
+            <div class="similar-section" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                <div class="skeleton" style="width: 220px; height: 26px; margin-bottom: 25px; border-radius: 8px;"></div>
+                <div class="similar-grid">
+                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
+                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
+                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
+                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Error State -->
@@ -1074,7 +1075,7 @@
         });
     </script>
 
-    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
+    <!-- ✅ Shared Scripts -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
@@ -1095,7 +1096,7 @@
             let currentCategoryName = '';
             let productSwiper = null;
 
-            const loadingScreen = document.getElementById('loadingScreen');
+            const skeletonContainer = document.getElementById('skeletonContainer');
             const errorState = document.getElementById('errorState');
             const productContent = document.getElementById('productContent');
 
@@ -1138,17 +1139,16 @@
                 const strId = String(productId);
 
                 if (wishlist.includes(strId)) {
-                wishlist = wishlist.filter(id => id !== strId);
-                localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-                return false;
-                }  
-                else {
-                wishlist.push(strId);
-                localStorage.setItem('wishlist', JSON.stringify(wishlist));
-                window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-                return true;
-}
+                    wishlist = wishlist.filter(id => id !== strId);
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    return false;
+                } else {
+                    wishlist.push(strId);
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    return true;
+                }
             }
 
             // ===== تحميل بيانات المستخدم =====
@@ -1201,7 +1201,8 @@
                     loadReviews();
                     loadSimilarProducts();
 
-                    loadingScreen.style.display = 'none';
+                    // ✅ أخفي Skeleton + أظهر المنتج
+                    skeletonContainer.style.display = 'none';
                     productContent.style.display = 'block';
 
                 } catch (err) {
@@ -1211,7 +1212,7 @@
             }
 
             function showError() {
-                loadingScreen.style.display = 'none';
+                skeletonContainer.style.display = 'none';
                 errorState.style.display = 'block';
             }
 
@@ -1333,8 +1334,6 @@
                     return;
                 }
 
-                // ✅ استخدم الدالة الموحّدة من shared/cart.js
-                // نضيف الكمية المحددة
                 for (let i = 0; i < currentQuantity; i++) {
                     window.addToCartItem(
                         currentProduct.Product_ID,

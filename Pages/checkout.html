@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إتمام الطلب - متجرنا</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ✅ Shared Styles (مسار من Pages/) -->
+    <!-- ✅ Shared Styles -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/skeleton.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
@@ -44,7 +45,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Background */
         .bg-animation {
             position: fixed; inset: 0;
             z-index: 0; overflow: hidden;
@@ -90,7 +90,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* Main */
         .main-content {
             position: relative;
             z-index: 5;
@@ -122,7 +121,6 @@
             transform: translateX(6px);
         }
 
-        /* Page Header */
         .page-header {
             text-align: center;
             margin-bottom: 40px;
@@ -171,7 +169,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Layout */
         .checkout-layout {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
@@ -179,7 +176,6 @@
             align-items: start;
         }
 
-        /* Cards */
         .checkout-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(14px);
@@ -239,7 +235,6 @@
             font-weight: 800;
         }
 
-        /* Form */
         .form-group {
             margin-bottom: 16px;
             position: relative;
@@ -283,7 +278,6 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Payment Methods */
         .payment-methods {
             display: flex;
             flex-direction: column;
@@ -385,7 +379,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Summary */
         .summary-sticky {
             position: sticky;
             top: 20px;
@@ -455,7 +448,6 @@
             flex-shrink: 0;
         }
 
-        /* Totals */
         .totals {
             margin-top: 20px;
             padding-top: 15px;
@@ -493,7 +485,6 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Confirm Button */
         .confirm-btn {
             width: 100%;
             padding: 16px;
@@ -539,7 +530,6 @@
             transform: none;
         }
 
-        /* Empty Cart */
         .empty-cart {
             text-align: center;
             padding: 60px 20px;
@@ -588,9 +578,27 @@
             box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
         }
 
+        /* ===== Skeleton: Checkout Layout ===== */
+        .skeleton-checkout-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .skeleton-checkout-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            animation: skeletonFadeIn 0.5s ease-out both;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
-            .checkout-layout {
+            .checkout-layout,
+            .skeleton-checkout-layout {
                 grid-template-columns: 1fr;
             }
             .summary-sticky {
@@ -601,7 +609,8 @@
         @media (max-width: 768px) {
             .main-content { padding: 20px 15px 40px; }
             .page-header h1 { font-size: 26px; }
-            .checkout-card { padding: 20px; }
+            .checkout-card,
+            .skeleton-checkout-card { padding: 20px; }
         }
     </style>
 </head>
@@ -615,7 +624,7 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
+    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
 
     <!-- Main -->
     <div class="main-content">
@@ -629,6 +638,49 @@
             <i class="fas fa-credit-card icon-big"></i>
             <h1>إتمام الطلب</h1>
             <p>اختار بياناتك وطريقة الدفع</p>
+        </div>
+
+        <!-- ===== Skeleton Loading ===== -->
+        <div id="skeletonContainer">
+            <div class="skeleton-checkout-layout">
+                <!-- Skeleton: Left (Form + Payment) -->
+                <div>
+                    <!-- Form -->
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 180px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 48px; border-radius: 12px;"></div>
+                    </div>
+
+                    <!-- Payment -->
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 160px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; margin-bottom: 12px; border-radius: 14px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; margin-bottom: 12px; border-radius: 14px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 76px; border-radius: 14px;"></div>
+                    </div>
+                </div>
+
+                <!-- Skeleton: Right (Summary) -->
+                <div>
+                    <div class="skeleton-checkout-card">
+                        <div class="skeleton" style="width: 140px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
+
+                        <!-- 3 cart items -->
+                        <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
+
+                        <!-- Totals -->
+                        <div class="skeleton" style="width: 100%; height: 130px; border-radius: 12px;"></div>
+
+                        <!-- Button -->
+                        <div class="skeleton" style="width: 100%; height: 55px; margin-top: 20px; border-radius: 50px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Empty Cart -->
@@ -767,7 +819,7 @@
 
     </div>
 
-    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
+    <!-- ✅ Shared Scripts -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
@@ -782,6 +834,10 @@
             }
 
             const SHIPPING_FEE = 30;
+
+            const skeletonContainer = document.getElementById('skeletonContainer');
+            const checkoutLayout = document.getElementById('checkoutLayout');
+            const emptyCart = document.getElementById('emptyCart');
 
             let cart = [];
             let currentUser = null;
@@ -799,50 +855,60 @@
                 return Number(price || 0).toLocaleString('en-US') + ' ج.م';
             }
 
-            // Init
+            // ===== Init =====
             async function init() {
-                // 1. Check auth
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!session) {
-                    window.showToast('❌ لازم تسجل دخول الأول', 'error');
-                    setTimeout(() => {
-                        window.location.href = '../Auth/login.html';
-                    }, 1500);
-                    return;
+                try {
+                    // 1. Check auth
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session) {
+                        window.showToast('❌ لازم تسجل دخول الأول', 'error');
+                        setTimeout(() => {
+                            window.location.href = '../Auth/login.html';
+                        }, 1500);
+                        return;
+                    }
+                    currentUser = session.user;
+
+                    // 2. Load customer data
+                    const { data: customer } = await supabase
+                        .from('Customers')
+                        .select('*')
+                        .eq('id', currentUser.id)
+                        .single();
+
+                    currentCustomer = customer || {
+                        Name: currentUser.user_metadata?.name || '',
+                        Email: currentUser.email,
+                        Phone: currentUser.user_metadata?.phone || '',
+                        Address: currentUser.user_metadata?.address || '',
+                        City: currentUser.user_metadata?.city || ''
+                    };
+
+                    // 3. Load cart
+                    cart = window.getCart();
+
+                    // 4. Hide skeleton
+                    skeletonContainer.style.display = 'none';
+
+                    if (cart.length === 0) {
+                        emptyCart.style.display = 'block';
+                        checkoutLayout.style.display = 'none';
+                        return;
+                    }
+
+                    emptyCart.style.display = 'none';
+                    checkoutLayout.style.display = 'grid';
+
+                    // 5. Prefill form + render
+                    prefillForm();
+                    renderSummary();
+                    attachEvents();
+
+                } catch (error) {
+                    console.error('❌ Init error:', error);
+                    skeletonContainer.style.display = 'none';
+                    window.showToast('❌ ' + error.message, 'error');
                 }
-                currentUser = session.user;
-
-                // 2. Load customer data
-                const { data: customer } = await supabase
-                    .from('Customers')
-                    .select('*')
-                    .eq('id', currentUser.id)
-                    .single();
-
-                currentCustomer = customer || {
-                    Name: currentUser.user_metadata?.name || '',
-                    Email: currentUser.email,
-                    Phone: currentUser.user_metadata?.phone || '',
-                    Address: currentUser.user_metadata?.address || '',
-                    City: currentUser.user_metadata?.city || ''
-                };
-
-                // 3. Load cart (✅ من shared/cart.js)
-                cart = window.getCart();
-
-                if (cart.length === 0) {
-                    document.getElementById('emptyCart').style.display = 'block';
-                    document.getElementById('checkoutLayout').style.display = 'none';
-                    return;
-                }
-
-                document.getElementById('emptyCart').style.display = 'none';
-                document.getElementById('checkoutLayout').style.display = 'grid';
-
-                // 4. Prefill form
-                prefillForm();
-                renderSummary();
-                attachEvents();
             }
 
             function prefillForm() {
@@ -978,7 +1044,7 @@
 
                     console.log('✅ Order items created');
 
-                    // ✅ امسح السلة من shared/cart.js
+                    // Clear cart
                     window.clearCartItems();
 
                     window.showToast('✅ تم تأكيد طلبك بنجاح!', 'success');
