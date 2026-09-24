@@ -7,7 +7,9 @@
     function getBasePath() {
         const path = window.location.pathname;
         if (path.includes('/Pages/') || path.includes('/Auth/') ||
-            path.includes('/pages/') || path.includes('/auth/')) {
+            path.includes('/Support/') ||
+            path.includes('/pages/') || path.includes('/auth/') ||
+            path.includes('/support/')) {
             return '../';
         }
         return '';
@@ -225,7 +227,7 @@
                 return;
             }
 
-            window.location.href = `${BASE}Pages/products.html?q=${encodeURIComponent(query)}`;
+            window.location.href = `${BASE}Pages/search-results.html?q=${encodeURIComponent(query)}`;
         });
     }
 

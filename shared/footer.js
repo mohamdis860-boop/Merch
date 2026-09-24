@@ -8,7 +8,9 @@
     function getBasePath() {
         const path = window.location.pathname;
         if (path.includes('/Pages/') || path.includes('/Auth/') ||
-            path.includes('/pages/') || path.includes('/auth/')) {
+            path.includes('/Support/') ||
+            path.includes('/pages/') || path.includes('/auth/') ||
+            path.includes('/support/')) {
             return '../';
         }
         return '';
@@ -58,9 +60,9 @@
                     <h4>خدمة العملاء</h4>
                     <ul>
                         <li><a href="${BASE}Pages/contact.html">تواصل معنا</a></li>
-                        <li><a href="${BASE}Pages/faq.html">الأسئلة الشائعة</a></li>
-                        <li><a href="${BASE}Pages/terms.html">الشروط والأحكام</a></li>
-                        <li><a href="${BASE}Pages/privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="${BASE}Support/faq.html">الأسئلة الشائعة</a></li>
+                        <li><a href="${BASE}Support/terms.html">الشروط والأحكام</a></li>
+                        <li><a href="${BASE}Support/privacy.html">سياسة الخصوصية</a></li>
                     </ul>
                 </div>
 
