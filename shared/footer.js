@@ -1,5 +1,5 @@
 /* ==================== shared/footer.js ==================== */
-/* بناء الفوتر الموحّد + زر Back to Top — يتحمّل تلقائياً في كل الصفحات */
+/* بناء الفوتر الموحّد + زر Back to Top + Theme — يتحمّل تلقائياً في كل الصفحات */
 
 (function() {
     'use strict';
@@ -17,6 +17,28 @@
     }
 
     const BASE = getBasePath();
+
+    // ===== حقن theme.css تلقائياً في <head> =====
+    function injectThemeCSS() {
+        if (document.querySelector('link[data-theme-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/theme.css';
+        link.setAttribute('data-theme-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // ===== حقن theme.js تلقائياً في <body> =====
+    function injectThemeJS() {
+        if (document.querySelector('script[data-theme-js]')) return;
+
+        const script = document.createElement('script');
+        script.src = BASE + 'shared/theme.js';
+        script.setAttribute('data-theme-js', 'true');
+        script.async = false;
+        document.body.appendChild(script);
+    }
 
     // ===== بناء الفوتر =====
     function buildFooter() {
@@ -155,8 +177,10 @@
 
     // ===== التهيئة =====
     function init() {
-        buildFooter();
-        buildBackToTop();
+        injectThemeCSS();      // 1. حقن CSS أولاً
+        buildFooter();          // 2. الفوتر
+        buildBackToTop();       // 3. Back to Top
+        injectThemeJS();        // 4. حقن JS أخيراً
     }
 
     if (document.readyState === 'loading') {
@@ -165,5 +189,5 @@
         init();
     }
 
-    console.log('✅ Footer + Back to Top loaded');
+    console.log('✅ Footer + Back to Top + Theme loaded');
 })();
