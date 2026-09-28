@@ -1,10 +1,10 @@
 /* ==================== shared/footer.js ==================== */
-/* بناء الفوتر الموحّد — يتحمّل تلقائياً في كل الصفحات */
+/* بناء الفوتر الموحّد + زر Back to Top — يتحمّل تلقائياً في كل الصفحات */
 
 (function() {
     'use strict';
 
-    // ===== تحديد مسار الأساس (نفس navbar.js) =====
+    // ===== تحديد مسار الأساس =====
     function getBasePath() {
         const path = window.location.pathname;
         if (path.includes('/Pages/') || path.includes('/Auth/') ||
@@ -20,10 +20,8 @@
 
     // ===== بناء الفوتر =====
     function buildFooter() {
-        // لو الفوتر الجديد موجود، متعملش حاجة
         if (document.querySelector('.footer-main')) return;
 
-        // شيل الفوتر القديم لو موجود
         const oldFooter = document.querySelector('.footer:not(.footer-main)');
         if (oldFooter) oldFooter.remove();
 
@@ -104,14 +102,61 @@
 
         document.body.appendChild(footer);
 
-        // ===== السنة الحالية =====
         const yearEl = document.getElementById('footerYear');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
+    }
+
+    // ===== بناء زر Back to Top =====
+    function buildBackToTop() {
+        if (document.querySelector('.back-to-top')) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'back-to-top';
+        btn.setAttribute('aria-label', 'العودة لأعلى الصفحة');
+        btn.innerHTML = `
+            <svg class="progress-ring" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="25"></circle>
+            </svg>
+            <i class="fas fa-arrow-up"></i>
+        `;
+
+        document.body.appendChild(btn);
+
+        // ===== إظهار/إخفاء + Progress =====
+        const toggleBtn = () => {
+            const scrolled = window.scrollY;
+            const threshold = 300;
+
+            btn.classList.toggle('show', scrolled > threshold);
+
+            // Progress Ring
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? Math.min(scrolled / docHeight, 1) : 0;
+            const circumference = 2 * Math.PI * 25;
+
+            const circle = btn.querySelector('.progress-ring circle');
+            if (circle) {
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = circumference * (1 - progress);
+            }
+        };
+
+        // ===== Smooth Scroll =====
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== Listeners =====
+        window.addEventListener('scroll', toggleBtn, { passive: true });
+        window.addEventListener('resize', toggleBtn, { passive: true });
+
+        toggleBtn();
     }
 
     // ===== التهيئة =====
     function init() {
         buildFooter();
+        buildBackToTop();
     }
 
     if (document.readyState === 'loading') {
@@ -120,5 +165,5 @@
         init();
     }
 
-    console.log('✅ Footer loaded');
+    console.log('✅ Footer + Back to Top loaded');
 })();
