@@ -1,5 +1,5 @@
 /* ==================== shared/footer.js ==================== */
-/* الفوتر + Back to Top + Theme + Compare — تلقائياً */
+/* الفوتر + Back to Top + Theme + Compare + Mobile Nav — تلقائياً */
 
 (function() {
     'use strict';
@@ -18,7 +18,7 @@
 
     const BASE = getBasePath();
 
-    // ===== حقن theme.css تلقائياً في <head> =====
+    // ===== حقن theme.css =====
     function injectThemeCSS() {
         if (document.querySelector('link[data-theme-css]')) return;
 
@@ -29,7 +29,7 @@
         document.head.appendChild(link);
     }
 
-    // ===== حقن compare-bar.css تلقائياً في <head> =====
+    // ===== حقن compare-bar.css =====
     function injectCompareCSS() {
         if (document.querySelector('link[data-compare-css]')) return;
 
@@ -40,7 +40,18 @@
         document.head.appendChild(link);
     }
 
-    // ===== حقن theme.js تلقائياً في <body> =====
+    // ===== ✅ حقن mobile-nav.css =====
+    function injectMobileNavCSS() {
+        if (document.querySelector('link[data-mobile-nav-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/mobile-nav.css';
+        link.setAttribute('data-mobile-nav-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // ===== حقن theme.js =====
     function injectThemeJS() {
         if (document.querySelector('script[data-theme-js]')) return;
 
@@ -51,24 +62,33 @@
         document.body.appendChild(script);
     }
 
-    // ===== حقن compare.js + compare-bar.js تلقائياً =====
+    // ===== حقن compare.js + compare-bar.js =====
     function injectCompareJS() {
         if (document.querySelector('script[data-compare-js]')) return;
 
-        // 1. compare.js أولاً
         const s1 = document.createElement('script');
         s1.src = BASE + 'shared/compare.js';
         s1.setAttribute('data-compare-js', 'true');
         s1.async = false;
         document.body.appendChild(s1);
 
-        // 2. compare-bar.js بعد ما compare.js يخلص
         s1.onload = () => {
             const s2 = document.createElement('script');
             s2.src = BASE + 'shared/compare-bar.js';
             s2.async = false;
             document.body.appendChild(s2);
         };
+    }
+
+    // ===== ✅ حقن mobile-nav.js =====
+    function injectMobileNavJS() {
+        if (document.querySelector('script[data-mobile-nav-js]')) return;
+
+        const script = document.createElement('script');
+        script.src = BASE + 'shared/mobile-nav.js';
+        script.setAttribute('data-mobile-nav-js', 'true');
+        script.async = false;
+        document.body.appendChild(script);
     }
 
     // ===== بناء الفوتر =====
@@ -201,10 +221,12 @@
     function init() {
         injectThemeCSS();
         injectCompareCSS();
+        injectMobileNavCSS();      // ← جديد
         buildFooter();
         buildBackToTop();
         injectThemeJS();
         injectCompareJS();
+        injectMobileNavJS();       // ← جديد
     }
 
     if (document.readyState === 'loading') {
@@ -213,5 +235,5 @@
         init();
     }
 
-    console.log('✅ Footer + Back to Top + Theme + Compare loaded');
+    console.log('✅ Footer + Back to Top + Theme + Compare + Mobile Nav loaded');
 })();
