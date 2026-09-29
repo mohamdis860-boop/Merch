@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    
-    <!-- ✅ Shared Styles -->
+
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
     <link rel="stylesheet" href="../shared/footer.css">
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
 
@@ -269,7 +268,6 @@
             box-shadow: 0 0 10px rgba(255, 107, 107, 0.6);
         }
 
-        /* Product Info */
         .product-info {
             display: flex;
             flex-direction: column;
@@ -431,7 +429,7 @@
         .actions-row {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
             margin-top: 10px;
         }
@@ -476,11 +474,11 @@
 
         .add-to-cart-btn {
             flex: 1;
-            min-width: 200px;
+            min-width: 180px;
             padding: 15px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.35s;
@@ -514,6 +512,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .wishlist-btn:hover {
@@ -530,7 +529,57 @@
             box-shadow: 0 8px 25px rgba(253, 121, 168, 0.5);
         }
 
-        /* Reviews Section */
+        /* ===== Compare Button ===== */
+        .compare-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 26px;
+            border-radius: 50px;
+            background: rgba(108, 92, 231, 0.12);
+            border: 1px solid rgba(108, 92, 231, 0.4);
+            color: #a29bfe;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.35s;
+            font-family: 'Cairo', sans-serif;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .compare-btn i {
+            font-size: 16px;
+            transition: transform 0.35s;
+        }
+
+        .compare-btn:hover {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.5);
+        }
+
+        .compare-btn:hover i {
+            transform: rotate(15deg) scale(1.15);
+        }
+
+        .compare-btn.active {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.5);
+        }
+
+        .compare-btn.active i::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+
+        /* ===== Reviews ===== */
         .reviews-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -737,7 +786,7 @@
             display: block;
         }
 
-        /* Similar Products */
+        /* ===== Similar ===== */
         .similar-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -757,11 +806,7 @@
             border-radius: 16px;
             padding: 15px;
             cursor: pointer;
-            transition:
-                transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                box-shadow 0.4s ease,
-                background 0.4s ease,
-                border-color 0.4s ease;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             color: white;
             animation: cardSlideUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
@@ -769,23 +814,15 @@
         }
 
         @keyframes cardSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(60px) scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(60px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .similar-card:hover {
             transform: translateY(-15px) scale(1.03);
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 107, 107, 0.5);
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.4),
-                0 0 40px rgba(255, 107, 107, 0.25);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 107, 107, 0.25);
             z-index: 10;
         }
 
@@ -831,21 +868,7 @@
             color: var(--secondary);
         }
 
-        /* Footer */
-        .footer {
-            position: relative;
-            z-index: 5;
-            text-align: center;
-            padding: 40px 20px 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 40px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 14px;
-        }
-
-        .footer i { color: var(--primary); }
-
-        /* Responsive */
+        /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .product-layout {
                 grid-template-columns: 1fr;
@@ -859,6 +882,7 @@
             .price-value { font-size: 26px; }
             .actions-row { flex-direction: column; align-items: stretch; }
             .wishlist-btn { width: 100%; height: 50px; }
+            .compare-btn { width: 100%; padding: 14px 20px; }
             .similar-grid { grid-template-columns: 1fr 1fr; }
             .product-swiper .swiper-button-prev,
             .product-swiper .swiper-button-next {
@@ -875,7 +899,6 @@
 </head>
 <body>
 
-    <!-- Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -884,9 +907,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
-
-    <!-- Main Content -->
     <div class="main-content">
 
         <a href="products.html" class="back-btn" data-aos="fade-left">
@@ -894,7 +914,7 @@
             العودة للمنتجات
         </a>
 
-        <!-- ===== Skeleton Loading ===== -->
+        <!-- Skeleton -->
         <div id="skeletonContainer">
             <div class="skeleton-details-layout">
                 <div class="skeleton skeleton-details-image"></div>
@@ -907,28 +927,9 @@
                     <div class="skeleton skeleton-actions"></div>
                 </div>
             </div>
-
-            <!-- Reviews Skeleton -->
-            <div class="reviews-section" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
-                <div class="skeleton" style="width: 200px; height: 26px; margin-bottom: 25px; border-radius: 8px;"></div>
-                <div class="skeleton" style="width: 100%; height: 200px; border-radius: 20px; margin-bottom: 20px;"></div>
-                <div class="skeleton" style="width: 100%; height: 100px; border-radius: 16px; margin-bottom: 15px;"></div>
-                <div class="skeleton" style="width: 100%; height: 100px; border-radius: 16px;"></div>
-            </div>
-
-            <!-- Similar Skeleton -->
-            <div class="similar-section" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
-                <div class="skeleton" style="width: 220px; height: 26px; margin-bottom: 25px; border-radius: 8px;"></div>
-                <div class="similar-grid">
-                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
-                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
-                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
-                    <div class="skeleton" style="width: 100%; height: 240px; border-radius: 16px;"></div>
-                </div>
-            </div>
         </div>
 
-        <!-- Error State -->
+        <!-- Error -->
         <div class="error-state" id="errorState" style="display: none;">
             <i class="fas fa-box-open"></i>
             <h2>المنتج غير موجود</h2>
@@ -942,22 +943,17 @@
         <!-- Product Content -->
         <div id="productContent" style="display: none;">
 
-            <!-- Product Layout -->
             <div class="product-layout" data-aos="fade-up" data-aos-delay="200">
 
-                <!-- Image Gallery (Swiper) -->
                 <div class="product-image-box" id="imageBox">
                     <div class="swiper product-swiper">
-                        <div class="swiper-wrapper" id="swiperWrapper">
-                            <!-- Slides added dynamically -->
-                        </div>
+                        <div class="swiper-wrapper" id="swiperWrapper"></div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
                     </div>
                 </div>
 
-                <!-- Info -->
                 <div class="product-info">
 
                     <div class="product-breadcrumb">
@@ -1018,60 +1014,51 @@
                         <button type="button" class="wishlist-btn" id="wishlistBtn" title="أضف للمفضلة">
                             <i class="far fa-heart"></i>
                         </button>
+
+                        <button type="button" class="compare-btn" id="compareBtn" title="أضف للمقارنة">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>أضف للمقارنة</span>
+                        </button>
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- Reviews Section -->
+            <!-- Reviews -->
             <div class="reviews-section" data-aos="fade-up">
-
                 <h2 class="section-title">
                     <i class="fas fa-star"></i>
                     المراجعات
                     <span class="count" id="reviewsCountTitle">0</span>
                 </h2>
-
                 <div id="reviewFormContainer"></div>
                 <div class="reviews-list" id="reviewsList"></div>
-
             </div>
 
-            <!-- Similar Products -->
+            <!-- Similar -->
             <div class="similar-section" data-aos="fade-up">
-
                 <h2 class="section-title">
                     <i class="fas fa-gift"></i>
                     منتجات مشابهة
                 </h2>
-
                 <div class="similar-grid" id="similarGrid"></div>
-
             </div>
 
         </div>
 
     </div>
 
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 100
-        });
+        AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 100 });
     </script>
 
-    <!-- ✅ Shared Scripts -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
+    <script src="../shared/compare.js"></script>
     <script src="../shared/navbar.js"></script>
     <script src="../shared/footer.js"></script>
 
@@ -1094,7 +1081,6 @@
             const errorState = document.getElementById('errorState');
             const productContent = document.getElementById('productContent');
 
-            // ===== أدوات مساعدة =====
             function escapeHtml(text) {
                 if (!text) return '';
                 const div = document.createElement('div');
@@ -1119,7 +1105,7 @@
                 return html;
             }
 
-            // ===== المفضلة =====
+            // ===== Wishlist =====
             function getWishlist() {
                 return JSON.parse(localStorage.getItem('wishlist')) || [];
             }
@@ -1145,7 +1131,6 @@
                 }
             }
 
-            // ===== تحميل بيانات المستخدم =====
             async function loadCurrentUser() {
                 try {
                     const { data: { session } } = await supabase.auth.getSession();
@@ -1155,7 +1140,6 @@
                 }
             }
 
-            // ===== تحميل المنتج =====
             async function loadProduct() {
                 await loadCurrentUser();
 
@@ -1195,7 +1179,6 @@
                     loadReviews();
                     loadSimilarProducts();
 
-                    // ✅ أخفي Skeleton + أظهر المنتج
                     skeletonContainer.style.display = 'none';
                     productContent.style.display = 'block';
 
@@ -1213,7 +1196,6 @@
             function renderProduct() {
                 const p = currentProduct;
 
-                // ===== Swiper Gallery =====
                 const swiperWrapper = document.getElementById('swiperWrapper');
                 const imgUrl = window.getImageUrl(p.Image_URL);
 
@@ -1232,21 +1214,12 @@
                 }
 
                 setTimeout(() => {
-                    if (productSwiper) {
-                        productSwiper.destroy(true, true);
-                    }
-
+                    if (productSwiper) productSwiper.destroy(true, true);
                     productSwiper = new Swiper('.product-swiper', {
                         loop: false,
                         spaceBetween: 10,
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                         effect: 'slide',
                         speed: 400,
                     });
@@ -1305,8 +1278,53 @@
                     addBtn.disabled = true;
                     addBtn.querySelector('span').textContent = 'غير متاح';
                 }
+
+                // ✅ Update compare button state
+                updateCompareBtnState();
             }
 
+            // ===== Compare Button =====
+            const compareBtn = document.getElementById('compareBtn');
+
+            function updateCompareBtnState() {
+                if (!compareBtn || !currentProduct) return;
+
+                const inCompare = window.isInCompare && window.isInCompare(currentProduct.Product_ID);
+                const span = compareBtn.querySelector('span');
+
+                if (inCompare) {
+                    compareBtn.classList.add('active');
+                    if (span) span.textContent = 'في المقارنة';
+                } else {
+                    compareBtn.classList.remove('active');
+                    if (span) span.textContent = 'أضف للمقارنة';
+                }
+            }
+
+            if (compareBtn) {
+                compareBtn.addEventListener('click', function() {
+                    if (!currentProduct) return;
+
+                    if (!window.toggleCompare) {
+                        if (window.showToast) window.showToast('❌ المقارنة غير متاحة', 'error');
+                        return;
+                    }
+
+                    window.toggleCompare({
+                        id: currentProduct.Product_ID,
+                        name: currentProduct.Product_Name,
+                        price: parseFloat(currentProduct.Selling_Price) || 0,
+                        image: currentProduct.Image_URL || ''
+                    });
+
+                    updateCompareBtnState();
+                });
+
+                // Listen for compare updates
+                window.addEventListener('compareUpdated', updateCompareBtnState);
+            }
+
+            // ===== Quantity =====
             document.getElementById('increaseQty').addEventListener('click', () => {
                 if (currentQuantity < 99) {
                     currentQuantity++;
@@ -1321,6 +1339,7 @@
                 }
             });
 
+            // ===== Add to Cart =====
             document.getElementById('addToCartBtn').addEventListener('click', function() {
                 const statusAvailable = (currentProduct.Status || '').toLowerCase() === 'available' || (currentProduct.Status || '').toLowerCase() === 'active' || !currentProduct.Status;
                 if (!statusAvailable) {
@@ -1347,6 +1366,7 @@
                 }, 1500);
             });
 
+            // ===== Wishlist =====
             document.getElementById('wishlistBtn').addEventListener('click', function() {
                 const added = toggleWishlist(currentProduct.Product_ID);
 
@@ -1361,7 +1381,7 @@
                 }
             });
 
-            // ===== المراجعات =====
+            // ===== Reviews =====
             async function loadReviews() {
                 const productId = currentProduct.Product_ID;
 
@@ -1553,9 +1573,7 @@
                     ).join('');
 
                     const date = new Date(review.created_at).toLocaleDateString('ar-EG', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
+                        year: 'numeric', month: 'long', day: 'numeric'
                     });
 
                     html += `
@@ -1568,9 +1586,7 @@
                                     <h5 class="review-name" data-customer-id="${review.customer_id}">جاري التحميل...</h5>
                                     <span><i class="far fa-clock"></i> ${date}</span>
                                 </div>
-                                <div class="review-stars">
-                                    ${starsHTML}
-                                </div>
+                                <div class="review-stars">${starsHTML}</div>
                             </div>
                             <p class="review-comment">${escapeHtml(review.comment)}</p>
                         </div>
@@ -1578,7 +1594,6 @@
                 });
 
                 list.innerHTML = html;
-
                 fetchCustomerNames(reviews.map(r => r.customer_id));
             }
 
@@ -1606,7 +1621,7 @@
                 }
             }
 
-            // ===== المنتجات المشابهة =====
+            // ===== Similar =====
             async function loadSimilarProducts() {
                 if (!currentProduct.Category_ID) return;
 
@@ -1646,9 +1661,7 @@
                                     }
                                 </div>
                                 <h4>${escapeHtml(p.Product_Name)}</h4>
-                                <div class="similar-price">
-                                    ${formatPrice(p.Selling_Price)}
-                                </div>
+                                <div class="similar-price">${formatPrice(p.Selling_Price)}</div>
                             </a>
                         `;
                     });
@@ -1662,7 +1675,7 @@
 
             loadProduct();
 
-            console.log('%c📦 Product Details page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+            console.log('%c📦 Product Details page loaded (with compare)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>

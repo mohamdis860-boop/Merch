@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
-    <!-- ✅ Shared Styles -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -44,7 +43,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Background ===== */
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -87,7 +85,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -113,7 +110,6 @@
             transform: translateX(6px);
         }
 
-        /* ===== Header ===== */
         .page-header {
             text-align: center;
             margin-bottom: 35px;
@@ -142,7 +138,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* ===== Toolbar ===== */
         .toolbar {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(14px);
@@ -263,7 +258,6 @@
 
         .btn-filters-toggle.has-filters .filter-count { display: flex; }
 
-        /* ===== Results Count Bar ===== */
         .results-count-bar {
             display: flex;
             align-items: center;
@@ -314,7 +308,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== Layout ===== */
         .products-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -322,7 +315,6 @@
             align-items: start;
         }
 
-        /* ===== Sidebar ===== */
         .filters-sidebar {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(14px);
@@ -379,7 +371,6 @@
             color: var(--primary);
         }
 
-        /* Filter Group */
         .filter-group {
             margin-bottom: 20px;
             padding-bottom: 18px;
@@ -425,7 +416,6 @@
             overflow: hidden;
         }
 
-        /* Price */
         .price-inputs {
             display: flex;
             gap: 8px;
@@ -458,7 +448,6 @@
             font-size: 12px;
         }
 
-        /* Categories */
         .categories-list {
             display: flex;
             flex-direction: column;
@@ -528,7 +517,6 @@
             font-weight: 600;
         }
 
-        /* Radio */
         .radio-list {
             display: flex;
             flex-direction: column;
@@ -586,7 +574,6 @@
             transform: scale(1);
         }
 
-        /* Stars */
         .stars {
             display: inline-flex;
             gap: 2px;
@@ -596,7 +583,6 @@
 
         .stars .empty { color: rgba(255, 255, 255, 0.15); }
 
-        /* ===== Active Chips ===== */
         .active-filters {
             display: flex;
             flex-wrap: wrap;
@@ -643,7 +629,6 @@
             color: white;
         }
 
-        /* ===== Products Grid ===== */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -742,6 +727,7 @@
             display: flex;
             gap: 8px;
             margin-top: 12px;
+            align-items: stretch;
         }
 
         .product-card .btn-sm {
@@ -775,6 +761,7 @@
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 46px;
+            flex: 0 0 46px;
         }
 
         .product-card .btn-details:hover {
@@ -782,7 +769,6 @@
             border-color: transparent;
         }
 
-        /* ===== Empty ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -808,7 +794,6 @@
             margin-bottom: 8px;
         }
 
-        /* ===== Load More Section ===== */
         .load-more-section {
             margin-top: 40px;
             text-align: center;
@@ -928,7 +913,6 @@
 
         .load-more-section.hidden { display: none; }
 
-        /* ===== Overlay ===== */
         .filters-overlay {
             display: none;
             position: fixed;
@@ -946,7 +930,6 @@
             opacity: 1;
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 992px) {
             .products-layout { grid-template-columns: 1fr; }
 
@@ -1025,7 +1008,6 @@
             <p>تصفح منتجاتنا المميزة واختر ما يناسبك</p>
         </div>
 
-        <!-- Toolbar -->
         <div class="toolbar" data-aos="fade-up">
             <div class="search-box">
                 <i class="fas fa-search"></i>
@@ -1048,7 +1030,6 @@
             </button>
         </div>
 
-        <!-- Results count bar -->
         <div class="results-count-bar" data-aos="fade-up">
             <div class="results-count">
                 <i class="fas fa-box"></i>
@@ -1060,13 +1041,10 @@
             </button>
         </div>
 
-        <!-- Active Filters Chips -->
         <div class="active-filters" id="activeFilters"></div>
 
-        <!-- Layout -->
         <div class="products-layout">
 
-            <!-- Sidebar -->
             <aside class="filters-sidebar" id="filtersSidebar" data-aos="fade-left">
 
                 <div class="filters-header">
@@ -1076,7 +1054,6 @@
                     </button>
                 </div>
 
-                <!-- Price -->
                 <div class="filter-group" data-filter="price">
                     <div class="filter-group-title">
                         <span><i class="fas fa-tag" style="color:#ff6b6b;margin-left:6px;"></i> السعر</span>
@@ -1090,7 +1067,6 @@
                     </div>
                 </div>
 
-                <!-- Categories -->
                 <div class="filter-group" data-filter="category">
                     <div class="filter-group-title">
                         <span><i class="fas fa-tags" style="color:#ff6b6b;margin-left:6px;"></i> التصنيف</span>
@@ -1103,7 +1079,6 @@
                     </div>
                 </div>
 
-                <!-- Availability -->
                 <div class="filter-group" data-filter="availability">
                     <div class="filter-group-title">
                         <span><i class="fas fa-check-circle" style="color:#ff6b6b;margin-left:6px;"></i> التوفر</span>
@@ -1130,7 +1105,6 @@
                     </div>
                 </div>
 
-                <!-- Rating -->
                 <div class="filter-group" data-filter="rating">
                     <div class="filter-group-title">
                         <span><i class="fas fa-star" style="color:#ff6b6b;margin-left:6px;"></i> التقييم</span>
@@ -1167,7 +1141,6 @@
 
             </aside>
 
-            <!-- Products Container -->
             <div id="productsContainer">
                 <div class="skeleton-product-grid">
                     <div class="skeleton-product-card">
@@ -1199,7 +1172,6 @@
 
         </div>
 
-        <!-- Load More Section -->
         <div class="load-more-section hidden" id="loadMoreSection">
             <div class="load-more-info">
                 <span>عرض <strong id="showingCount">0</strong> من <strong id="totalCount">0</strong> منتج</span>
@@ -1232,6 +1204,7 @@
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
+    <script src="../shared/compare.js"></script>
     <script src="../shared/navbar.js"></script>
     <script src="../shared/footer.js"></script>
 
@@ -1261,7 +1234,6 @@
             const filtersOverlay = document.getElementById('filtersOverlay');
             const filterCount = document.getElementById('filterCount');
 
-            // Load More DOM
             const loadMoreSection = document.getElementById('loadMoreSection');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             const loadMoreProgress = document.getElementById('loadMoreProgress');
@@ -1276,7 +1248,6 @@
             let categoryMap = {};
             let statusValues = new Set();
 
-            // Pagination
             const ITEMS_PER_PAGE = 12;
             let currentPage = 0;
 
@@ -1381,7 +1352,6 @@
                 return { minPrice, maxPrice, selectedCats, availability, minRating };
             }
 
-            // ===== Count Active =====
             function countActiveFilters() {
                 let count = 0;
                 const minP = parseFloat(priceMin.value);
@@ -1400,7 +1370,6 @@
                 return count;
             }
 
-            // ===== Render Chips =====
             function renderActiveChips() {
                 activeFilters.innerHTML = '';
                 const { minPrice, maxPrice, selectedCats, availability, minRating } = getActiveFilters();
@@ -1540,8 +1509,31 @@
                     window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
                 });
 
+                // ⚖️ زر المقارنة
+                const compareBtn = document.createElement('button');
+                compareBtn.className = 'btn-compare-toggle';
+                compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
+                compareBtn.title = 'أضف للمقارنة';
+                compareBtn.innerHTML = `<i class="fas fa-balance-scale"></i>`;
+                if (window.isInCompare && window.isInCompare(productId)) {
+                    compareBtn.classList.add('active');
+                }
+                compareBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (window.toggleCompare) {
+                        const added = window.toggleCompare({
+                            id: productId,
+                            name: productName,
+                            price: price,
+                            image: imageUrl
+                        });
+                        this.classList.toggle('active', added);
+                    }
+                });
+
                 actions.appendChild(cartBtn);
                 actions.appendChild(detailsBtn);
+                actions.appendChild(compareBtn);
 
                 card.appendChild(badge);
                 card.appendChild(catBadge);
@@ -1557,7 +1549,7 @@
                 return card;
             }
 
-            // ===== Render Products (with pagination) =====
+            // ===== Render Products =====
             function renderProducts(resetPage = true) {
                 if (!filteredProducts || filteredProducts.length === 0) {
                     productsContainer.innerHTML = `
@@ -1780,10 +1772,9 @@
                 searchInput.value = initialQuery;
             }
 
-            // ===== Run =====
             loadData();
 
-            console.log('%c🛍️ Products page with filters + pagination loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+            console.log('%c🛍️ Products page with filters + pagination + compare loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>

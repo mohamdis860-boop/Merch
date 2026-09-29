@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقارنة المنتجات | متجرنا</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+    <link rel="stylesheet" href="../shared/navbar.css">
+    <link rel="stylesheet" href="../shared/toast.css">
+    <link rel="stylesheet" href="../shared/footer.css">
+    <link rel="stylesheet" href="../shared/compare-bar.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 30px 100px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.35s;
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            color: #ff6b6b;
+            transform: translateX(6px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 6s ease infinite;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page-header p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            display: none;
+        }
+
+        .empty-state.show { display: block; }
+
+        .empty-icon {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 24px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(253, 121, 168, 0.1));
+            border: 2px dashed rgba(108, 92, 231, 0.4);
+            font-size: 3rem;
+            color: #a29bfe;
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .empty-state p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .empty-state .btn-go {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: 0.3s;
+        }
+
+        .empty-state .btn-go:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+        }
+
+        /* ===== Compare Table ===== */
+        .compare-wrapper {
+            display: none;
+        }
+
+        .compare-wrapper.show { display: block; }
+
+        .compare-table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+        }
+
+        .compare-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 18px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .compare-table th {
+            background: rgba(108, 92, 231, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 140px;
+            text-align: right;
+        }
+
+        .compare-table td {
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+        }
+
+        .compare-table tr:last-child th,
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Product Header Cells */
+        .product-header {
+            background: rgba(255, 255, 255, 0.02) !important;
+            padding: 24px 16px !important;
+            position: relative;
+        }
+
+        .product-header .product-card-mini {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-header .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(108, 92, 231, 0.15));
+            display: grid;
+            place-items: center;
+            font-size: 36px;
+            color: rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .product-header .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-header h3 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            max-width: 180px;
+            line-height: 1.4;
+        }
+
+        .product-header .remove-btn {
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 13px;
+            transition: 0.3s;
+            margin-top: 4px;
+        }
+
+        .product-header .remove-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Value Cells */
+        .value-cell {
+            padding: 18px 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .value-cell.price {
+            color: #ffd93d;
+            font-size: 20px;
+            font-weight: 800;
+            text-shadow: 0 0 12px rgba(255, 217, 61, 0.3);
+        }
+
+        .value-cell.rating {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stars {
+            display: inline-flex;
+            gap: 2px;
+            color: #ffd93d;
+            font-size: 14px;
+        }
+
+        .stars .empty { color: rgba(255, 255, 255, 0.15); }
+
+        .value-cell.rating .review-count {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .value-cell.status {
+            font-weight: 800;
+        }
+
+        .value-cell.status.available {
+            color: #22c55e;
+        }
+
+        .value-cell.status.unavailable {
+            color: #ef4444;
+        }
+
+        /* Better Value Highlight */
+        .value-cell.better {
+            position: relative;
+        }
+
+        .value-cell.better::before {
+            content: '⭐';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 12px;
+            animation: starPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .value-cell.better {
+            background: rgba(34, 197, 94, 0.06);
+            border-right: 2px solid rgba(34, 197, 94, 0.4);
+            border-left: 2px solid rgba(34, 197, 94, 0.4);
+        }
+
+        /* Actions */
+        .compare-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-action.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.35);
+        }
+
+        .btn-action.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.55);
+        }
+
+        .btn-action.outline {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-action.outline:hover {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: rgba(255, 107, 107, 0.4);
+            color: #ff6b6b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 28px; }
+            .main-content { padding: 30px 15px 100px; }
+
+            .compare-table th {
+                font-size: 11px;
+                width: 100px;
+                padding: 12px 8px;
+            }
+
+            .compare-table td {
+                padding: 14px 8px;
+                font-size: 13px;
+            }
+
+            .value-cell.price { font-size: 16px; }
+
+            .product-header .product-image {
+                width: 70px;
+                height: 70px;
+                font-size: 26px;
+            }
+
+            .product-header h3 { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+
+        <a href="products.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للمنتجات
+        </a>
+
+        <div class="page-header" data-aos="fade-down">
+            <h1>⚖️ مقارنة المنتجات</h1>
+            <p>شوف الفروق بين المنتجين جنب بعض</p>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <h2>مفيش منتجات للمقارنة</h2>
+            <p>اختار منتجين من صفحة المنتجات واضغط على أيقونة المقارنة ⚖️</p>
+            <a href="products.html" class="btn-go">
+                <i class="fas fa-box"></i>
+                تصفح المنتجات
+            </a>
+        </div>
+
+        <!-- Compare Table -->
+        <div class="compare-wrapper" id="compareWrapper">
+            <div class="compare-table">
+                <table id="compareTable"></table>
+            </div>
+
+            <div class="compare-actions">
+                <a href="products.html" class="btn-action outline">
+                    <i class="fas fa-plus"></i>
+                    إضافة منتج آخر
+                </a>
+                <button class="btn-action primary" id="addBothToCart">
+                    <i class="fas fa-cart-plus"></i>
+                    أضف الاتنين للسلة
+                </button>
+                <button class="btn-action outline" id="clearCompareBtn">
+                    <i class="fas fa-trash"></i>
+                    مسح المقارنة
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 700, once: true });</script>
+
+    <script src="../shared/config.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="../shared/toast.js"></script>
+    <script src="../shared/compare.js"></script>
+    <script src="../shared/navbar.js"></script>
+    <script src="../shared/footer.js"></script>
+    <script src="../shared/compare-bar.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const emptyState = document.getElementById('emptyState');
+            const compareWrapper = document.getElementById('compareWrapper');
+            const compareTable = document.getElementById('compareTable');
+            const addBothBtn = document.getElementById('addBothToCart');
+            const clearBtn = document.getElementById('clearCompareBtn');
+
+            let compareList = [];
+
+            // ===== Escape HTML =====
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // ===== Build Compare Table =====
+            function buildTable() {
+                if (compareList.length < 2) {
+                    emptyState.classList.add('show');
+                    compareWrapper.classList.remove('show');
+                    return;
+                }
+
+                emptyState.classList.remove('show');
+                compareWrapper.classList.add('show');
+
+                const [a, b] = compareList;
+
+                // Determine "better" values
+                const better = {
+                    price: a.price < b.price ? 'a' : (b.price < a.price ? 'b' : 'equal'),
+                    rating: a.rating > b.rating ? 'a' : (b.rating > a.rating ? 'b' : 'equal'),
+                    reviews: a.reviewCount > b.reviewCount ? 'a' : (b.reviewCount > a.reviewCount ? 'b' : 'equal')
+                };
+
+                // Build product header
+                const productHeader = (p, side) => {
+                    const imgHTML = p.image
+                        ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas fa-box\\'></i>'">`
+                        : '<i class="fas fa-box"></i>';
+
+                    return `
+                        <div class="product-card-mini">
+                            <div class="product-image">${imgHTML}</div>
+                            <h3>${escapeHtml(p.name)}</h3>
+                            <button class="remove-btn" data-id="${escapeHtml(String(p.id))}" title="إزالة">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                };
+
+                // Build rows
+                const rows = [
+                    {
+                        label: 'السعر',
+                        valueA: `<div class="value-cell price ${better.price === 'a' ? 'better' : ''}">${a.price.toLocaleString('en-US')} ج.م</div>`,
+                        valueB: `<div class="value-cell price ${better.price === 'b' ? 'better' : ''}">${b.price.toLocaleString('en-US')} ج.م</div>`
+                    },
+                    {
+                        label: 'التقييم',
+                        valueA: `<div class="value-cell rating ${better.rating === 'a' ? 'better' : ''}">
+                            ${renderStars(a.rating)}
+                            <span class="review-count">${a.rating.toFixed(1)} (${a.reviewCount} تقييم)</span>
+                        </div>`,
+                        valueB: `<div class="value-cell rating ${better.rating === 'b' ? 'better' : ''}">
+                            ${renderStars(b.rating)}
+                            <span class="review-count">${b.rating.toFixed(1)} (${b.reviewCount} تقييم)</span>
+                        </div>`
+                    },
+                    {
+                        label: 'التصنيف',
+                        valueA: `<div class="value-cell">${escapeHtml(a.category)}</div>`,
+                        valueB: `<div class="value-cell">${escapeHtml(b.category)}</div>`
+                    },
+                    {
+                        label: 'الوحدة',
+                        valueA: `<div class="value-cell">${escapeHtml(a.unit || '—')}</div>`,
+                        valueB: `<div class="value-cell">${escapeHtml(b.unit || '—')}</div>`
+                    },
+                    {
+                        label: 'الحالة',
+                        valueA: `<div class="value-cell status ${a.status ? 'available' : 'unavailable'}">${a.status ? '✅ متوفر' : '❌ غير متوفر'}</div>`,
+                        valueB: `<div class="value-cell status ${b.status ? 'available' : 'unavailable'}">${b.status ? '✅ متوفر' : '❌ غير متوفر'}</div>`
+                    },
+                    {
+                        label: 'الوصف',
+                        valueA: `<div class="value-cell" style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.7);">${escapeHtml(a.description || '—')}</div>`,
+                        valueB: `<div class="value-cell" style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.7);">${escapeHtml(b.description || '—')}</div>`
+                    }
+                ];
+
+                let html = `
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="product-header">${productHeader(a)}</th>
+                            <th class="product-header">${productHeader(b)}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows.map(r => `
+                            <tr>
+                                <th>${r.label}</th>
+                                <td>${r.valueA}</td>
+                                <td>${r.valueB}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+
+                compareTable.innerHTML = html;
+
+                // Remove buttons
+                compareTable.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        window.removeFromCompare(id);
+                        loadData();
+                    });
+                });
+            }
+
+            function renderStars(rating) {
+                const full = Math.round(rating);
+                let html = '<span class="stars">';
+                for (let i = 1; i <= 5; i++) {
+                    html += i <= full
+                        ? '<i class="fas fa-star"></i>'
+                        : '<i class="fas fa-star empty"></i>';
+                }
+                html += '</span>';
+                return html;
+            }
+
+            // ===== Load Data =====
+            async function loadData() {
+                compareList = window.getCompareList ? window.getCompareList() : [];
+
+                // لو أقل من 2، نعرض empty state
+                if (compareList.length < 2) {
+                    emptyState.classList.add('show');
+                    compareWrapper.classList.remove('show');
+                    return;
+                }
+
+                // جيب بيانات المنتجات المحدثة من Supabase
+                try {
+                    const ids = compareList.map(p => p.id);
+                    const { data, error } = await window.getSupabase()
+                        .from('Product')
+                        .select('Product_ID, Product_Name, Selling_Price, Image_URL, Category_ID, Status, Rating, Review_Count, Unit, Description')
+                        .in('Product_ID', ids);
+
+                    if (error) throw error;
+
+                    // جيب التصنيفات
+                    const { data: cats } = await window.getSupabase()
+                        .from('Category')
+                        .select('Category_ID, Category_Name');
+
+                    const catMap = {};
+                    (cats || []).forEach(c => {
+                        catMap[String(c.Category_ID)] = c.Category_Name;
+                    });
+
+                    // حدّث القائمة
+                    compareList = compareList.map(p => {
+                        const fresh = (data || []).find(d => String(d.Product_ID) === String(p.id));
+                        if (!fresh) return p;
+                        return {
+                            id: fresh.Product_ID,
+                            name: fresh.Product_Name,
+                            price: parseFloat(fresh.Selling_Price) || 0,
+                            image: fresh.Image_URL || '',
+                            rating: parseFloat(fresh.Rating) || 0,
+                            reviewCount: parseInt(fresh.Review_Count) || 0,
+                            status: isAvailable(fresh.Status),
+                            category: catMap[String(fresh.Category_ID)] || '—',
+                            unit: fresh.Unit || '',
+                            description: fresh.Description || ''
+                        };
+                    });
+
+                    buildTable();
+
+                } catch (err) {
+                    console.error('❌ Error:', err);
+                }
+            }
+
+            function isAvailable(status) {
+                if (status === null || status === undefined) return true;
+                const s = String(status).toLowerCase().trim();
+                return !(
+                    s === 'out of stock' || s === 'out_of_stock' ||
+                    s === 'outofstock' || s === 'unavailable' ||
+                    s === 'غير متوفر' || s === 'نفذ' || s === 'نفذت' ||
+                    s === 'false' || s === '0' || s === 'no'
+                );
+            }
+
+            // ===== Add Both to Cart =====
+            addBothBtn?.addEventListener('click', () => {
+                if (compareList.length < 2) return;
+                compareList.forEach(item => {
+                    if (window.addToCartItem) {
+                        window.addToCartItem(item.id, item.name, item.price, item.image);
+                    }
+                });
+            });
+
+            // ===== Clear =====
+            clearBtn?.addEventListener('click', () => {
+                if (confirm('متأكد إنك عايز تمسح المقارنة؟')) {
+                    window.clearCompare();
+                    loadData();
+                }
+            });
+
+            // ===== Listen =====
+            window.addEventListener('compareUpdated', loadData);
+
+            // ===== Run =====
+            loadData();
+
+            console.log('✅ Compare page loaded');
+        });
+    </script>
+
+</body>
+</html>

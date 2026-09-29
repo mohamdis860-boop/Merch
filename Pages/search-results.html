@@ -6,37 +6,24 @@
     <title>نتائج البحث | متجرنا</title>
     <meta name="description" content="نتائج البحث عن المنتجات في متجرنا.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Shared CSS -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
     <link rel="stylesheet" href="../shared/footer.css">
 
-    <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <style>
-        /* ========================================
-           Search Results Page Styles
-           ======================================== */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html { scroll-behavior: smooth; }
 
@@ -60,10 +47,8 @@
         .search-hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
+            top: -50%; right: -10%;
+            width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(255, 107, 107, 0.12), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
@@ -146,9 +131,7 @@
             transition: 0.3s;
         }
 
-        .search-form:focus-within i.fa-search {
-            color: #ff6b6b;
-        }
+        .search-form:focus-within i.fa-search { color: #ff6b6b; }
 
         .search-form input {
             flex: 1;
@@ -162,9 +145,7 @@
             min-width: 0;
         }
 
-        .search-form input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
+        .search-form input::placeholder { color: rgba(255, 255, 255, 0.4); }
 
         .search-form button {
             padding: 11px 26px;
@@ -231,10 +212,7 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
         }
 
-        .filter-bar select option {
-            background: #1a1a2e;
-            color: #fff;
-        }
+        .filter-bar select option { background: #1a1a2e; color: #fff; }
 
         /* ===== Product Grid ===== */
         .products-container {
@@ -252,7 +230,6 @@
         .product-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             padding: 22px;
@@ -342,10 +319,11 @@
 
         .product-card .card-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-top: 15px;
             position: relative;
             z-index: 1;
+            align-items: stretch;
         }
 
         .product-card .btn-sm {
@@ -380,12 +358,64 @@
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 50px;
+            flex: 0 0 50px;
         }
 
         .product-card .btn-details:hover {
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             border-color: transparent;
             transform: translateY(-2px);
+        }
+
+        /* ===== Compare Toggle Button ===== */
+        .btn-compare-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .btn-compare-toggle:hover {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: rgba(108, 92, 231, 0.5);
+            color: #a29bfe;
+            transform: translateY(-2px);
+        }
+
+        .btn-compare-toggle.active {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.5);
+        }
+
+        .btn-compare-toggle.active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            background: #22c55e;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 2px solid #0a0a1a;
         }
 
         /* ===== Empty State ===== */
@@ -423,9 +453,7 @@
             margin-bottom: 12px;
         }
 
-        .empty-state h2 .query {
-            color: #ff6b6b;
-        }
+        .empty-state h2 .query { color: #ff6b6b; }
 
         .empty-state p {
             color: rgba(255, 255, 255, 0.6);
@@ -471,64 +499,48 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 640px) {
-            .search-hero {
-                padding: 40px 20px 20px;
-            }
+            .search-hero { padding: 40px 20px 20px; }
 
-            .search-form {
-                padding: 0 6px 0 16px;
-            }
+            .search-form { padding: 0 6px 0 16px; }
 
-            .search-form button {
-                padding: 10px 18px;
-            }
+            .search-form button { padding: 10px 18px; }
 
-            .search-form button span {
-                display: none;
-            }
+            .search-form button span { display: none; }
 
-            .filter-bar {
-                padding: 0 15px;
-            }
+            .filter-bar { padding: 0 15px; }
 
-            .filter-bar select {
-                flex: 1;
-                min-width: 140px;
-            }
+            .filter-bar select { flex: 1; min-width: 140px; }
 
-            .products-container {
-                padding: 30px 15px 60px;
-            }
+            .products-container { padding: 30px 15px 60px; }
 
             .product-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 14px;
             }
 
-            .product-card {
-                padding: 16px;
-            }
+            .product-card { padding: 16px; }
 
             .product-card h4 {
                 font-size: 15px;
                 min-height: 42px;
             }
 
-            .product-card .price {
-                font-size: 18px;
+            .product-card .price { font-size: 18px; }
+
+            .btn-compare-toggle {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
             }
         }
 
         @media (max-width: 420px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
+            .product-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== Hero ===== -->
     <section class="search-hero">
         <span class="badge" data-aos="fade-down">
             <i class="fas fa-search"></i>
@@ -541,7 +553,6 @@
             جاري البحث...
         </p>
 
-        <!-- Search Form -->
         <div class="search-form-container" data-aos="fade-up" data-aos-delay="300">
             <form class="search-form" id="searchForm">
                 <i class="fas fa-search"></i>
@@ -554,7 +565,6 @@
         </div>
     </section>
 
-    <!-- ===== Filter Bar ===== -->
     <div class="filter-bar" id="filterBar" data-aos="fade-up" data-aos-delay="400" style="display: none;">
         <select id="sortFilter">
             <option value="default">الترتيب الافتراضي</option>
@@ -565,10 +575,8 @@
         </select>
     </div>
 
-    <!-- ===== Products Container ===== -->
     <div class="products-container">
 
-        <!-- Loading Skeleton -->
         <div id="loadingState">
             <div class="skeleton-product-grid">
                 <div class="skeleton-product-card">
@@ -598,10 +606,8 @@
             </div>
         </div>
 
-        <!-- Products Grid -->
         <div class="product-grid" id="productGrid" style="display: none;"></div>
 
-        <!-- Empty State -->
         <div class="empty-state" id="emptyState">
             <div class="empty-icon">
                 <i class="fas fa-search-minus"></i>
@@ -624,21 +630,17 @@
 
     </div>
 
-    <!-- ===== Scripts ===== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
+    <script src="../shared/compare.js"></script>
     <script src="../shared/navbar.js"></script>
     <script src="../shared/footer.js"></script>
 
     <script>
-        /* ========================================
-           Search Results Page
-           ======================================== */
-
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 700, once: true, offset: 50 });
 
@@ -648,7 +650,6 @@
                 return;
             }
 
-            // ===== DOM Elements =====
             const searchForm    = document.getElementById('searchForm');
             const searchInput   = document.getElementById('searchInput');
             const queryDisplay  = document.getElementById('queryDisplay');
@@ -660,12 +661,10 @@
             const productGrid   = document.getElementById('productGrid');
             const emptyState    = document.getElementById('emptyState');
 
-            // ===== State =====
             let currentQuery = '';
             let allResults = [];
             let displayedResults = [];
 
-            // ===== Helpers =====
             function safeToString(v) {
                 return (v === null || v === undefined) ? '' : String(v);
             }
@@ -677,17 +676,11 @@
                 return div.innerHTML;
             }
 
-            function escapeRegex(str) {
-                return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            }
-
-            // ===== Get Query from URL =====
             function getQueryFromURL() {
                 const params = new URLSearchParams(window.location.search);
                 return (params.get('q') || '').trim();
             }
 
-            // ===== Update URL =====
             function updateURL(query) {
                 const url = new URL(window.location);
                 if (query) {
@@ -698,7 +691,6 @@
                 window.history.replaceState({}, '', url);
             }
 
-            // ===== Update Header =====
             function updateHeader(query, count) {
                 queryDisplay.textContent = query;
                 emptyQuery.textContent = query;
@@ -764,8 +756,31 @@
                     window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
                 });
 
+                // ⚖️ Compare button
+                const compareBtn = document.createElement('button');
+                compareBtn.className = 'btn-compare-toggle';
+                compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
+                compareBtn.title = 'أضف للمقارنة';
+                compareBtn.innerHTML = `<i class="fas fa-balance-scale"></i>`;
+                if (window.isInCompare && window.isInCompare(productId)) {
+                    compareBtn.classList.add('active');
+                }
+                compareBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (window.toggleCompare) {
+                        const added = window.toggleCompare({
+                            id: productId,
+                            name: productName,
+                            price: price,
+                            image: imageUrl
+                        });
+                        this.classList.toggle('active', added);
+                    }
+                });
+
                 actions.appendChild(cartBtn);
                 actions.appendChild(detailsBtn);
+                actions.appendChild(compareBtn);
 
                 card.appendChild(badge);
                 card.appendChild(title);
@@ -822,7 +837,7 @@
                 render();
             }
 
-            // ===== Search — 3-tier (Supabase ilike → client-side → first word) =====
+            // ===== Search =====
             async function performSearch(query) {
                 if (!query) {
                     window.location.href = 'products.html';
@@ -834,7 +849,6 @@
                 updateURL(query);
                 updateHeader(query, 0);
 
-                // عرض loading
                 loadingState.style.display = 'block';
                 productGrid.style.display = 'none';
                 emptyState.classList.remove('show');
@@ -844,10 +858,9 @@
                 let results = [];
 
                 try {
-                    // ===== محاولة 1: ilike في Supabase =====
+                    // Attempt 1: ilike in Supabase
                     try {
                         const safeQuery = queryLower.replace(/[%_\\]/g, '\\$&');
-
                         const { data, error } = await supabase
                             .from('Product')
                             .select('Product_ID, Product_Name, Selling_Price, Image_URL')
@@ -855,18 +868,14 @@
 
                         if (error) throw error;
                         results = data || [];
-
                         console.log(`📡 Supabase ilike → ${results.length} results`);
-
                     } catch (ilikeErr) {
                         console.warn('⚠️ ilike failed, using fallback:', ilikeErr.message);
                         results = [];
                     }
 
-                    // ===== محاولة 2: لو ilike رجع 0، فلترة محلية =====
+                    // Attempt 2: client-side filter
                     if (results.length === 0) {
-                        console.log('🔄 Trying client-side fallback...');
-
                         const { data: allProducts, error: allErr } = await supabase
                             .from('Product')
                             .select('Product_ID, Product_Name, Selling_Price, Image_URL');
@@ -877,17 +886,13 @@
                             const name = String(p.Product_Name || '').toLowerCase().trim();
                             return name.includes(queryLower);
                         });
-
                         console.log(`🔍 Client-side filter → ${results.length} results`);
                     }
 
-                    // ===== محاولة 3: لو لسه 0 والبحث فيه أكتر من كلمة، جرب أول كلمة =====
+                    // Attempt 3: first word only
                     if (results.length === 0 && queryLower.includes(' ')) {
                         const firstWord = queryLower.split(/\s+/)[0];
-
                         if (firstWord.length >= 2) {
-                            console.log(`🔄 Trying first word only: "${firstWord}"`);
-
                             const { data: allProducts } = await supabase
                                 .from('Product')
                                 .select('Product_ID, Product_Name, Selling_Price, Image_URL');
@@ -896,12 +901,10 @@
                                 const name = String(p.Product_Name || '').toLowerCase();
                                 return name.includes(firstWord);
                             });
-
                             console.log(`🔍 First word "${firstWord}" → ${results.length} results`);
                         }
                     }
 
-                    // ===== النتيجة النهائية =====
                     allResults = results;
                     displayedResults = [...allResults];
 
@@ -909,12 +912,9 @@
                     updateHeader(query, allResults.length);
                     applySort();
 
-                    if (window.AOS && typeof AOS.refresh === 'function') {
-                        AOS.refresh();
-                    }
+                    if (window.AOS && typeof AOS.refresh === 'function') AOS.refresh();
 
                     console.log(`✅ Search "${query}" → ${allResults.length} results total`);
-
                 } catch (err) {
                     console.error('❌ Search failed:', err);
                     loadingState.style.display = 'none';
@@ -923,13 +923,10 @@
                     updateHeader(query, 0);
                     render();
 
-                    if (window.showToast) {
-                        window.showToast('فشل البحث — حاول تاني', 'error');
-                    }
+                    if (window.showToast) window.showToast('فشل البحث — حاول تاني', 'error');
                 }
             }
 
-            // ===== Form Submit =====
             searchForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const query = searchInput.value.trim();
@@ -939,10 +936,8 @@
                 }
             });
 
-            // ===== Sort Change =====
             sortFilter.addEventListener('change', applySort);
 
-            // ===== Initial Load =====
             const initialQuery = getQueryFromURL();
             if (initialQuery) {
                 performSearch(initialQuery);
@@ -950,7 +945,7 @@
                 window.location.href = 'products.html';
             }
 
-            console.log('%c🔍 Search Results page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+            console.log('%c🔍 Search Results page loaded (with compare)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
         });
     </script>
 </body>
