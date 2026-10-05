@@ -1,13 +1,10 @@
 /* ==================== shared/cart.js ==================== */
-/* إدارة السلة لكل مستخدم على حدة */
 
 (function() {
     'use strict';
-
     const GUEST_KEY = 'cart_guest';
-    const LEGACY_KEY = 'cart';  // المفتاح القديم
+    const LEGACY_KEY = 'cart';
 
-    // ===== Migration: نقل السلة القديمة =====
     function migrateLegacyCart() {
         try {
             const legacy = localStorage.getItem(LEGACY_KEY);
@@ -17,7 +14,6 @@
 
             const oldCart = JSON.parse(legacy);
             if (Array.isArray(oldCart) && oldCart.length > 0) {
-                // ادمجها في سلة الزائر
                 const guestCart = JSON.parse(localStorage.getItem(GUEST_KEY)) || [];
                 const merged = [...guestCart];
 
@@ -40,16 +36,13 @@
         }
     }
 
-    // شغّل الـ migration أول ما الملف يتحمّل
     migrateLegacyCart();
 
-    // ===== تحديد مفتاح السلة =====
     function getCartKey() {
         const userId = window.currentUser?.id;
         return userId ? `cart_${userId}` : GUEST_KEY;
     }
 
-    // ===== قراءة السلة =====
     window.getCart = function() {
         try {
             const key = getCartKey();
@@ -61,7 +54,6 @@
         }
     };
 
-    // ===== حفظ السلة =====
     window.saveCart = function(cart) {
         try {
             const key = getCartKey();
@@ -72,7 +64,6 @@
         }
     };
 
-    // ===== إضافة منتج =====
     window.addToCartItem = function(productId, productName, price, imageUrl) {
         const cart = window.getCart();
         const existing = cart.find(item => String(item.id) === String(productId));
@@ -94,7 +85,6 @@
         window.saveCart(cart);
     };
 
-    // ===== حذف منتج =====
     window.removeFromCart = function(productId) {
         const cart = window.getCart();
         const item = cart.find(i => String(i.id) === String(productId));
@@ -103,13 +93,11 @@
         if (item) window.showToast(`🗑️ تم حذف "${item.name}" من السلة`, 'info');
     };
 
-    // ===== تفريغ السلة =====
     window.clearCartItems = function() {
         window.saveCart([]);
         window.showToast('🗑️ تم تفريغ السلة', 'info');
     };
 
-    // ===== نقل سلة الزائر للمستخدم الجديد =====
     window.mergeGuestCart = function(userId) {
         try {
             const guestCart = JSON.parse(localStorage.getItem(GUEST_KEY)) || [];
@@ -120,7 +108,6 @@
             const userKey = `cart_${userId}`;
             const userCart = JSON.parse(localStorage.getItem(userKey)) || [];
 
-            // دمج السلتين
             guestCart.forEach(guestItem => {
                 const existing = userCart.find(u => String(u.id) === String(guestItem.id));
                 if (existing) {
@@ -135,7 +122,6 @@
 
             console.log('✅ تم دمج السلة بنجاح');
 
-            // إشعار بتحديث السلة
             window.dispatchEvent(new CustomEvent('cartUpdated'));
 
         } catch (e) {
@@ -143,7 +129,6 @@
         }
     };
 
-    // ===== مسح سلة مستخدم معين (اختياري) =====
     window.clearUserCart = function(userId) {
         if (userId) {
             localStorage.removeItem(`cart_${userId}`);

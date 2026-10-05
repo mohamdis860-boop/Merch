@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نتائج البحث | متجرنا</title>
     <meta name="description" content="نتائج البحث عن المنتجات في متجرنا.">
-
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
     <link rel="stylesheet" href="../shared/footer.css">
-
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <style>
@@ -36,7 +31,6 @@
             line-height: 1.7;
         }
 
-        /* ===== Hero ===== */
         .search-hero {
             padding: 60px 20px 30px;
             text-align: center;
@@ -100,7 +94,6 @@
             font-size: 1.15rem;
         }
 
-        /* ===== Search Form ===== */
         .search-form-container {
             max-width: 700px;
             margin: 30px auto 0;
@@ -170,7 +163,6 @@
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
         }
 
-        /* ===== Filter Bar ===== */
         .filter-bar {
             max-width: 1200px;
             margin: 30px auto 0;
@@ -214,7 +206,6 @@
 
         .filter-bar select option { background: #1a1a2e; color: #fff; }
 
-        /* ===== Product Grid ===== */
         .products-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -367,7 +358,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== Compare Toggle Button ===== */
         .btn-compare-toggle {
             background: rgba(255, 255, 255, 0.08);
             color: white;
@@ -418,7 +408,6 @@
             border: 2px solid #0a0a1a;
         }
 
-        /* ===== Empty State ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px 40px;
@@ -497,7 +486,6 @@
             color: #fff;
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 640px) {
             .search-hero { padding: 40px 20px 20px; }
 
@@ -704,7 +692,6 @@
                 document.title = `نتائج البحث عن "${query}" | متجرنا`;
             }
 
-            // ===== Create Product Card =====
             function createProductCard(item, index) {
                 const productId = safeToString(item.Product_ID);
                 const productName = safeToString(item.Product_Name) || 'بدون اسم';
@@ -756,7 +743,6 @@
                     window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
                 });
 
-                // ⚖️ Compare button
                 const compareBtn = document.createElement('button');
                 compareBtn.className = 'btn-compare-toggle';
                 compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
@@ -794,7 +780,6 @@
                 return card;
             }
 
-            // ===== Render =====
             function render() {
                 if (!displayedResults || displayedResults.length === 0) {
                     productGrid.style.display = 'none';
@@ -813,7 +798,6 @@
                 });
             }
 
-            // ===== Sort =====
             function applySort() {
                 const sort = sortFilter.value;
                 const sorted = [...allResults];
@@ -837,7 +821,6 @@
                 render();
             }
 
-            // ===== Search =====
             async function performSearch(query) {
                 if (!query) {
                     window.location.href = 'products.html';
@@ -858,7 +841,6 @@
                 let results = [];
 
                 try {
-                    // Attempt 1: ilike in Supabase
                     try {
                         const safeQuery = queryLower.replace(/[%_\\]/g, '\\$&');
                         const { data, error } = await supabase
@@ -874,7 +856,6 @@
                         results = [];
                     }
 
-                    // Attempt 2: client-side filter
                     if (results.length === 0) {
                         const { data: allProducts, error: allErr } = await supabase
                             .from('Product')
@@ -889,7 +870,6 @@
                         console.log(`🔍 Client-side filter → ${results.length} results`);
                     }
 
-                    // Attempt 3: first word only
                     if (results.length === 0 && queryLower.includes(' ')) {
                         const firstWord = queryLower.split(/\s+/)[0];
                         if (firstWord.length >= 2) {

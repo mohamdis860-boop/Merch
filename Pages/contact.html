@@ -5,31 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تواصل معنا | متجرنا</title>
     <meta name="description" content="تواصل معنا لأي استفسار أو شكوى — نحن هنا لمساعدتك على مدار 12 ساعة.">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Shared CSS -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/footer.css">
-
-    <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <style>
-        /* ========================================
-           Contact Page Styles
-           ======================================== */
 
         * {
             margin: 0;
@@ -48,7 +35,6 @@
             line-height: 1.7;
         }
 
-        /* ===== Hero ===== */
         .contact-hero {
             padding: 80px 20px 60px;
             text-align: center;
@@ -106,14 +92,12 @@
             color: #ff6b6b;
         }
 
-        /* ===== Container ===== */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ===== Info Cards ===== */
         .contact-info {
             padding: 40px 0;
         }
@@ -174,7 +158,6 @@
             color: #ff6b6b;
         }
 
-        /* ===== Form ===== */
         .contact-form-section {
             padding: 40px 0 80px;
         }
@@ -354,7 +337,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== Mini FAQ ===== */
         .contact-faq {
             padding: 40px 0 80px;
             background: rgba(0, 0, 0, 0.2);
@@ -433,7 +415,6 @@
             text-decoration: underline;
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 640px) {
             .contact-hero {
                 padding: 60px 20px 40px;
@@ -483,7 +464,6 @@
 </head>
 <body>
 
-    <!-- ===== Hero ===== -->
     <section class="contact-hero">
         <h1 data-aos="fade-up">تواصل معنا</h1>
         <p data-aos="fade-up" data-aos-delay="100">
@@ -492,7 +472,6 @@
         </p>
     </section>
 
-    <!-- ===== Info Cards ===== -->
     <section class="contact-info">
         <div class="container">
             <div class="info-grid">
@@ -525,7 +504,6 @@
         </div>
     </section>
 
-    <!-- ===== Contact Form ===== -->
     <section class="contact-form-section">
         <div class="container">
             <div class="form-wrapper" data-aos="fade-up">
@@ -588,7 +566,6 @@
         </div>
     </section>
 
-    <!-- ===== Mini FAQ ===== -->
     <section class="contact-faq">
         <div class="container">
             <h2 data-aos="fade-up">أسئلة سريعة</h2>
@@ -614,11 +591,9 @@
         </div>
     </section>
 
-    <!-- ===== Scripts ===== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- ✅ EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script src="../shared/config.js"></script>
@@ -627,11 +602,6 @@
     <script src="../shared/footer.js"></script>
 
     <script>
-        /* ========================================
-           Contact Page — Form + EmailJS
-           ======================================== */
-
-        // ===== إعدادات EmailJS =====
         const EMAILJS_CONFIG = {
             serviceId:  'service_dnx1ixd',
             templateId: 'template_860mz8v',
@@ -641,7 +611,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 700, once: true, offset: 50 });
 
-            // ===== تهيئة EmailJS =====
             if (typeof emailjs !== 'undefined') {
                 emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
                 console.log('✅ EmailJS initialized');
@@ -649,7 +618,6 @@
                 console.warn('⚠️ EmailJS SDK not loaded');
             }
 
-            // ===== Character Counter =====
             const messageEl = document.getElementById('message');
             const charCountEl = document.getElementById('charCount');
             const counterEl = charCountEl?.parentElement;
@@ -663,7 +631,6 @@
                 });
             }
 
-            // ===== Validation Helpers =====
             const showError = (input, msg) => {
                 const group = input.closest('.form-group');
                 group.classList.add('error');
@@ -706,7 +673,6 @@
                 }
             };
 
-            // ===== Live Validation =====
             const form = document.getElementById('contactForm');
             if (!form) return;
 
@@ -731,11 +697,9 @@
                 });
             });
 
-            // ===== Submit =====
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                // 1. Validate
                 let hasError = false;
                 fields.forEach((id) => {
                     const input = document.getElementById(id);
@@ -752,14 +716,12 @@
                     return;
                 }
 
-                // 2. Loading state
                 const btn = document.getElementById('submitBtn');
                 const originalHTML = btn.innerHTML;
                 btn.disabled = true;
                 btn.classList.add('loading');
                 btn.innerHTML = '<i class="fas fa-spinner"></i><span>جاري الإرسال...</span>';
 
-                // 3. Send via EmailJS
                 try {
                     const response = await emailjs.sendForm(
                         EMAILJS_CONFIG.serviceId,
@@ -774,7 +736,6 @@
                         window.showToast('تم استلام رسالتك — هنرد عليك قريب', 'success');
                     }
 
-                    // Reset form
                     form.reset();
                     if (charCountEl) charCountEl.textContent = '0';
                     if (counterEl) counterEl.classList.remove('warning', 'danger');

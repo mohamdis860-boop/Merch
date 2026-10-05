@@ -7,8 +7,6 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ✅ Shared Styles (مسار من Pages/) -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/footer.css">
@@ -50,7 +48,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Background ===== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -123,7 +120,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main Content ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -163,7 +159,6 @@
             transform: translateX(4px);
         }
 
-        /* ===== Page Header ===== */
         .page-header {
             text-align: center;
             margin-bottom: 50px;
@@ -213,7 +208,6 @@
             animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        /* ===== About Grid ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -329,7 +323,6 @@
             color: var(--secondary);
         }
 
-        /* ===== About Cards ===== */
         .about-cards {
             animation: fadeInUp 0.9s ease-out 0.4s both;
         }
@@ -450,7 +443,6 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
         }
 
-        /* ===== Team Section ===== */
         .team-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -582,7 +574,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* ===== Footer ===== */
         .footer {
             position: relative;
             z-index: 5;
@@ -607,7 +598,6 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 30px;
@@ -638,7 +628,6 @@
 </head>
 <body>
 
-    <!-- Animated Colorful Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -647,9 +636,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
-
-    <!-- Main Content -->
     <div class="main-content">
 
         <a href="../index.html" class="back-btn">
@@ -794,7 +780,6 @@
 
     </div>
 
-    <!-- ✅ Shared Scripts (مسار من Pages/) -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>    
     <script src="../shared/toast.js"></script>
@@ -802,7 +787,6 @@
     <script src="../shared/footer.js"></script>
 
     <script>
-        // الصفحة دي مش محتاجة JavaScript إضافي — كل حاجة بتتعمل تلقائياً من shared/navbar.js
 
         console.log('%cℹ️ About page loaded', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
     </script>

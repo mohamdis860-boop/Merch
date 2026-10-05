@@ -1,5 +1,4 @@
 /* ==================== shared/config.js ==================== */
-/* إعدادات Supabase في مكان واحد — كل الصفحات تستخدم الملف ده */
 
 window.APP_CONFIG = {
     SUPABASE_URL: 'https://cqdgqawjxofbwzcoliut.supabase.co',
@@ -7,7 +6,6 @@ window.APP_CONFIG = {
     STORAGE_BUCKET: 'products'
 };
 
-// إنشاء Supabase client عام (يستخدمه كل الملفات)
 window.getSupabase = function() {
     if (!window.supabase) {
         console.warn('⚠️ Supabase library not loaded yet');
@@ -24,12 +22,10 @@ window.getSupabase = function() {
     return window._supabaseClient;
 };
 
-// رابط الـ Storage
 window.getStorageUrl = function() {
     return `${window.APP_CONFIG.SUPABASE_URL}/storage/v1/object/public/${window.APP_CONFIG.STORAGE_BUCKET}/`;
 };
 
-// دالة عامة: تحويل مسار الصورة لرابط كامل
 window.getImageUrl = function(imagePath) {
     if (!imagePath || imagePath.trim() === '') return null;
     if (imagePath.startsWith('http')) return imagePath;

@@ -126,7 +126,6 @@
             transform: translateX(6px);
         }
 
-        /* ===== Error State ===== */
         .error-state {
             text-align: center;
             padding: 100px 20px;
@@ -157,7 +156,6 @@
             font-weight: 700;
         }
 
-        /* ===== Product Layout ===== */
         .product-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -529,7 +527,6 @@
             box-shadow: 0 8px 25px rgba(253, 121, 168, 0.5);
         }
 
-        /* ===== Compare Button ===== */
         .compare-btn {
             display: inline-flex;
             align-items: center;
@@ -579,7 +576,6 @@
             font-weight: 900;
         }
 
-        /* ===== Reviews ===== */
         .reviews-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -786,7 +782,6 @@
             display: block;
         }
 
-        /* ===== Similar ===== */
         .similar-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -868,7 +863,6 @@
             color: var(--secondary);
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .product-layout {
                 grid-template-columns: 1fr;
@@ -914,7 +908,6 @@
             العودة للمنتجات
         </a>
 
-        <!-- Skeleton -->
         <div id="skeletonContainer">
             <div class="skeleton-details-layout">
                 <div class="skeleton skeleton-details-image"></div>
@@ -929,7 +922,6 @@
             </div>
         </div>
 
-        <!-- Error -->
         <div class="error-state" id="errorState" style="display: none;">
             <i class="fas fa-box-open"></i>
             <h2>المنتج غير موجود</h2>
@@ -940,7 +932,6 @@
             </a>
         </div>
 
-        <!-- Product Content -->
         <div id="productContent" style="display: none;">
 
             <div class="product-layout" data-aos="fade-up" data-aos-delay="200">
@@ -1025,7 +1016,6 @@
 
             </div>
 
-            <!-- Reviews -->
             <div class="reviews-section" data-aos="fade-up">
                 <h2 class="section-title">
                     <i class="fas fa-star"></i>
@@ -1036,7 +1026,6 @@
                 <div class="reviews-list" id="reviewsList"></div>
             </div>
 
-            <!-- Similar -->
             <div class="similar-section" data-aos="fade-up">
                 <h2 class="section-title">
                     <i class="fas fa-gift"></i>
@@ -1105,7 +1094,6 @@
                 return html;
             }
 
-            // ===== Wishlist =====
             function getWishlist() {
                 return JSON.parse(localStorage.getItem('wishlist')) || [];
             }
@@ -1279,11 +1267,9 @@
                     addBtn.querySelector('span').textContent = 'غير متاح';
                 }
 
-                // ✅ Update compare button state
                 updateCompareBtnState();
             }
 
-            // ===== Compare Button =====
             const compareBtn = document.getElementById('compareBtn');
 
             function updateCompareBtnState() {
@@ -1320,11 +1306,9 @@
                     updateCompareBtnState();
                 });
 
-                // Listen for compare updates
                 window.addEventListener('compareUpdated', updateCompareBtnState);
             }
 
-            // ===== Quantity =====
             document.getElementById('increaseQty').addEventListener('click', () => {
                 if (currentQuantity < 99) {
                     currentQuantity++;
@@ -1339,7 +1323,6 @@
                 }
             });
 
-            // ===== Add to Cart =====
             document.getElementById('addToCartBtn').addEventListener('click', function() {
                 const statusAvailable = (currentProduct.Status || '').toLowerCase() === 'available' || (currentProduct.Status || '').toLowerCase() === 'active' || !currentProduct.Status;
                 if (!statusAvailable) {
@@ -1366,7 +1349,6 @@
                 }, 1500);
             });
 
-            // ===== Wishlist =====
             document.getElementById('wishlistBtn').addEventListener('click', function() {
                 const added = toggleWishlist(currentProduct.Product_ID);
 
@@ -1381,7 +1363,6 @@
                 }
             });
 
-            // ===== Reviews =====
             async function loadReviews() {
                 const productId = currentProduct.Product_ID;
 
@@ -1621,7 +1602,6 @@
                 }
             }
 
-            // ===== Similar =====
             async function loadSimilarProducts() {
                 if (!currentProduct.Category_ID) return;
 

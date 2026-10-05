@@ -8,8 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ✅ Shared Styles -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -246,7 +244,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== Loading Spinner (جديد) ===== */
         .cart-loading {
             display: flex;
             flex-direction: column;
@@ -725,7 +722,6 @@
 </head>
 <body>
 
-    <!-- Animated Colorful Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -734,9 +730,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
-
-    <!-- Main Content -->
     <div class="main-content">
 
         <div class="back-btn" onclick="window.location.href='products.html'">
@@ -784,7 +777,6 @@
    </div>
   </div>
 
-    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
@@ -797,15 +789,12 @@
 
             const cartContainer = document.getElementById('cartContainer');
 
-            // ✅ ابدأ فاضي — هيتحدّث لما المستخدم يتحمّل
             let cart = [];
 
-            // ===== reload السلة =====
             function reloadCart() {
                 cart = window.getCart();
             }
 
-            // ===== أدوات مساعدة =====
             function escapeHtml(text) {
                 if (!text) return '';
                 const div = document.createElement('div');
@@ -829,7 +818,6 @@
                 }, 2500);
             }
 
-            // ===== حذف منتج =====
             window.removeFromCartLocal = function(productId) {
                 const item = cart.find(i => String(i.id) === String(productId));
                 if (item) {
@@ -840,7 +828,6 @@
                 updateCartDisplay();
             };
 
-            // ===== تحديث الكمية =====
             window.updateQuantity = function(productId, change) {
                 const item = cart.find(i => String(i.id) === String(productId));
                 if (!item) return;
@@ -860,7 +847,6 @@
                 updateCartDisplay();
             };
 
-            // ===== تفريغ السلة =====
             window.clearCart = function() {
                 if (cart.length === 0) return;
                 if (!confirm('هل أنت متأكد من تفريغ السلة؟')) return;
@@ -870,7 +856,6 @@
                 updateCartDisplay();
             };
 
-            // ===== Sortable =====
             function initializeSortable() {
                 if (!window.Sortable) return;
 
@@ -906,7 +891,6 @@
                 });
             }
 
-            // ===== عرض السلة =====
             function updateCartDisplay() {
                 if (cart.length === 0) {
                     cartContainer.innerHTML = `
@@ -981,7 +965,6 @@
                 setTimeout(() => initializeSortable(), 150);
             }
 
-            // ===== الاستماع للتحديثات =====
             window.addEventListener('cartUpdated', () => {
                 console.log('🔄 cartUpdated event received');
                 reloadCart();
@@ -995,31 +978,19 @@
                 }
             });
 
-            // ===== التهيئة =====
-            // المشكلة: navbar.js بيعمل checkAuth بشكل async
-            // فلما الصفحة تشتغل، window.currentUser لسه null
-            // وبالتالي getCart() بترجع 'cart_guest' اللي فاضي!
-            //
-            // الحل: استنى cartUpdated من navbar.js أو استخدم fallback
-
             async function initCart() {
                 console.log('⏳ Waiting for user auth...');
 
-                // استنى لحد ما navbar.js يخلّص checkAuth
-                // (بيعمل cartUpdated بعد ما يعرف المستخدم)
                 let attempts = 0;
                 const maxAttempts = 30; // 3 seconds
 
                 while (attempts < maxAttempts) {
-                    // لو الـ user اتحط أو لو guest cart موجود
                     if (window.currentUser) {
                         console.log('✅ User ready:', window.currentUser.email);
                         break;
                     }
 
-                    // لو guest mode و مفيش session
                     if (attempts >= 10) {
-                        // استنى 1.5 ثانية كفاية
                         console.log('👤 Assuming guest mode');
                         break;
                     }
@@ -1028,7 +999,6 @@
                     attempts++;
                 }
 
-                // دلوقتي اقرأ السلة
                 reloadCart();
                 updateCartDisplay();
 

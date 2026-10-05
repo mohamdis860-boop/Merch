@@ -1,7 +1,5 @@
 /* ==================== shared/navbar.css ==================== */
-/* أنماط موحّدة للـ Navbar في كل الصفحات */
 
-/* ===== Navbar ===== */
 .navbar {
     position: relative;
     z-index: 10;
@@ -96,7 +94,6 @@
     color: #ff6b6b;
 }
 
-/* ===== مربع البحث في البار ===== */
 .navbar .nav-search {
     display: flex;
     align-items: center;
@@ -143,7 +140,6 @@
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* ===== عداد السلة ===== */
 .navbar .cart-badge {
     position: relative;
 }
@@ -173,7 +169,6 @@
     100% { transform: scale(1); }
 }
 
-/* ===== زر البروفايل ===== */
 .navbar .profile-btn {
     display: flex;
     align-items: center;
@@ -221,7 +216,6 @@
     white-space: nowrap;
 }
 
-/* ===== زر الدخول ===== */
 .navbar .login-btn {
     display: flex;
     align-items: center;
@@ -253,7 +247,6 @@
     font-size: 16px;
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 1200px) {
     .navbar .nav-search {
         width: 160px;
@@ -311,7 +304,6 @@
         gap: 15px;
     }
 }
-    /* ===== عداد المفضلة ===== */
 .navbar .wishlist-badge {
     position: relative;
 }
@@ -335,7 +327,6 @@
     pointer-events: none;
 }
 
-/* الأيقونة تبقى حمرا */
 .navbar .wishlist-badge i.fa-heart {
     color: rgba(253, 121, 168, 0.8);
 }

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحة غير موجودة - متجرنا</title>
-    
-    <!-- ===== PWA & Favicons (من Root، مفيش ../) ===== -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -14,12 +12,8 @@
     <meta name="theme-color" content="#ff6b6b">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <!-- ===== Libraries ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ===== Shared Styles ===== -->
     <link rel="stylesheet" href="shared/navbar.css">
     <link rel="stylesheet" href="shared/toast.css">
     
@@ -64,7 +58,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Background ===== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -127,7 +120,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Floating Icons ===== */
         .floating-icon {
             position: absolute;
             color: rgba(255, 255, 255, 0.04);
@@ -149,7 +141,6 @@
             50% { transform: translateY(-30px) rotate(15deg); opacity: 0.08; }
         }
 
-        /* ===== Main Content ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -173,7 +164,6 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ===== 404 Number ===== */
         .error-number {
             font-size: 180px;
             font-weight: 900;
@@ -211,7 +201,6 @@
             50% { transform: translateY(-20px) rotate(5deg); }
         }
 
-        /* ===== Icon ===== */
         .error-icon {
             font-size: 70px;
             color: var(--primary);
@@ -228,7 +217,6 @@
             75% { transform: rotate(15deg) scale(1.1); }
         }
 
-        /* ===== Title ===== */
         .error-title {
             font-size: 42px;
             font-weight: 900;
@@ -245,7 +233,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== Subtitle ===== */
         .error-subtitle {
             font-size: 18px;
             color: rgba(255, 255, 255, 0.6);
@@ -257,7 +244,6 @@
             margin-right: auto;
         }
 
-        /* ===== Buttons ===== */
         .error-buttons {
             display: flex;
             gap: 15px;
@@ -324,7 +310,6 @@
             box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
         }
 
-        /* ===== Quick Links ===== */
         .quick-links {
             animation: fadeInUp 0.8s ease-out 0.9s both;
         }
@@ -381,7 +366,6 @@
             font-size: 14px;
         }
 
-        /* ===== Footer ===== */
         .footer {
             position: relative;
             z-index: 5;
@@ -404,7 +388,6 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .error-number {
                 font-size: 120px;
@@ -454,7 +437,6 @@
 </head>
 <body>
 
-    <!-- Animated Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -462,7 +444,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- Floating Icons -->
     <i class="fas fa-search floating-icon"></i>
     <i class="fas fa-exclamation-triangle floating-icon"></i>
     <i class="fas fa-compass floating-icon"></i>
@@ -470,31 +451,23 @@
     <i class="fas fa-question floating-icon"></i>
     <i class="fas fa-ghost floating-icon"></i>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
-
-    <!-- Main Content -->
     <div class="main-content">
         <div class="error-container">
 
-            <!-- Big 404 -->
             <div class="error-number">
                 <span>4</span><span>0</span><span>4</span>
             </div>
 
-            <!-- Icon -->
             <i class="fas fa-search-minus error-icon"></i>
 
-            <!-- Title -->
             <h1 class="error-title">الصفحة غير موجودة!</h1>
 
-            <!-- Subtitle -->
             <p class="error-subtitle">
                 عذراً، الصفحة اللي بتدور عليها مش موجودة أو اتنقلت لمكان تاني.
                 <br>
                 تأكد من الرابط أو ارجع للصفحة الرئيسية.
             </p>
 
-            <!-- Buttons -->
             <div class="error-buttons">
                 <a href="index.html" class="error-btn error-btn-primary">
                     <i class="fas fa-home"></i>
@@ -506,7 +479,6 @@
                 </a>
             </div>
 
-            <!-- Quick Links -->
             <div class="quick-links">
                 <div class="quick-links-title">
                     <i class="fas fa-link"></i>
@@ -535,7 +507,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
         <p>
             <i class="fas fa-heart"></i>
@@ -543,14 +514,12 @@
         </p>
     </div>
 
-    <!-- ✅ Shared Scripts -->
     <script src="shared/config.js"></script>
     <script src="shared/cart.js"></script>
     <script src="shared/toast.js"></script>
     <script src="shared/navbar.js"></script>
 
     <script>
-        // ===== تسجيل Service Worker =====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
@@ -563,7 +532,6 @@
             });
         }
 
-        // ===== تسجيل الصفحة في Console =====
         console.log('%c❌ 404 Page Loaded', 'color: #ff4757; font-size: 20px; font-weight: bold;');
         console.log('%c🔗 المسار المطلوب:', 'color: #ffd93d; font-size: 14px;', window.location.pathname);
     </script>

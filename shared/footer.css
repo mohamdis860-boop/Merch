@@ -1,5 +1,4 @@
 /* ==================== shared/footer.css ==================== */
-/* الفوتر الموحّد — يتحمّل تلقائياً في كل الصفحات */
 
 .footer-main {
     position: relative;
@@ -49,7 +48,6 @@
     z-index: 1;
 }
 
-/* ===== القسم 1: عن المتجر ===== */
 .footer-brand .footer-logo {
     font-size: 26px;
     font-weight: 900;
@@ -83,7 +81,6 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* ===== الأقسام العامة ===== */
 .footer-col h4 {
     color: #fff;
     font-size: 1.05rem;
@@ -146,7 +143,6 @@
     transform: translateX(0);
 }
 
-/* ===== قسم التواصل ===== */
 .footer-contact ul li {
     display: flex;
     align-items: flex-start;
@@ -176,7 +172,6 @@
     color: #ff6b6b;
 }
 
-/* ===== الشريط السفلي ===== */
 .footer-bottom {
     max-width: 1200px;
     margin: 50px auto 0;
@@ -211,7 +206,6 @@
     60% { transform: scale(1.2); }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 992px) {
     .footer-container {
         grid-template-columns: 1fr 1fr;
@@ -236,7 +230,6 @@
         gap: 10px;
     }
 }
-/* ==================== Back to Top Button ==================== */
 
 .back-to-top {
     position: fixed;
@@ -300,7 +293,6 @@
     transform: translateY(-3px);
 }
 
-/* Progress Ring (اختياري) */
 .back-to-top .progress-ring {
     position: absolute;
     top: 0;
@@ -321,7 +313,6 @@
     stroke-linecap: round;
 }
 
-/* Responsive */
 @media (max-width: 640px) {
     .back-to-top {
         bottom: 20px;
@@ -332,7 +323,6 @@
     }
 }
 
-/* Print: أخفيه */
 @media print {
     .back-to-top { display: none !important; }
 }

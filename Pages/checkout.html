@@ -7,8 +7,6 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ✅ Shared Styles -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -578,7 +576,6 @@
             box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
         }
 
-        /* ===== Skeleton: Checkout Layout ===== */
         .skeleton-checkout-layout {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
@@ -595,7 +592,6 @@
             animation: skeletonFadeIn 0.5s ease-out both;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .checkout-layout,
             .skeleton-checkout-layout {
@@ -616,7 +612,6 @@
 </head>
 <body>
 
-    <!-- Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -624,9 +619,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً -->
-
-    <!-- Main -->
     <div class="main-content">
 
         <a href="cart.html" class="back-btn">
@@ -640,12 +632,9 @@
             <p>اختار بياناتك وطريقة الدفع</p>
         </div>
 
-        <!-- ===== Skeleton Loading ===== -->
         <div id="skeletonContainer">
             <div class="skeleton-checkout-layout">
-                <!-- Skeleton: Left (Form + Payment) -->
                 <div>
-                    <!-- Form -->
                     <div class="skeleton-checkout-card">
                         <div class="skeleton" style="width: 180px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
                         <div class="skeleton" style="width: 100%; height: 48px; margin-bottom: 15px; border-radius: 12px;"></div>
@@ -654,7 +643,6 @@
                         <div class="skeleton" style="width: 100%; height: 48px; border-radius: 12px;"></div>
                     </div>
 
-                    <!-- Payment -->
                     <div class="skeleton-checkout-card">
                         <div class="skeleton" style="width: 160px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
                         <div class="skeleton" style="width: 100%; height: 76px; margin-bottom: 12px; border-radius: 14px;"></div>
@@ -663,27 +651,22 @@
                     </div>
                 </div>
 
-                <!-- Skeleton: Right (Summary) -->
                 <div>
                     <div class="skeleton-checkout-card">
                         <div class="skeleton" style="width: 140px; height: 22px; margin-bottom: 20px; border-radius: 8px;"></div>
 
-                        <!-- 3 cart items -->
                         <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
                         <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
                         <div class="skeleton" style="width: 100%; height: 80px; margin-bottom: 15px; border-radius: 12px;"></div>
 
-                        <!-- Totals -->
                         <div class="skeleton" style="width: 100%; height: 130px; border-radius: 12px;"></div>
 
-                        <!-- Button -->
                         <div class="skeleton" style="width: 100%; height: 55px; margin-top: 20px; border-radius: 50px;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Empty Cart -->
         <div id="emptyCart" class="empty-cart" style="display: none;">
             <i class="fas fa-shopping-bag"></i>
             <h2>السلة فارغة</h2>
@@ -694,13 +677,10 @@
             </a>
         </div>
 
-        <!-- Checkout -->
         <div class="checkout-layout" id="checkoutLayout" style="display: none;">
 
-            <!-- LEFT: Form + Payment -->
             <div>
 
-                <!-- Shipping Info -->
                 <div class="checkout-card">
                     <h3 class="card-title">
                         <span class="step-num">1</span>
@@ -734,7 +714,6 @@
                     </div>
                 </div>
 
-                <!-- Payment -->
                 <div class="checkout-card">
                     <h3 class="card-title">
                         <span class="step-num">2</span>
@@ -782,7 +761,6 @@
 
             </div>
 
-            <!-- RIGHT: Summary -->
             <div class="summary-sticky">
                 <div class="checkout-card">
                     <h3 class="card-title">
@@ -819,7 +797,6 @@
 
     </div>
 
-    <!-- ✅ Shared Scripts -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
@@ -855,10 +832,8 @@
                 return Number(price || 0).toLocaleString('en-US') + ' ج.م';
             }
 
-            // ===== Init =====
             async function init() {
                 try {
-                    // 1. Check auth
                     const { data: { session } } = await supabase.auth.getSession();
                     if (!session) {
                         window.showToast('❌ لازم تسجل دخول الأول', 'error');
@@ -869,7 +844,6 @@
                     }
                     currentUser = session.user;
 
-                    // 2. Load customer data
                     const { data: customer } = await supabase
                         .from('Customers')
                         .select('*')
@@ -884,10 +858,8 @@
                         City: currentUser.user_metadata?.city || ''
                     };
 
-                    // 3. Load cart
                     cart = window.getCart();
 
-                    // 4. Hide skeleton
                     skeletonContainer.style.display = 'none';
 
                     if (cart.length === 0) {
@@ -899,7 +871,6 @@
                     emptyCart.style.display = 'none';
                     checkoutLayout.style.display = 'grid';
 
-                    // 5. Prefill form + render
                     prefillForm();
                     renderSummary();
                     attachEvents();
@@ -954,7 +925,6 @@
             }
 
             function attachEvents() {
-                // Payment options
                 document.querySelectorAll('.payment-option').forEach(opt => {
                     opt.addEventListener('click', function() {
                         document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
@@ -965,17 +935,14 @@
                     });
                 });
 
-                // Phone input: only digits
                 document.getElementById('phone').addEventListener('input', function() {
                     this.value = this.value.replace(/[^0-9]/g, '');
                 });
 
-                // Confirm button
                 document.getElementById('confirmOrderBtn').addEventListener('click', confirmOrder);
             }
 
             async function confirmOrder() {
-                // Validate
                 const fullName = document.getElementById('fullName').value.trim();
                 const phone = document.getElementById('phone').value.trim();
                 const address = document.getElementById('address').value.trim();
@@ -1025,7 +992,6 @@
 
                     const orderId = orderData.Order_ID || orderData.order_id;
 
-                    // Create Order_Items
                     const itemsPayload = cart.map(item => ({
                         Order_ID: orderId,
                         Product_ID: parseInt(item.id),
@@ -1044,7 +1010,6 @@
 
                     console.log('✅ Order items created');
 
-                    // Clear cart
                     window.clearCartItems();
 
                     window.showToast('✅ تم تأكيد طلبك بنجاح!', 'success');

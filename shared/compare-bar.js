@@ -1,5 +1,4 @@
 /* ==================== shared/compare-bar.js ==================== */
-/* شريط المقارنة السفلي — يتحمّل تلقائياً */
 
 (function() {
     'use strict';
@@ -107,7 +106,6 @@
             goBtn.classList.toggle('disabled', count < 2);
         }
 
-        // Padding للـ body
         document.body.style.paddingBottom = count > 0 ? '100px' : '';
     }
 

@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -44,7 +43,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Background ===== */
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -100,7 +98,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -130,7 +127,6 @@
         .back-btn i { transition: 0.35s; }
         .back-btn:hover i { transform: translateX(4px); }
 
-        /* ===== Page Header ===== */
         .page-header {
             text-align: center;
             margin-bottom: 40px;
@@ -191,7 +187,6 @@
             transform: scale(1.05);
         }
 
-        /* ===== Product Grid ===== */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -439,7 +434,6 @@
             border-color: transparent;
         }
 
-        /* ===== Loading Spinner ===== */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -462,7 +456,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== Empty State ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -482,7 +475,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .page-header h1 { font-size: 30px; }
             .main-content { padding: 30px 15px; }
@@ -645,7 +637,6 @@
                 return 'fa-tag';
             }
 
-            // ===== Create Product Card =====
             function createProductCard(item, index) {
                 const productId = safeToString(item.Product_ID);
                 const productName = safeToString(item.Product_Name) || 'بدون اسم';
@@ -661,7 +652,6 @@
                 card.setAttribute('data-aos', 'zoom-in-up');
                 card.setAttribute('data-aos-delay', String(Math.min(index * 50, 400)));
 
-                // Image
                 const imageWrapper = document.createElement('div');
                 imageWrapper.className = `product-image ${effect}`;
 
@@ -688,16 +678,13 @@
                     `;
                 }
 
-                // ID Badge
                 const idBadge = document.createElement('div');
                 idBadge.className = 'product-id-badge';
                 idBadge.innerHTML = `<i class="fas fa-barcode"></i> ${escapeHtml(productId) || '—'}`;
 
-                // Title
                 const title = document.createElement('h4');
                 title.innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(productName)}`;
 
-                // Price
                 const priceEl = document.createElement('div');
                 priceEl.className = 'price';
                 priceEl.innerHTML = `
@@ -705,11 +692,9 @@
                     ${price > 0 ? Number(price).toLocaleString('en-US') + ' ج.م' : '—'}
                 `;
 
-                // Actions
                 const actions = document.createElement('div');
                 actions.className = 'card-actions';
 
-                // Cart button
                 const cartBtn = document.createElement('button');
                 cartBtn.className = 'btn-sm btn-cart';
                 cartBtn.innerHTML = `<i class="fas fa-cart-plus"></i> أضف`;
@@ -720,13 +705,11 @@
                     setTimeout(() => { this.disabled = false; }, 500);
                 });
 
-                // Details button
                 const detailsBtn = document.createElement('a');
                 detailsBtn.className = 'btn-sm btn-details';
                 detailsBtn.href = `product-details.html?id=${encodeURIComponent(productId)}`;
                 detailsBtn.innerHTML = `<i class="fas fa-eye"></i>`;
 
-                // ⚖️ Compare button
                 const compareBtn = document.createElement('button');
                 compareBtn.className = 'btn-compare-toggle';
                 compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
@@ -752,7 +735,7 @@
                 actions.appendChild(detailsBtn);
                 actions.appendChild(compareBtn);
 
-                // Assemble
+
                 card.appendChild(imageWrapper);
                 card.appendChild(idBadge);
                 card.appendChild(title);
@@ -762,7 +745,6 @@
                 return card;
             }
 
-            // ===== Load Products =====
             async function loadCategoryProducts() {
                 const params = getUrlParams();
                 const categoryId = params.categoryId;

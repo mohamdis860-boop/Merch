@@ -1,5 +1,4 @@
 /* ==================== shared/compare.js ==================== */
-/* إدارة قائمة المقارنة (2 منتجات) — متاحة في كل الصفحات */
 
 (function() {
     'use strict';
@@ -7,7 +6,6 @@
     const STORAGE_KEY = 'compare_list';
     const MAX_ITEMS = 2;
 
-    // ===== قراءة القائمة =====
     window.getCompareList = function() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
@@ -18,7 +16,6 @@
         }
     };
 
-    // ===== حفظ القائمة =====
     window.saveCompareList = function(list) {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(list || []));
@@ -28,20 +25,17 @@
         }
     };
 
-    // ===== إضافة منتج (Toggle) =====
     window.toggleCompare = function(product) {
         const list = window.getCompareList();
         const exists = list.find(p => String(p.id) === String(product.id));
 
         if (exists) {
-            // شيله
             const newList = list.filter(p => String(p.id) !== String(product.id));
             window.saveCompareList(newList);
             if (window.showToast) window.showToast('تم الحذف من المقارنة', 'info');
             return false;
         }
 
-        // لو وصلنا 2، شيل الأقدم
         if (list.length >= MAX_ITEMS) {
             list.shift();
             if (window.showToast) {
@@ -55,25 +49,21 @@
         return true;
     };
 
-    // ===== إزالة =====
     window.removeFromCompare = function(productId) {
         const list = window.getCompareList();
         const newList = list.filter(p => String(p.id) !== String(productId));
         window.saveCompareList(newList);
     };
 
-    // ===== تفريغ =====
     window.clearCompare = function() {
         window.saveCompareList([]);
         if (window.showToast) window.showToast('تم تفريغ المقارنة', 'info');
     };
 
-    // ===== هل موجود؟ =====
     window.isInCompare = function(productId) {
         return window.getCompareList().some(p => String(p.id) === String(productId));
     };
 
-    // ===== العدد =====
     window.getCompareCount = function() {
         return window.getCompareList().length;
     };

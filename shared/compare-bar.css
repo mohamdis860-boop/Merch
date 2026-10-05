@@ -1,6 +1,5 @@
 /* ==================== shared/compare-bar.css ==================== */
 
-/* ===== الشريط السفلي ===== */
 .compare-bar {
     position: fixed;
     bottom: 0;
@@ -177,7 +176,6 @@
     color: #ff6b6b;
 }
 
-/* ===== زر "أضف للمقارنة" في الكارت ===== */
 .btn-compare-toggle {
     background: rgba(255, 255, 255, 0.08);
     color: white;
@@ -235,7 +233,6 @@
     100% { transform: scale(1); }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 640px) {
     .compare-bar-inner {
         flex-direction: column;

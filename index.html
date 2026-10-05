@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجرنا - الرئيسية</title>
-    
-    <!-- ===== PWA & Favicons ===== -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -15,13 +13,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="متجرنا">
-    
-    <!-- ===== Libraries ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    
-    <!-- ===== Shared Styles (من Root، مفيش ../) ===== -->
     <link rel="stylesheet" href="shared/navbar.css">
     <link rel="stylesheet" href="shared/toast.css">
     <link rel="stylesheet" href="shared/skeleton.css">
@@ -64,7 +58,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Colorful Background ===== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -137,7 +130,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main Content ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -146,7 +138,6 @@
             padding: 60px 30px 40px;
         }
 
-        /* ===== Hero Section ===== */
         .hero-section {
             text-align: center;
             padding: 50px 20px 60px;
@@ -237,7 +228,6 @@
             margin-top: 5px;
         }
 
-        /* ===== Buttons ===== */
         .btn {
             padding: 14px 40px;
             border: none;
@@ -301,7 +291,6 @@
             flex-wrap: wrap;
         }
 
-        /* ===== Features Cards ===== */
         .cards-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -395,7 +384,6 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
-        /* ===== Products Section ===== */
         .products-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -464,7 +452,6 @@
             transform: translateX(-5px);
         }
 
-        /* ===== Product Grid ===== */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -615,7 +602,6 @@
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
         }
 
-        /* ===== Loading Spinner ===== */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -638,7 +624,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== Footer ===== */
         .footer {
             position: relative;
             z-index: 5;
@@ -662,7 +647,6 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .hero-section h1 { font-size: 36px; }
             .hero-section .subtitle { font-size: 18px; }
@@ -683,7 +667,6 @@
 </head>
 <body>
 
-    <!-- Animated Colorful Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -692,12 +675,8 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
-
-    <!-- Main Content -->
     <div class="main-content">
 
-        <!-- Hero Section -->
         <section class="hero-section">
             <div class="greeting" id="greeting" data-aos="fade-down">
                 <i class="fas fa-hand-peace"></i> أهلاً بك في متجرنا
@@ -732,7 +711,6 @@
             </div>
         </section>
 
-        <!-- Features Cards -->
         <div class="cards-section">
             <div class="card" data-aos="fade-up" data-aos-delay="0">
                 <i class="fas fa-truck"></i>
@@ -756,7 +734,6 @@
             </div>
         </div>
 
-        <!-- Products Section -->
         <section class="products-section">
             <div class="section-title" data-aos="fade-right">
                 <i class="fas fa-box"></i>
@@ -801,7 +778,6 @@
 
     </div>
 
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -812,14 +788,12 @@
         });
     </script>
 
-    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
      <script src="shared/footer.js"></script>
     <script src="shared/config.js"></script>
     <script src="shared/cart.js"></script>
     <script src="shared/toast.js"></script>
     <script src="shared/navbar.js"></script>
 
-    <!-- ===== Page Scripts ===== -->
     <script>
         (function() {
             const supabase = window.getSupabase();
@@ -833,7 +807,6 @@
             const categoryCountEl = document.getElementById('categoryCount');
             const greeting = document.getElementById('greeting');
 
-            // ===== أدوات مساعدة =====
             function escapeHtml(text) {
                 if (!text) return '';
                 const div = document.createElement('div');
@@ -841,7 +814,6 @@
                 return div.innerHTML;
             }
 
-            // ===== تحديث الـ Greeting لو المستخدم مسجل =====
             async function updateGreeting() {
                 try {
                     const { data: { session } } = await supabase.auth.getSession();
@@ -854,7 +826,6 @@
                 }
             }
 
-            // ===== تحميل البيانات =====
             async function loadData() {
                 try {
                     const { data: products, error: productsError } = await supabase
@@ -884,7 +855,6 @@
                         return;
                     }
 
-                    // بناء المنتجات بـ DOM آمن
                     const grid = document.createElement('div');
                     grid.className = 'product-grid';
                     const icons = ['fa-tag', 'fa-box', 'fa-cube', 'fa-gem', 'fa-star', 'fa-circle', 'fa-square', 'fa-crown'];
@@ -945,7 +915,6 @@
                 }
             }
 
-            // ===== تشغيل =====
             updateGreeting();
             loadData();
 
@@ -954,7 +923,6 @@
         })();
     </script>
 
-    <!-- ✅ Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -1216,7 +1215,6 @@
                 return;
             }
 
-            // ===== DOM =====
             const productsContainer = document.getElementById('productsContainer');
             const searchInput = document.getElementById('searchInput');
             const sortFilter = document.getElementById('sortFilter');
@@ -1241,7 +1239,6 @@
             const totalCount = document.getElementById('totalCount');
             const noMoreProducts = document.getElementById('noMoreProducts');
 
-            // ===== State =====
             let allProducts = [];
             let filteredProducts = [];
             let categories = [];
@@ -1251,7 +1248,6 @@
             const ITEMS_PER_PAGE = 12;
             let currentPage = 0;
 
-            // ===== Helpers =====
             function safeToString(v) {
                 return (v === null || v === undefined) ? '' : String(v);
             }
@@ -1280,7 +1276,6 @@
                 );
             }
 
-            // ===== Load More UI =====
             function updateLoadMoreUI() {
                 const total = filteredProducts.length;
                 const shown = Math.min((currentPage + 1) * ITEMS_PER_PAGE, total);
@@ -1306,7 +1301,6 @@
                 }
             }
 
-            // ===== Render Categories =====
             function renderCategories() {
                 if (categories.length === 0) {
                     categoriesList.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:13px;">لا توجد تصنيفات</p>';
@@ -1337,7 +1331,6 @@
                 });
             }
 
-            // ===== Get Active Filters =====
             function getActiveFilters() {
                 const minPrice = parseFloat(priceMin.value) || 0;
                 const maxPrice = parseFloat(priceMax.value) || Infinity;
@@ -1437,7 +1430,6 @@
                 clearFiltersBtn.classList.toggle('show', count > 0);
             }
 
-            // ===== Create Product Card =====
             function createProductCard(item, index) {
                 const productId = safeToString(item.Product_ID);
                 const productName = safeToString(item.Product_Name) || 'بدون اسم';
@@ -1509,7 +1501,6 @@
                     window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
                 });
 
-                // ⚖️ زر المقارنة
                 const compareBtn = document.createElement('button');
                 compareBtn.className = 'btn-compare-toggle';
                 compareBtn.setAttribute('aria-label', 'أضف للمقارنة');
@@ -1549,7 +1540,6 @@
                 return card;
             }
 
-            // ===== Render Products =====
             function renderProducts(resetPage = true) {
                 if (!filteredProducts || filteredProducts.length === 0) {
                     productsContainer.innerHTML = `
@@ -1588,7 +1578,6 @@
                 }
             }
 
-            // ===== Load More Handler =====
             function loadMore() {
                 const total = filteredProducts.length;
                 const shown = Math.min((currentPage + 1) * ITEMS_PER_PAGE, total);
@@ -1622,7 +1611,6 @@
                 }, 300);
             }
 
-            // ===== Apply Filters =====
             function applyFilters() {
                 const searchTerm = searchInput.value.trim().toLowerCase();
                 const sortValue = sortFilter.value;
@@ -1673,7 +1661,6 @@
                 renderActiveChips();
             }
 
-            // ===== Load Data =====
             async function loadData() {
                 try {
                     const { data: cats, error: catErr } = await supabase
@@ -1718,7 +1705,6 @@
                 }
             }
 
-            // ===== Events =====
             searchInput.addEventListener('input', applyFilters);
             sortFilter.addEventListener('change', applyFilters);
 

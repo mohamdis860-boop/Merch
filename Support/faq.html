@@ -5,31 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الأسئلة الشائعة | متجرنا</title>
     <meta name="description" content="إجابات على أكثر الأسئلة شيوعاً — الشحن، الدفع، الاسترجاع، والحساب.">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Shared CSS -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/footer.css">
-
-    <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <style>
-        /* ========================================
-           FAQ Page Styles
-           ======================================== */
 
         * {
             margin: 0;
@@ -48,7 +35,6 @@
             line-height: 1.7;
         }
 
-        /* ===== Hero ===== */
         .faq-hero {
             padding: 70px 20px 40px;
             text-align: center;
@@ -117,7 +103,6 @@
             z-index: 1;
         }
 
-        /* ===== Search Box ===== */
         .faq-search {
             max-width: 600px;
             margin: 0 auto;
@@ -167,7 +152,6 @@
             color: rgba(255, 255, 255, 0.4);
         }
 
-        /* ===== Categories ===== */
         .faq-categories {
             max-width: 900px;
             margin: 30px auto 0;
@@ -209,7 +193,6 @@
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.35);
         }
 
-        /* ===== FAQ List ===== */
         .faq-container {
             max-width: 900px;
             margin: 0 auto;
@@ -314,7 +297,6 @@
             text-decoration: underline;
         }
 
-        /* ===== No Results ===== */
         .no-results {
             text-align: center;
             padding: 60px 20px;
@@ -342,7 +324,6 @@
             font-size: 1.2rem;
         }
 
-        /* ===== CTA ===== */
         .faq-cta {
             max-width: 700px;
             margin: 0 auto 80px;
@@ -407,7 +388,6 @@
             box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 640px) {
             .faq-hero {
                 padding: 50px 20px 30px;
@@ -440,7 +420,6 @@
 </head>
 <body>
 
-    <!-- ===== Hero ===== -->
     <section class="faq-hero">
         <span class="badge" data-aos="fade-down">
             <i class="fas fa-question-circle"></i>
@@ -452,7 +431,6 @@
             <a href="../Pages/contact.html" style="color:#ff6b6b;font-weight:700;">تواصل معنا</a>.
         </p>
 
-        <!-- Search -->
         <div class="faq-search" data-aos="fade-up" data-aos-delay="300">
             <div class="faq-search-box">
                 <i class="fas fa-search"></i>
@@ -460,7 +438,6 @@
             </div>
         </div>
 
-        <!-- Categories -->
         <div class="faq-categories" data-aos="fade-up" data-aos-delay="400">
             <button class="faq-cat-btn active" data-cat="all">
                 <i class="fas fa-th-large"></i> الكل
@@ -483,10 +460,8 @@
         </div>
     </section>
 
-    <!-- ===== FAQ List ===== -->
     <div class="faq-container" id="faqContainer">
 
-        <!-- ===== الطلبات ===== -->
         <div class="faq-group" data-cat="orders">
             <h2 class="faq-group-title">
                 <i class="fas fa-shopping-bag"></i>
@@ -528,7 +503,6 @@
             </details>
         </div>
 
-        <!-- ===== الدفع ===== -->
         <div class="faq-group" data-cat="payment">
             <h2 class="faq-group-title">
                 <i class="fas fa-credit-card"></i>
@@ -571,7 +545,6 @@
             </details>
         </div>
 
-        <!-- ===== الشحن ===== -->
         <div class="faq-group" data-cat="shipping">
             <h2 class="faq-group-title">
                 <i class="fas fa-truck"></i>
@@ -611,7 +584,6 @@
             </details>
         </div>
 
-        <!-- ===== الاسترجاع ===== -->
         <div class="faq-group" data-cat="returns">
             <h2 class="faq-group-title">
                 <i class="fas fa-undo-alt"></i>
@@ -653,7 +625,6 @@
             </details>
         </div>
 
-        <!-- ===== الحساب ===== -->
         <div class="faq-group" data-cat="account">
             <h2 class="faq-group-title">
                 <i class="fas fa-user-circle"></i>
@@ -695,7 +666,6 @@
             </details>
         </div>
 
-        <!-- ===== No Results ===== -->
         <div class="no-results" id="noResults">
             <i class="fas fa-search"></i>
             <h3>مفيش نتائج</h3>
@@ -704,7 +674,6 @@
 
     </div>
 
-    <!-- ===== CTA ===== -->
     <div class="faq-cta" data-aos="fade-up">
         <h3>لسه عندك سؤال؟</h3>
         <p>فريق الدعم جاهز يساعدك على مدار 12 ساعة يومياً</p>
@@ -714,7 +683,6 @@
         </a>
     </div>
 
-    <!-- ===== Scripts ===== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -724,9 +692,6 @@
     <script src="../shared/footer.js"></script>
 
     <script>
-        /* ========================================
-           FAQ Page — Search + Filter
-           ======================================== */
 
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 700, once: true, offset: 50 });
@@ -739,14 +704,12 @@
             let activeCat = 'all';
             let searchTerm = '';
 
-            // ===== عدّاد أسئلة في كل مجموعة =====
             groups.forEach(group => {
                 const count = group.querySelectorAll('.faq-item').length;
                 const countEl = group.querySelector('.count');
                 if (countEl) countEl.textContent = `${count} سؤال`;
             });
 
-            // ===== فلترة =====
             function filterFaq() {
                 let visibleGroups = 0;
 
@@ -780,7 +743,6 @@
                 noResults.classList.toggle('show', visibleGroups === 0);
             }
 
-            // ===== Search =====
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     searchTerm = e.target.value.trim().toLowerCase();
@@ -788,7 +750,6 @@
                 });
             }
 
-            // ===== Category Buttons =====
             catButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     catButtons.forEach(b => b.classList.remove('active'));
@@ -798,7 +759,6 @@
                 });
             });
 
-            // ===== تهيئة أولية =====
             filterFaq();
 
             console.log('✅ FAQ page loaded');

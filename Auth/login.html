@@ -7,8 +7,6 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ✅ Shared Styles (مسار من Auth/) -->
     <link rel="stylesheet" href="../shared/toast.css">
     
     <style>
@@ -47,7 +45,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Background ===== */
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -103,7 +100,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Floating Icons ===== */
         .floating-icon {
             position: absolute;
             color: rgba(255, 255, 255, 0.05);
@@ -124,7 +120,6 @@
             50% { transform: translateY(-25px) rotate(15deg); }
         }
 
-        /* ===== Login Container ===== */
         .login-container {
             position: relative;
             z-index: 5;
@@ -138,7 +133,6 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ===== Login Card ===== */
         .login-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
@@ -166,7 +160,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ===== Back Button ===== */
         .back-btn {
             position: absolute;
             top: 20px;
@@ -192,7 +185,6 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
         }
 
-        /* ===== Header ===== */
         .login-header {
             text-align: center;
             margin-bottom: 35px;
@@ -324,7 +316,6 @@
             transform: scale(1.1);
         }
 
-        /* ===== Options Row ===== */
         .options-row {
             display: flex;
             justify-content: space-between;
@@ -396,7 +387,6 @@
         .forgot-password:hover::after { width: 100%; }
         .forgot-password:hover { color: var(--secondary); }
 
-        /* ===== Submit Button ===== */
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -440,7 +430,6 @@
             transform: none;
         }
 
-        /* ===== Divider ===== */
         .divider {
             display: flex;
             align-items: center;
@@ -460,7 +449,6 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
 
-        /* ===== Social Login ===== */
         .social-login {
             display: flex;
             gap: 12px;
@@ -508,7 +496,6 @@
             color: #ffffff;
         }
 
-        /* ===== Register Link ===== */
         .register-link {
             text-align: center;
             font-size: 14px;
@@ -530,7 +517,6 @@
             text-decoration: underline;
         }
 
-        /* ===== Spinner ===== */
         .spinner {
             width: 18px; height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -544,7 +530,6 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== Fade In ===== */
         .fade-in-item {
             animation: fadeInUp 0.6s ease-out both;
         }
@@ -558,7 +543,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 500px) {
             .login-card { padding: 35px 25px 30px; border-radius: 24px; }
             .login-logo { width: 70px; height: 70px; }
@@ -572,7 +556,6 @@
 </head>
 <body>
 
-    <!-- Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -581,7 +564,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- Floating Icons -->
     <i class="fas fa-shopping-bag floating-icon"></i>
     <i class="fas fa-tags floating-icon"></i>
     <i class="fas fa-cart-plus floating-icon"></i>
@@ -589,16 +571,13 @@
     <i class="fas fa-star floating-icon"></i>
     <i class="fas fa-heart floating-icon"></i>
 
-    <!-- Login Container -->
     <div class="login-container">
         <div class="login-card">
 
-            <!-- Back Button -->
             <a href="../index.html" class="back-btn" title="العودة">
                 <i class="fas fa-arrow-right"></i>
             </a>
 
-            <!-- Header -->
             <div class="login-header">
                 <div class="login-logo">
                     <i class="fas fa-sign-in-alt"></i>
@@ -607,10 +586,8 @@
                 <p class="login-subtitle">أهلاً بعودتك! ادخل بياناتك للمتابعة</p>
             </div>
 
-            <!-- Form -->
             <form class="login-form" id="loginForm" novalidate>
 
-                <!-- Email -->
                 <div class="input-group fade-in-item">
                     <label for="email">
                         <i class="fas fa-envelope" style="color: var(--primary); margin-right: 6px;"></i>
@@ -622,7 +599,6 @@
                     </div>
                 </div>
 
-                <!-- Password -->
                 <div class="input-group fade-in-item">
                     <label for="password">
                         <i class="fas fa-lock" style="color: var(--primary); margin-right: 6px;"></i>
@@ -637,7 +613,6 @@
                     </div>
                 </div>
 
-                <!-- Options -->
                 <div class="options-row fade-in-item">
                     <label class="remember-me">
                         <input type="checkbox" id="rememberMe">
@@ -646,7 +621,6 @@
                     <a href="forgot-password.html" class="forgot-password">نسيت كلمة المرور؟</a>
                 </div>
 
-                <!-- Submit -->
                 <button type="submit" class="submit-btn fade-in-item" id="submitBtn">
                     <span class="spinner" id="spinner"></span>
                     <i class="fas fa-sign-in-alt" id="submitIcon"></i>
@@ -655,17 +629,14 @@
 
             </form>
 
-            <!-- Divider -->
             <div class="divider">أو</div>
 
-            <!-- Social -->
             <div class="social-login">
                 <a href="#" class="social-btn google" title="Google"><i class="fab fa-google"></i></a>
                 <a href="#" class="social-btn facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="social-btn apple" title="Apple"><i class="fab fa-apple"></i></a>
             </div>
 
-            <!-- Register Link -->
             <p class="register-link">
                 ليس لديك حساب؟
                 <a href="register.html">سجّل الآن</a>
@@ -674,7 +645,6 @@
         </div>
     </div>
 
-    <!-- ✅ Shared Scripts (مسار من Auth/) -->
     <script src="../shared/config.js"></script>
     <script src="../shared/toast.js"></script>
 
@@ -775,7 +745,6 @@
 
                     console.log('✅ Auth Success:', authData.user.email);
 
-                    // جلب بيانات العميل
                     const { data: customer, error: customerError } = await supabase
                         .from('Customers')
                         .select('Name, Email, Phone, City')
@@ -788,7 +757,6 @@
 
                     const customerName = customer?.Name || authData.user.email;
 
-                    // تذكرني
                     if (rememberMe.checked) {
                         localStorage.setItem('rememberMe', 'true');
                         localStorage.setItem('userEmail', email);
@@ -811,7 +779,6 @@
                 }
             });
 
-            // التحقق من جلسة سابقة
             async function checkExistingSession() {
                 try {
                     const { data: { session } } = await supabase.auth.getSession();

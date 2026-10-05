@@ -1,10 +1,8 @@
 /* ==================== sw.js ==================== */
-/* Service Worker — يدير الـ caching والـ offline */
 
 const CACHE_NAME = 'matjarna-v1.0.0';
 const RUNTIME_CACHE = 'matjarna-runtime-v1';
 
-// ✅ الملفات الأساسية اللي تتحفظ في الـ cache
 const PRECACHE_URLS = [
     './',
     './index.html',
@@ -25,7 +23,6 @@ const PRECACHE_URLS = [
     './favicon.svg'
 ];
 
-// ===== Install: حفظ الملفات الأساسية =====
 self.addEventListener('install', event => {
     console.log('🔧 Service Worker: Installing...');
     
@@ -33,7 +30,6 @@ self.addEventListener('install', event => {
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('📦 Pre-caching files...');
-                // كل ملف على حدة عشان لو واحد فشل ميكسرش الكل
                 return Promise.allSettled(
                     PRECACHE_URLS.map(url => 
                         cache.add(url).catch(err => {
@@ -49,7 +45,6 @@ self.addEventListener('install', event => {
     );
 });
 
-// ===== Activate: مسح الـ caches القديمة =====
 self.addEventListener('activate', event => {
     console.log('🚀 Service Worker: Activating...');
     
@@ -72,7 +67,6 @@ self.addEventListener('activate', event => {
     );
 });
 
-// ===== Fetch: استراتيجية ذكية =====
 self.addEventListener('fetch', event => {
     const { request } = event;
     const url = new URL(request.url);
@@ -87,13 +81,10 @@ self.addEventListener('fetch', event => {
         return;
     }
 
-    // ✅ استراتيجية خاصة: Cache First مع Network Fallback
-    // (مناسبة للملفات الثابتة: CSS, JS, Images)
     event.respondWith(
         caches.match(request)
             .then(cachedResponse => {
                 if (cachedResponse) {
-                    // تحديث في الخلفية (stale-while-revalidate)
                     fetch(request)
                         .then(response => {
                             if (response && response.status === 200) {
@@ -107,15 +98,12 @@ self.addEventListener('fetch', event => {
                     return cachedResponse;
                 }
 
-                // مش موجود في الكاش → جيبه من الشبكة
                 return fetch(request)
                     .then(response => {
-                        // متحفظش لو مش 200 أو من نوع مش مدعوم
                         if (!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
 
-                        // احفظه في الـ runtime cache
                         const responseToCache = response.clone();
                         caches.open(RUNTIME_CACHE).then(cache => {
                             cache.put(request, responseToCache);
@@ -126,7 +114,6 @@ self.addEventListener('fetch', event => {
                     .catch(error => {
                         console.warn('⚠️ Fetch failed for:', request.url);
                         
-                        // لو الصفحة HTML → ارجع لـ offline page أو index
                         if (request.destination === 'document') {
                             return caches.match('./index.html');
                         }
@@ -137,7 +124,6 @@ self.addEventListener('fetch', event => {
     );
 });
 
-// ===== رسالة من الصفحة لتحديث SW =====
 self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();

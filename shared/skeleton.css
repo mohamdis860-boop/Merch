@@ -1,7 +1,5 @@
 /* ==================== shared/skeleton.css ==================== */
-/* Skeleton Loading - هياكل تحميل أنيقة */
 
-/* ===== Base Skeleton ===== */
 .skeleton {
     background: linear-gradient(
         90deg,
@@ -21,7 +19,6 @@
     100% { background-position: -200% 0; }
 }
 
-/* ===== Skeleton Variants ===== */
 .skeleton-text {
     height: 14px;
     margin-bottom: 8px;
@@ -50,7 +47,6 @@
     border-radius: 14px;
 }
 
-/* ===== Product Card Skeleton ===== */
 .skeleton-product-card {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(14px);
@@ -98,7 +94,6 @@
     border-radius: 30px;
 }
 
-/* ===== Category Card Skeleton ===== */
 .skeleton-category-card {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(14px);
@@ -138,7 +133,6 @@
     border-radius: 30px;
 }
 
-/* ===== Cart Item Skeleton ===== */
 .skeleton-cart-item {
     display: flex;
     align-items: center;
@@ -191,7 +185,6 @@
     border-radius: 8px;
 }
 
-/* ===== Product Details Skeleton ===== */
 .skeleton-details-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -247,7 +240,6 @@
     border-radius: 50px;
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 900px) {
     .skeleton-details-layout {
         grid-template-columns: 1fr;
@@ -268,7 +260,6 @@
     }
 }
 
-/* ===== Skeleton Grids ===== */
 .skeleton-product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

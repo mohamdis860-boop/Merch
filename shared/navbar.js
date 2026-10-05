@@ -1,5 +1,4 @@
 /* ==================== shared/navbar.js ==================== */
-/* بناء الـ Navbar + السلة + المفضلة + Auth — تلقائياً في كل الصفحات */
 
 (function() {
     'use strict';
@@ -17,7 +16,6 @@
 
     const BASE = getBasePath();
 
-    // ===== بناء الـ Navbar =====
     function buildNavbar() {
         if (document.querySelector('.navbar')) return;
 
@@ -76,7 +74,6 @@
         document.body.insertBefore(nav, document.body.firstChild);
     }
 
-    // ===== تفعيل الرابط النشط =====
     function setActiveLink() {
         const path = window.location.pathname;
         const fileName = path.split('/').pop() || 'index.html';
@@ -101,7 +98,6 @@
         }
     }
 
-    // ===== عدّاد السلة =====
     function updateCartBadge() {
         const cartBadge = document.getElementById('cartBadge');
         if (!cartBadge) return;
@@ -119,7 +115,6 @@
 
     window.updateCartBadge = updateCartBadge;
 
-    // ===== ✅ عدّاد المفضلة =====
     function updateWishlistBadge() {
         const wishlistBadge = document.getElementById('wishlistBadge');
         if (!wishlistBadge) return;
@@ -137,7 +132,6 @@
 
     window.updateWishlistBadge = updateWishlistBadge;
 
-    // ===== التحقق من تسجيل الدخول =====
     async function checkAuth() {
         const profileBtn = document.getElementById('profileBtn');
         const profileAvatarMini = document.getElementById('profileAvatarMini');
@@ -188,7 +182,6 @@
         }
     }
 
-    // ===== إضافة زر الدخول =====
     function addLoginButton() {
         const profileBtn = document.getElementById('profileBtn');
         if (!profileBtn) return;
@@ -205,7 +198,6 @@
         profileBtn.parentElement.appendChild(loginBtn);
     }
 
-    // ===== منطق البحث =====
     function setupNavSearch() {
         const form = document.getElementById('navSearchForm');
         const input = document.getElementById('navSearchInput');
@@ -231,7 +223,6 @@
         });
     }
 
-    // ===== التهيئة =====
     function init() {
         buildNavbar();
         setActiveLink();
@@ -246,10 +237,8 @@
         checkAuth();
         setupNavSearch();
 
-        // استمع لتحديثات السلة
         window.addEventListener('cartUpdated', updateCartBadge);
 
-        // ✅ استمع لتحديثات المفضلة
         window.addEventListener('storage', function(e) {
             if (e.key && e.key.startsWith('cart')) {
                 updateCartBadge();
@@ -259,7 +248,6 @@
             }
         });
 
-        // ✅ استمع لحدث مخصص للمفضلة (لما تتغير من نفس التاب)
         window.addEventListener('wishlistUpdated', updateWishlistBadge);
     }
 

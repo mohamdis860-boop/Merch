@@ -8,8 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    
-    <!-- ✅ Shared Styles (مسار من Pages/) -->
     <link rel="stylesheet" href="../shared/navbar.css">
     <link rel="stylesheet" href="../shared/toast.css">
     <link rel="stylesheet" href="../shared/skeleton.css">
@@ -52,7 +50,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== Animated Colorful Background ===== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -125,7 +122,6 @@
             75% { transform: translate(30px, -30px) scale(1.08); }
         }
 
-        /* ===== Main Content ===== */
         .main-content {
             position: relative;
             z-index: 5;
@@ -160,7 +156,6 @@
             transform: translateX(4px);
         }
 
-        /* ===== Page Header ===== */
         .page-header {
             text-align: center;
             margin-bottom: 40px;
@@ -203,7 +198,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* ===== Categories Grid ===== */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -377,7 +371,6 @@
             transform: translateX(-5px);
         }
 
-        /* ===== Loading Spinner ===== */
         .loading-spinner {
             display: flex;
             justify-content: center;
@@ -400,7 +393,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== Empty State ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -420,7 +412,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* ===== Footer ===== */
         .footer {
             position: relative;
             z-index: 5;
@@ -444,7 +435,6 @@
             60% { transform: scale(1.2); }
         }
 
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 30px;
@@ -472,7 +462,6 @@
 </head>
 <body>
 
-    <!-- Animated Colorful Background -->
     <div class="bg-animation">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -481,9 +470,6 @@
         <div class="blob"></div>
     </div>
 
-    <!-- ⚠️ الـ Navbar هيتبني تلقائياً بالـ JavaScript -->
-
-    <!-- Main Content -->
     <div class="main-content">
 
         <a href="../index.html" class="back-btn" data-aos="fade-left">
@@ -538,7 +524,6 @@
     </div>
 </div>
 
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -549,7 +534,6 @@
         });
     </script>
 
-    <!-- ✅ Shared Scripts (الترتيب مهم!) -->
     <script src="../shared/config.js"></script>
     <script src="../shared/cart.js"></script>
     <script src="../shared/toast.js"></script>
@@ -566,7 +550,6 @@
 
             const categoriesContainer = document.getElementById('categoriesContainer');
 
-            // ===== أدوات مساعدة =====
             function safeToString(value) {
                 if (value === null || value === undefined) return '';
                 return String(value);
@@ -597,7 +580,6 @@
                 }, 400);
             }
 
-            // ===== إنشاء كارت تصنيف =====
             function createCategoryCard(item, index, productCounts) {
                 const categoryName = safeToString(item.Category_Name) || 'بدون اسم';
                 const description = safeToString(item.Description) || 'لا يوجد وصف';
@@ -620,30 +602,24 @@
                 card.dataset.name = categoryName;
                 card.dataset.desc = description;
 
-                // الأيقونة
                 const iconEl = document.createElement('i');
                 iconEl.className = `fas ${icon} category-icon`;
 
-                // العنوان
                 const title = document.createElement('h3');
                 title.textContent = categoryName;
 
-                // الوصف
                 const descEl = document.createElement('p');
                 descEl.className = 'category-desc';
                 descEl.textContent = description;
 
-                // عدد المنتجات
                 const countEl = document.createElement('span');
                 countEl.className = 'product-count';
                 countEl.innerHTML = `<i class="fas fa-box"></i> ${productCount} منتج`;
 
-                // ID
                 const idEl = document.createElement('span');
                 idEl.className = 'category-id';
                 idEl.textContent = `#${categoryId}`;
 
-                // Hint
                 const hintEl = document.createElement('div');
                 hintEl.className = 'click-hint';
                 hintEl.innerHTML = `<i class="fas fa-arrow-left"></i> اضغط للتصفح`;
@@ -655,7 +631,6 @@
                 card.appendChild(idEl);
                 card.appendChild(hintEl);
 
-                // حدث النقر
                 card.addEventListener('click', function() {
                     goToCategoryProducts(
                         this.dataset.id,
@@ -667,10 +642,8 @@
                 return card;
             }
 
-            // ===== تحميل التصنيفات =====
             async function loadCategories() {
                 try {
-                    // تحميل التصنيفات والمنتجات بالتوازي
                     const [catRes, prodRes] = await Promise.all([
                         supabase.from('Category').select('*'),
                         supabase.from('Product').select('Category_ID')
@@ -684,7 +657,6 @@
 
                     console.log('✅ تم تحميل التصنيفات:', categories);
 
-                    // حساب عدد المنتجات لكل تصنيف
                     const productCounts = products.reduce((acc, p) => {
                         if (p.Category_ID) {
                             acc[p.Category_ID] = (acc[p.Category_ID] || 0) + 1;
@@ -702,7 +674,6 @@
                         return;
                     }
 
-                    // بناء الشبكة
                     const grid = document.createElement('div');
                     grid.className = 'categories-grid';
 
@@ -714,7 +685,6 @@
                     categoriesContainer.innerHTML = '';
                     categoriesContainer.appendChild(grid);
 
-                    // تحديث AOS
                     if (window.AOS && typeof AOS.refresh === 'function') {
                         AOS.refresh();
                     }
