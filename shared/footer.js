@@ -1,4 +1,5 @@
 /* ==================== shared/footer.js ==================== */
+/* الفوتر + Back to Top + Theme + Compare + Scroll Fix + Mobile Nav */
 
 (function() {
     'use strict';
@@ -16,6 +17,51 @@
 
     const BASE = getBasePath();
 
+    // ===== 1. حقن scroll-fix.css (الأهم — قبل أي حاجة) =====
+    function injectScrollFixCSS() {
+        if (document.querySelector('link[data-scroll-fix-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/scroll-fix.css';
+        link.setAttribute('data-scroll-fix-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // ===== 2. حقن inline style للـ white flash (احتياطي) =====
+    function injectScrollFixInline() {
+        if (document.querySelector('style[data-scroll-fix-inline]')) return;
+
+        const style = document.createElement('style');
+        style.setAttribute('data-scroll-fix-inline', 'true');
+        style.textContent = `
+            /* Fix White Flash on Scroll */
+            html {
+                background-color: #0a0a1a !important;
+                overscroll-behavior: none;
+            }
+            body {
+                background-color: #0a0a1a !important;
+                background-attachment: fixed;
+                overscroll-behavior: none;
+            }
+            @media (max-width: 768px) {
+                body {
+                    background-image: none !important;
+                    background-attachment: scroll !important;
+                }
+            }
+            html[data-theme="light"] {
+                background-color: #f8fafc !important;
+            }
+            html[data-theme="light"] body {
+                background-color: #f8fafc !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // ===== 3. حقن theme.css =====
     function injectThemeCSS() {
         if (document.querySelector('link[data-theme-css]')) return;
 
@@ -26,6 +72,7 @@
         document.head.appendChild(link);
     }
 
+    // ===== 4. حقن compare-bar.css =====
     function injectCompareCSS() {
         if (document.querySelector('link[data-compare-css]')) return;
 
@@ -36,6 +83,18 @@
         document.head.appendChild(link);
     }
 
+    // ===== 5. حقن mobile-nav.css =====
+    function injectMobileNavCSS() {
+        if (document.querySelector('link[data-mobile-nav-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/mobile-nav.css';
+        link.setAttribute('data-mobile-nav-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // ===== 6. حقن theme.js =====
     function injectThemeJS() {
         if (document.querySelector('script[data-theme-js]')) return;
 
@@ -46,6 +105,7 @@
         document.body.appendChild(script);
     }
 
+    // ===== 7. حقن compare.js + compare-bar.js =====
     function injectCompareJS() {
         if (document.querySelector('script[data-compare-js]')) return;
 
@@ -55,7 +115,6 @@
         s1.async = false;
         document.body.appendChild(s1);
 
-
         s1.onload = () => {
             const s2 = document.createElement('script');
             s2.src = BASE + 'shared/compare-bar.js';
@@ -64,6 +123,18 @@
         };
     }
 
+    // ===== 8. حقن mobile-nav.js =====
+    function injectMobileNavJS() {
+        if (document.querySelector('script[data-mobile-nav-js]')) return;
+
+        const script = document.createElement('script');
+        script.src = BASE + 'shared/mobile-nav.js';
+        script.setAttribute('data-mobile-nav-js', 'true');
+        script.async = false;
+        document.body.appendChild(script);
+    }
+
+    // ===== بناء الفوتر =====
     function buildFooter() {
         if (document.querySelector('.footer-main')) return;
 
@@ -146,6 +217,7 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
     }
 
+    // ===== بناء زر Back to Top =====
     function buildBackToTop() {
         if (document.querySelector('.back-to-top')) return;
 
@@ -188,13 +260,25 @@
         toggleBtn();
     }
 
+    // ===== التهيئة =====
     function init() {
+        // ✅ 1. إصلاح الـ white flash — الأهم، لازم يكون الأول
+        injectScrollFixInline();
+        injectScrollFixCSS();
+
+        // 2. باقي الـ CSS
         injectThemeCSS();
         injectCompareCSS();
+        injectMobileNavCSS();
+
+        // 3. الفوتر + Back to Top
         buildFooter();
         buildBackToTop();
+
+        // 4. الـ JS
         injectThemeJS();
         injectCompareJS();
+        injectMobileNavJS();
     }
 
     if (document.readyState === 'loading') {
@@ -203,5 +287,5 @@
         init();
     }
 
-    console.log('✅ Footer + Back to Top + Theme + Compare loaded');
+    console.log('✅ Footer + Back to Top + Theme + Compare + Scroll Fix + Mobile Nav loaded');
 })();
