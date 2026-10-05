@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,20 +26,36 @@
             --accent3: #fd79a8;
         }
 
+        /* ✅ إصلاح الـ white flash */
+        html {
+            background-color: #0a0a1a !important;
+            overscroll-behavior: none;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-color: #0a0a1a !important;
+            background-image: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             font-family: 'Cairo', sans-serif;
             min-height: 100vh;
             color: white;
             overflow-x: hidden;
+            overscroll-behavior: none;
         }
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* على الموبايل: خلفية ثابتة بسيطة */
+        @media (max-width: 768px) {
+            body {
+                background-image: none !important;
+                animation: none !important;
+            }
         }
 
         .bg-animation {
@@ -82,6 +98,11 @@
             25% { transform: translate(60px, -50px) scale(1.15); }
             50% { transform: translate(-40px, 40px) scale(0.9); }
             75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        /* على الموبايل: اخفي blobs */
+        @media (max-width: 768px) {
+            .bg-animation { display: none !important; }
         }
 
         .main-content {
@@ -768,6 +789,57 @@
             border-color: transparent;
         }
 
+        /* ✅ زر المقارنة */
+        .btn-compare-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .btn-compare-toggle:hover {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: rgba(108, 92, 231, 0.5);
+            color: #a29bfe;
+            transform: translateY(-2px);
+        }
+
+        .btn-compare-toggle.active {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.5);
+        }
+
+        .btn-compare-toggle.active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            background: #22c55e;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 2px solid #0a0a1a;
+        }
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -912,14 +984,14 @@
 
         .load-more-section.hidden { display: none; }
 
+        /* ✅ Filters Overlay (بدون blur) */
         .filters-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 998;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -929,6 +1001,7 @@
             opacity: 1;
         }
 
+        /* ===== Responsive ===== */
         @media (max-width: 992px) {
             .products-layout { grid-template-columns: 1fr; }
 
@@ -937,16 +1010,28 @@
                 top: 0;
                 right: -320px;
                 width: 320px;
+                max-width: 85vw;
                 height: 100vh;
                 max-height: 100vh;
                 border-radius: 0;
-                z-index: 999;
+                z-index: 1001 !important;
                 padding: 22px 20px;
+                background: #0a0a1a !important;
+                transform: none !important;
+                transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+                overflow-y: auto;
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+                backdrop-filter: none !important;
             }
 
-            .filters-sidebar.open { right: 0; }
+            .filters-sidebar.open {
+                right: 0 !important;
+                transform: none !important;
+            }
 
-            .filters-sidebar .close-filters { display: grid; }
+            .filters-sidebar .close-filters {
+                display: grid !important;
+            }
 
             .btn-filters-toggle { display: inline-flex; }
 
@@ -961,7 +1046,21 @@
         @media (max-width: 768px) {
             .page-header h1 { font-size: 30px; }
             .main-content { padding: 30px 15px; }
-            .toolbar { padding: 14px 16px; }
+
+            /* منع البطء */
+            .toolbar {
+                padding: 14px 16px;
+                backdrop-filter: none !important;
+            }
+
+            .product-card {
+                backdrop-filter: none !important;
+                animation: none !important;
+            }
+
+            .product-card:hover {
+                transform: translateY(-4px);
+            }
 
             .product-grid {
                 grid-template-columns: 1fr 1fr;
@@ -971,6 +1070,30 @@
             .product-card { padding: 16px; }
             .product-card h4 { font-size: 14px; min-height: 40px; }
             .product-card .price { font-size: 17px; }
+
+            /* الأزرار على الموبايل */
+            .product-card .card-actions {
+                flex-wrap: wrap;
+            }
+
+            .product-card .btn-cart {
+                flex: 1 1 100%;
+                order: 1;
+            }
+
+            .product-card .btn-details,
+            .product-card .btn-compare-toggle {
+                flex: 0 0 44px;
+                max-width: 44px;
+                min-width: 44px;
+                height: 44px;
+                order: 2;
+            }
+
+            .back-to-top {
+                bottom: 90px !important;
+                left: 15px !important;
+            }
         }
 
         @media (max-width: 640px) {
@@ -1044,7 +1167,8 @@
 
         <div class="products-layout">
 
-            <aside class="filters-sidebar" id="filtersSidebar" data-aos="fade-left">
+            <!-- ✅ شيلنا data-aos من الـ sidebar -->
+            <aside class="filters-sidebar" id="filtersSidebar">
 
                 <div class="filters-header">
                     <h3><i class="fas fa-filter"></i> الفلاتر</h3>
@@ -1245,7 +1369,7 @@
             let categoryMap = {};
             let statusValues = new Set();
 
-            const ITEMS_PER_PAGE = 12;
+            const ITEMS_PER_PAGE = window.innerWidth <= 768 ? 8 : 12;
             let currentPage = 0;
 
             function safeToString(v) {
