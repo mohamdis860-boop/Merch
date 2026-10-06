@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +30,14 @@
             --error: #ff4757;
         }
 
+        html {
+            background-color: #0a0a1a !important;
+            overscroll-behavior: none;
+        }
+
         body {
-            background: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
+            background-color: #0a0a1a !important;
+            background-image: linear-gradient(135deg, #0a0a1a 0%, #12122a 30%, #1a1a3e 60%, #0f0f2a 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             font-family: 'Cairo', sans-serif;
@@ -39,12 +45,20 @@
             color: white;
             position: relative;
             overflow-x: hidden;
+            overscroll-behavior: none;
         }
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-image: none !important;
+                animation: none !important;
+            }
         }
 
         .bg-animation {
@@ -99,6 +113,10 @@
             25% { transform: translate(60px, -50px) scale(1.15); }
             50% { transform: translate(-40px, 40px) scale(0.9); }
             75% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        @media (max-width: 768px) {
+            .bg-animation { display: none !important; }
         }
 
         .main-content {
@@ -424,26 +442,29 @@
             white-space: pre-wrap;
         }
 
+        /* ===== Actions Row (Layout جديد) ===== */
         .actions-row {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 12px;
-            flex-wrap: wrap;
             margin-top: 10px;
         }
 
+        /* Quantity Selector */
         .quantity-selector {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             padding: 4px;
             gap: 6px;
+            align-self: flex-start;
         }
 
         .quantity-selector button {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: none;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.08);
@@ -470,14 +491,14 @@
             color: var(--secondary);
         }
 
+        /* Add to Cart (Full width primary) */
         .add-to-cart-btn {
-            flex: 1;
-            min-width: 180px;
-            padding: 15px 30px;
+            width: 100%;
+            padding: 16px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.35s;
             font-family: 'Cairo', sans-serif;
@@ -492,32 +513,71 @@
             overflow: hidden;
         }
 
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .add-to-cart-btn:hover::before { left: 100%; }
+
         .add-to-cart-btn:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
         }
 
+        .add-to-cart-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        /* Secondary Actions Row (2 أزرار جنب بعض) */
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Wishlist Button */
         .wishlist-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
+            width: 100%;
+            height: 54px;
+            border-radius: 50px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
             cursor: pointer;
-            transition: 0.4s;
-            display: flex;
+            transition: 0.3s;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            gap: 8px;
+        }
+
+        .wishlist-btn i {
+            font-size: 18px;
+            transition: transform 0.3s;
         }
 
         .wishlist-btn:hover {
-            background: rgba(253, 121, 168, 0.15);
-            border-color: var(--accent3);
-            color: var(--accent3);
-            transform: scale(1.1) rotate(-8deg);
+            background: rgba(253, 121, 168, 0.12);
+            border-color: rgba(253, 121, 168, 0.5);
+            color: #fd79a8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(253, 121, 168, 0.25);
+        }
+
+        .wishlist-btn:hover i {
+            transform: scale(1.2);
         }
 
         .wishlist-btn.active {
@@ -527,36 +587,47 @@
             box-shadow: 0 8px 25px rgba(253, 121, 168, 0.5);
         }
 
+        .wishlist-btn.active i {
+            animation: heartBeat 0.5s;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+        }
+
+        /* Compare Button */
         .compare-btn {
+            width: 100%;
+            height: 54px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 15px 26px;
-            border-radius: 50px;
-            background: rgba(108, 92, 231, 0.12);
-            border: 1px solid rgba(108, 92, 231, 0.4);
-            color: #a29bfe;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.35s;
-            font-family: 'Cairo', sans-serif;
-            white-space: nowrap;
-            flex-shrink: 0;
+            gap: 8px;
         }
 
         .compare-btn i {
             font-size: 16px;
-            transition: transform 0.35s;
+            transition: transform 0.3s;
         }
 
         .compare-btn:hover {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            border-color: transparent;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.5);
+            background: rgba(108, 92, 231, 0.12);
+            border-color: rgba(108, 92, 231, 0.5);
+            color: #a29bfe;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.25);
         }
 
         .compare-btn:hover i {
@@ -567,7 +638,7 @@
             background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             border-color: transparent;
             color: white;
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.5);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
         }
 
         .compare-btn.active i::before {
@@ -576,6 +647,7 @@
             font-weight: 900;
         }
 
+        /* ===== Reviews ===== */
         .reviews-section {
             margin-top: 60px;
             padding-top: 40px;
@@ -863,6 +935,7 @@
             color: var(--secondary);
         }
 
+        /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .product-layout {
                 grid-template-columns: 1fr;
@@ -874,20 +947,62 @@
             .main-content { padding: 20px 15px 40px; }
             .product-name { font-size: 24px; }
             .price-value { font-size: 26px; }
-            .actions-row { flex-direction: column; align-items: stretch; }
-            .wishlist-btn { width: 100%; height: 50px; }
-            .compare-btn { width: 100%; padding: 14px 20px; }
             .similar-grid { grid-template-columns: 1fr 1fr; }
             .product-swiper .swiper-button-prev,
             .product-swiper .swiper-button-next {
                 width: 36px;
                 height: 36px;
             }
+
+            /* Actions row — column */
+            .actions-row {
+                gap: 10px;
+            }
+
+            .quantity-selector {
+                align-self: stretch;
+                justify-content: center;
+            }
+
+            .secondary-actions {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .wishlist-btn,
+            .compare-btn {
+                height: 50px;
+                font-size: 14px;
+                gap: 6px;
+            }
+
+            .wishlist-btn i,
+            .compare-btn i {
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 500px) {
             .similar-grid { grid-template-columns: 1fr; }
             .review-header { flex-direction: column; align-items: flex-start; }
+
+            .secondary-actions {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .wishlist-btn,
+            .compare-btn {
+                height: 48px;
+                font-size: 12.5px;
+                gap: 5px;
+                padding: 0 8px;
+            }
+
+            .wishlist-btn i,
+            .compare-btn i {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
@@ -986,30 +1101,37 @@
                         <p id="productDescription">لا يوجد وصف لهذا المنتج.</p>
                     </div>
 
+                    <!-- ✅ Actions Row الجديد -->
                     <div class="actions-row">
+                        <!-- Quantity -->
                         <div class="quantity-selector">
-                            <button type="button" id="decreaseQty">
+                            <button type="button" id="decreaseQty" aria-label="تقليل">
                                 <i class="fas fa-minus"></i>
                             </button>
                             <span id="quantityValue">1</span>
-                            <button type="button" id="increaseQty">
+                            <button type="button" id="increaseQty" aria-label="زيادة">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
 
+                        <!-- Add to Cart — Primary -->
                         <button type="button" class="add-to-cart-btn" id="addToCartBtn">
                             <i class="fas fa-cart-plus"></i>
                             <span>أضف للسلة</span>
                         </button>
 
-                        <button type="button" class="wishlist-btn" id="wishlistBtn" title="أضف للمفضلة">
-                            <i class="far fa-heart"></i>
-                        </button>
+                        <!-- Secondary Actions (2 أزرار) -->
+                        <div class="secondary-actions">
+                            <button type="button" class="wishlist-btn" id="wishlistBtn" title="أضف للمفضلة">
+                                <i class="far fa-heart"></i>
+                                <span>المفضلة</span>
+                            </button>
 
-                        <button type="button" class="compare-btn" id="compareBtn" title="أضف للمقارنة">
-                            <i class="fas fa-balance-scale"></i>
-                            <span>أضف للمقارنة</span>
-                        </button>
+                            <button type="button" class="compare-btn" id="compareBtn" title="أضف للمقارنة">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>المقارنة</span>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -1252,13 +1374,14 @@
                 currentQuantity = 1;
                 document.getElementById('quantityValue').textContent = currentQuantity;
 
+                // ✅ Wishlist state
                 const wishlistBtn = document.getElementById('wishlistBtn');
                 if (isInWishlist(p.Product_ID)) {
                     wishlistBtn.classList.add('active');
-                    wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
+                    wishlistBtn.innerHTML = '<i class="fas fa-heart"></i><span>في المفضلة</span>';
                 } else {
                     wishlistBtn.classList.remove('active');
-                    wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
+                    wishlistBtn.innerHTML = '<i class="far fa-heart"></i><span>المفضلة</span>';
                 }
 
                 const addBtn = document.getElementById('addToCartBtn');
@@ -1270,20 +1393,20 @@
                 updateCompareBtnState();
             }
 
+            // ===== Compare Button =====
             const compareBtn = document.getElementById('compareBtn');
 
             function updateCompareBtnState() {
                 if (!compareBtn || !currentProduct) return;
 
                 const inCompare = window.isInCompare && window.isInCompare(currentProduct.Product_ID);
-                const span = compareBtn.querySelector('span');
 
                 if (inCompare) {
                     compareBtn.classList.add('active');
-                    if (span) span.textContent = 'في المقارنة';
+                    compareBtn.innerHTML = '<i class="fas fa-check"></i><span>في المقارنة</span>';
                 } else {
                     compareBtn.classList.remove('active');
-                    if (span) span.textContent = 'أضف للمقارنة';
+                    compareBtn.innerHTML = '<i class="fas fa-balance-scale"></i><span>المقارنة</span>';
                 }
             }
 
@@ -1309,6 +1432,7 @@
                 window.addEventListener('compareUpdated', updateCompareBtnState);
             }
 
+            // ===== Quantity =====
             document.getElementById('increaseQty').addEventListener('click', () => {
                 if (currentQuantity < 99) {
                     currentQuantity++;
@@ -1323,6 +1447,7 @@
                 }
             });
 
+            // ===== Add to Cart =====
             document.getElementById('addToCartBtn').addEventListener('click', function() {
                 const statusAvailable = (currentProduct.Status || '').toLowerCase() === 'available' || (currentProduct.Status || '').toLowerCase() === 'active' || !currentProduct.Status;
                 if (!statusAvailable) {
@@ -1340,29 +1465,31 @@
                 }
 
                 const btn = this;
-                const originalText = btn.querySelector('span').textContent;
-                btn.querySelector('span').textContent = '✓ تمت الإضافة';
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i><span>تمت الإضافة</span>';
                 btn.style.background = 'linear-gradient(135deg, #6bcb77, #4caf50)';
                 setTimeout(() => {
-                    btn.querySelector('span').textContent = originalText;
+                    btn.innerHTML = originalHTML;
                     btn.style.background = '';
                 }, 1500);
             });
 
+            // ===== Wishlist =====
             document.getElementById('wishlistBtn').addEventListener('click', function() {
                 const added = toggleWishlist(currentProduct.Product_ID);
 
                 if (added) {
                     this.classList.add('active');
-                    this.innerHTML = '<i class="fas fa-heart"></i>';
+                    this.innerHTML = '<i class="fas fa-heart"></i><span>في المفضلة</span>';
                     window.showToast('❤️ تم إضافة المنتج للمفضلة', 'success');
                 } else {
                     this.classList.remove('active');
-                    this.innerHTML = '<i class="far fa-heart"></i>';
+                    this.innerHTML = '<i class="far fa-heart"></i><span>المفضلة</span>';
                     window.showToast('💔 تم إزالة المنتج من المفضلة', 'info');
                 }
             });
 
+            // ===== Reviews =====
             async function loadReviews() {
                 const productId = currentProduct.Product_ID;
 
@@ -1602,6 +1729,7 @@
                 }
             }
 
+            // ===== Similar Products =====
             async function loadSimilarProducts() {
                 if (!currentProduct.Category_ID) return;
 
@@ -1655,7 +1783,7 @@
 
             loadProduct();
 
-            console.log('%c📦 Product Details page loaded (with compare)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+            console.log('%c📦 Product Details page loaded (new actions layout)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>
