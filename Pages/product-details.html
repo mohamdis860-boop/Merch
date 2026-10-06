@@ -442,7 +442,7 @@
             white-space: pre-wrap;
         }
 
-        /* ===== Actions Row (Layout جديد) ===== */
+        /* ===== Actions Row ===== */
         .actions-row {
             display: flex;
             flex-direction: column;
@@ -943,6 +943,7 @@
             }
         }
 
+        /* ===== Mobile — زراير دائرية في صف واحد ===== */
         @media (max-width: 768px) {
             .main-content { padding: 20px 15px 40px; }
             .product-name { font-size: 24px; }
@@ -954,31 +955,58 @@
                 height: 36px;
             }
 
-            /* Actions row — column */
+            /* Actions Row — كل حاجة في صف أفقي واحد */
             .actions-row {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
                 gap: 10px;
             }
 
+            /* Quantity — ياخد مساحة */
             .quantity-selector {
-                align-self: stretch;
-                justify-content: center;
+                align-self: auto;
+                flex: 0 0 auto;
             }
 
+            /* Add to Cart — ياخد المساحة الباقية */
+            .add-to-cart-btn {
+                width: auto;
+                flex: 1;
+                min-width: 0;
+                padding: 14px 18px;
+                font-size: 14px;
+                gap: 8px;
+            }
+
+            /* الـ secondary-actions يختفي كـ wrapper */
             .secondary-actions {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                display: contents;
             }
 
+            /* زراير دائرية */
             .wishlist-btn,
             .compare-btn {
+                width: 50px;
                 height: 50px;
-                font-size: 14px;
-                gap: 6px;
+                min-width: 50px;
+                max-width: 50px;
+                padding: 0;
+                border-radius: 50%;
+                flex-shrink: 0;
+                gap: 0;
+            }
+
+            .wishlist-btn span,
+            .compare-btn span {
+                display: none;
             }
 
             .wishlist-btn i,
             .compare-btn i {
-                font-size: 16px;
+                font-size: 20px;
+                margin: 0;
             }
         }
 
@@ -986,22 +1014,34 @@
             .similar-grid { grid-template-columns: 1fr; }
             .review-header { flex-direction: column; align-items: flex-start; }
 
-            .secondary-actions {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
+            /* على الشاشات الصغيرة جداً، ننزل الأزرار لسطر تاني */
+            .add-to-cart-btn {
+                padding: 13px 14px;
+                font-size: 13px;
             }
 
             .wishlist-btn,
             .compare-btn {
-                height: 48px;
-                font-size: 12.5px;
-                gap: 5px;
-                padding: 0 8px;
+                width: 46px;
+                height: 46px;
+                min-width: 46px;
+                max-width: 46px;
             }
 
             .wishlist-btn i,
             .compare-btn i {
-                font-size: 15px;
+                font-size: 18px;
+            }
+
+            .quantity-selector button {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .quantity-selector span {
+                font-size: 16px;
+                min-width: 32px;
             }
         }
     </style>
@@ -1101,7 +1141,7 @@
                         <p id="productDescription">لا يوجد وصف لهذا المنتج.</p>
                     </div>
 
-                    <!-- ✅ Actions Row الجديد -->
+                    <!-- Actions Row -->
                     <div class="actions-row">
                         <!-- Quantity -->
                         <div class="quantity-selector">
@@ -1114,13 +1154,13 @@
                             </button>
                         </div>
 
-                        <!-- Add to Cart — Primary -->
+                        <!-- Add to Cart -->
                         <button type="button" class="add-to-cart-btn" id="addToCartBtn">
                             <i class="fas fa-cart-plus"></i>
                             <span>أضف للسلة</span>
                         </button>
 
-                        <!-- Secondary Actions (2 أزرار) -->
+                        <!-- Secondary Actions -->
                         <div class="secondary-actions">
                             <button type="button" class="wishlist-btn" id="wishlistBtn" title="أضف للمفضلة">
                                 <i class="far fa-heart"></i>
@@ -1374,7 +1414,7 @@
                 currentQuantity = 1;
                 document.getElementById('quantityValue').textContent = currentQuantity;
 
-                // ✅ Wishlist state
+                // Wishlist state
                 const wishlistBtn = document.getElementById('wishlistBtn');
                 if (isInWishlist(p.Product_ID)) {
                     wishlistBtn.classList.add('active');
@@ -1393,7 +1433,7 @@
                 updateCompareBtnState();
             }
 
-            // ===== Compare Button =====
+            // ===== Compare =====
             const compareBtn = document.getElementById('compareBtn');
 
             function updateCompareBtnState() {
@@ -1783,7 +1823,7 @@
 
             loadProduct();
 
-            console.log('%c📦 Product Details page loaded (new actions layout)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
+            console.log('%c📦 Product Details page loaded (circular buttons on mobile)', 'color: #ff6b6b; font-size: 18px; font-weight: bold;');
 
         })();
     </script>
