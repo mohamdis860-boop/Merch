@@ -1,52 +1,61 @@
 {
-    "name": "متجرنا - تسوق إلكتروني",
+    "name": "متجرنا - تسوق أونلاين",
     "short_name": "متجرنا",
-    "description": "منصة تسوق إلكترونية متكاملة - أفضل المنتجات بأفضل الأسعار",
-    "start_url": "./index.html",
-    "scope": "./",
+    "description": "متجرك الإلكتروني الموثوق — منتجات أصلية، أسعار منافسة، وتوصيل سريع لجميع المحافظات.",
+    "start_url": "/Merch/",
+    "scope": "/Merch/",
+    "id": "/Merch/",
     "display": "standalone",
-    "orientation": "portrait-primary",
+    "orientation": "portrait",
     "background_color": "#0a0a1a",
     "theme_color": "#ff6b6b",
     "lang": "ar",
     "dir": "rtl",
-    "categories": ["shopping", "business"],
+    "categories": ["shopping", "ecommerce"],
     "icons": [
         {
-            "src": "icons/favicon-96x96.png",
-            "sizes": "96x96",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "icons/web-app-manifest-192x192.png",
+            "src": "/Merch/icons/web-app-manifest-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icons/web-app-manifest-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "icons/web-app-manifest-512x512.png",
+            "src": "/Merch/icons/web-app-manifest-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icons/web-app-manifest-512x512.png",
+            "src": "/Merch/icons/web-app-manifest-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/apple-touch-icon.png",
+            "src": "/Merch/icons/apple-touch-icon.png",
             "sizes": "180x180",
             "type": "image/png",
             "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "المنتجات",
+            "short_name": "المنتجات",
+            "url": "/Merch/Pages/products.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "السلة",
+            "short_name": "السلة",
+            "url": "/Merch/Pages/cart.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "تتبع الطلب",
+            "short_name": "تتبع",
+            "url": "/Merch/Pages/order-tracking.html",
+            "icons": [{ "src": "/Merch/icons/web-app-manifest-192x192.png", "sizes": "192x192" }]
         }
     ]
 }

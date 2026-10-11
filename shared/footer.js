@@ -1,9 +1,10 @@
 /* ==================== shared/footer.js ==================== */
-/* الفوتر + Back to Top + Theme + Compare + Scroll Fix + Mobile Nav */
+/* الفوتر + Back to Top + Theme + Compare + Scroll Fix + PWA */
 
 (function() {
     'use strict';
 
+    // ===== تحديد مسار الأساس =====
     function getBasePath() {
         const path = window.location.pathname;
         if (path.includes('/Pages/') || path.includes('/Auth/') ||
@@ -17,7 +18,11 @@
 
     const BASE = getBasePath();
 
-    // ===== 1. حقن scroll-fix.css (الأهم — قبل أي حاجة) =====
+    // ============================================
+    // ===== حقن ملفات CSS =====
+    // ============================================
+
+    // 1. scroll-fix.css (مهم — لإصلاح white flash)
     function injectScrollFixCSS() {
         if (document.querySelector('link[data-scroll-fix-css]')) return;
 
@@ -28,14 +33,46 @@
         document.head.appendChild(link);
     }
 
-    // ===== 2. حقن inline style للـ white flash (احتياطي) =====
+    // 2. theme.css
+    function injectThemeCSS() {
+        if (document.querySelector('link[data-theme-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/theme.css';
+        link.setAttribute('data-theme-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // 3. compare-bar.css
+    function injectCompareCSS() {
+        if (document.querySelector('link[data-compare-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/compare-bar.css';
+        link.setAttribute('data-compare-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // 4. pwa.css
+    function injectPWACSS() {
+        if (document.querySelector('link[data-pwa-css]')) return;
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'shared/pwa.css';
+        link.setAttribute('data-pwa-css', 'true');
+        document.head.appendChild(link);
+    }
+
+    // 5. inline style للـ white flash (احتياطي)
     function injectScrollFixInline() {
         if (document.querySelector('style[data-scroll-fix-inline]')) return;
 
         const style = document.createElement('style');
         style.setAttribute('data-scroll-fix-inline', 'true');
         style.textContent = `
-            /* Fix White Flash on Scroll */
             html {
                 background-color: #0a0a1a !important;
                 overscroll-behavior: none;
@@ -61,40 +98,11 @@
         document.head.appendChild(style);
     }
 
-    // ===== 3. حقن theme.css =====
-    function injectThemeCSS() {
-        if (document.querySelector('link[data-theme-css]')) return;
+    // ============================================
+    // ===== حقن ملفات JS =====
+    // ============================================
 
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = BASE + 'shared/theme.css';
-        link.setAttribute('data-theme-css', 'true');
-        document.head.appendChild(link);
-    }
-
-    // ===== 4. حقن compare-bar.css =====
-    function injectCompareCSS() {
-        if (document.querySelector('link[data-compare-css]')) return;
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = BASE + 'shared/compare-bar.css';
-        link.setAttribute('data-compare-css', 'true');
-        document.head.appendChild(link);
-    }
-
-    // ===== 5. حقن mobile-nav.css =====
-    function injectMobileNavCSS() {
-        if (document.querySelector('link[data-mobile-nav-css]')) return;
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = BASE + 'shared/mobile-nav.css';
-        link.setAttribute('data-mobile-nav-css', 'true');
-        document.head.appendChild(link);
-    }
-
-    // ===== 6. حقن theme.js =====
+    // 1. theme.js
     function injectThemeJS() {
         if (document.querySelector('script[data-theme-js]')) return;
 
@@ -105,7 +113,7 @@
         document.body.appendChild(script);
     }
 
-    // ===== 7. حقن compare.js + compare-bar.js =====
+    // 2. compare.js + compare-bar.js (بالترتيب)
     function injectCompareJS() {
         if (document.querySelector('script[data-compare-js]')) return;
 
@@ -123,18 +131,20 @@
         };
     }
 
-    // ===== 8. حقن mobile-nav.js =====
-    function injectMobileNavJS() {
-        if (document.querySelector('script[data-mobile-nav-js]')) return;
+    // 3. pwa.js
+    function injectPWAJS() {
+        if (document.querySelector('script[data-pwa-js]')) return;
 
         const script = document.createElement('script');
-        script.src = BASE + 'shared/mobile-nav.js';
-        script.setAttribute('data-mobile-nav-js', 'true');
+        script.src = BASE + 'shared/pwa.js';
+        script.setAttribute('data-pwa-js', 'true');
         script.async = false;
         document.body.appendChild(script);
     }
 
+    // ============================================
     // ===== بناء الفوتر =====
+    // ============================================
     function buildFooter() {
         if (document.querySelector('.footer-main')) return;
 
@@ -218,7 +228,9 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
     }
 
+    // ============================================
     // ===== بناء زر Back to Top =====
+    // ============================================
     function buildBackToTop() {
         if (document.querySelector('.back-to-top')) return;
 
@@ -261,16 +273,18 @@
         toggleBtn();
     }
 
+    // ============================================
     // ===== التهيئة =====
+    // ============================================
     function init() {
-        // ✅ 1. إصلاح الـ white flash — الأهم، لازم يكون الأول
+        // 1. إصلاح الـ white flash — الأول
         injectScrollFixInline();
         injectScrollFixCSS();
 
         // 2. باقي الـ CSS
         injectThemeCSS();
         injectCompareCSS();
-        injectMobileNavCSS();
+        injectPWACSS();
 
         // 3. الفوتر + Back to Top
         buildFooter();
@@ -279,7 +293,7 @@
         // 4. الـ JS
         injectThemeJS();
         injectCompareJS();
-        injectMobileNavJS();
+        injectPWAJS();
     }
 
     if (document.readyState === 'loading') {
@@ -288,5 +302,5 @@
         init();
     }
 
-    console.log('✅ Footer + Back to Top + Theme + Compare + Scroll Fix + Mobile Nav loaded');
+    console.log('✅ Footer + Back to Top + Theme + Compare + Scroll Fix + PWA loaded');
 })();

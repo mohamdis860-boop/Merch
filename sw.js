@@ -1,133 +1,182 @@
-/* ==================== sw.js ==================== */
+/* ==================== Service Worker ==================== */
+/* PWA — GitHub Pages Edition */
 
-const CACHE_NAME = 'matjarna-v1.0.0';
-const RUNTIME_CACHE = 'matjarna-runtime-v1';
+const CACHE_VERSION = 'v2.0.0';
+const CACHE_NAME = `merch-${CACHE_VERSION}`;
+const BASE_PATH = '/Merch';
 
-const PRECACHE_URLS = [
-    './',
-    './index.html',
-    './Pages/products.html',
-    './Pages/categories.html',
-    './Pages/about.html',
-    './Pages/cart.html',
-    './Pages/splash.html',
-    './Auth/login.html',
-    './Auth/register.html',
-    './shared/config.js',
-    './shared/cart.js',
-    './shared/navbar.css',
-    './shared/navbar.js',
-    './shared/toast.css',
-    './shared/toast.js',
-    './manifest.json',
-    './favicon.svg'
+console.log('🔧 SW Base:', BASE_PATH);
+
+const STATIC_ASSETS = [
+    // Root
+    `${BASE_PATH}/`,
+    `${BASE_PATH}/index.html`,
+    `${BASE_PATH}/404.html`,
+    `${BASE_PATH}/offline.html`,
+    `${BASE_PATH}/manifest.json`,
+
+    // CSS
+    `${BASE_PATH}/shared/navbar.css`,
+    `${BASE_PATH}/shared/toast.css`,
+    `${BASE_PATH}/shared/footer.css`,
+    `${BASE_PATH}/shared/theme.css`,
+    `${BASE_PATH}/shared/compare-bar.css`,
+    `${BASE_PATH}/shared/skeleton.css`,
+    `${BASE_PATH}/shared/scroll-fix.css`,
+
+    // JS
+    `${BASE_PATH}/shared/config.js`,
+    `${BASE_PATH}/shared/cart.js`,
+    `${BASE_PATH}/shared/toast.js`,
+    `${BASE_PATH}/shared/compare.js`,
+    `${BASE_PATH}/shared/compare-bar.js`,
+    `${BASE_PATH}/shared/navbar.js`,
+    `${BASE_PATH}/shared/footer.js`,
+    `${BASE_PATH}/shared/theme.js`,
+
+    // Pages
+    `${BASE_PATH}/Pages/products.html`,
+    `${BASE_PATH}/Pages/product-details.html`,
+    `${BASE_PATH}/Pages/categories.html`,
+    `${BASE_PATH}/Pages/about.html`,
+    `${BASE_PATH}/Pages/contact.html`,
+    `${BASE_PATH}/Pages/wishlist.html`,
+    `${BASE_PATH}/Pages/cart.html`,
+    `${BASE_PATH}/Pages/order-tracking.html`,
+    `${BASE_PATH}/Pages/compare.html`,
+    `${BASE_PATH}/Pages/search-results.html`,
+    `${BASE_PATH}/Pages/category-products.html`,
+    `${BASE_PATH}/Pages/checkout.html`,
+
+    // Auth
+    `${BASE_PATH}/Auth/login.html`,
+    `${BASE_PATH}/Auth/register.html`,
+    `${BASE_PATH}/Auth/profile.html`,
+    `${BASE_PATH}/Auth/forgot-password.html`,
+    `${BASE_PATH}/Auth/reset-password.html`,
+
+    // Support
+    `${BASE_PATH}/Support/faq.html`,
+    `${BASE_PATH}/Support/privacy.html`,
+    `${BASE_PATH}/Support/terms.html`,
+
+    // Icons
+    `${BASE_PATH}/favicon.ico`,
+    `${BASE_PATH}/favicon.svg`,
+    `${BASE_PATH}/icons/apple-touch-icon.png`,
+    `${BASE_PATH}/icons/favicon-96x96.png`,
+    `${BASE_PATH}/icons/web-app-manifest-192x192.png`,
+    `${BASE_PATH}/icons/web-app-manifest-512x512.png`
 ];
 
-self.addEventListener('install', event => {
-    console.log('🔧 Service Worker: Installing...');
-    
+// ===== Install =====
+self.addEventListener('install', (event) => {
+    console.log('📦 SW: Installing...');
+
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('📦 Pre-caching files...');
-                return Promise.allSettled(
-                    PRECACHE_URLS.map(url => 
-                        cache.add(url).catch(err => {
-                            console.warn(`⚠️ Failed to cache ${url}:`, err);
-                        })
-                    )
-                );
-            })
-            .then(() => {
-                console.log('✅ Service Worker: Installed');
-                return self.skipWaiting();
-            })
+        caches.open(CACHE_NAME).then((cache) => {
+            const promises = STATIC_ASSETS.map((url) => {
+                return cache.add(url).catch((err) => {
+                    console.warn(`⚠️ Failed: ${url}`);
+                    return null;
+                });
+            });
+
+            return Promise.all(promises).then((results) => {
+                const success = results.filter(r => r !== null).length;
+                console.log(`✅ Cached: ${success}/${results.length}`);
+            });
+        }).then(() => {
+            console.log('✅ SW: Installed');
+            return self.skipWaiting();
+        })
     );
 });
 
-self.addEventListener('activate', event => {
-    console.log('🚀 Service Worker: Activating...');
-    
+// ===== Activate =====
+self.addEventListener('activate', (event) => {
+    console.log('🔄 SW: Activating...');
+
     event.waitUntil(
         caches.keys()
-            .then(cacheNames => {
+            .then((names) => {
                 return Promise.all(
-                    cacheNames
-                        .filter(name => name !== CACHE_NAME && name !== RUNTIME_CACHE)
-                        .map(name => {
-                            console.log(`🗑️ Deleting old cache: ${name}`);
+                    names
+                        .filter((name) => name.startsWith('merch-') && name !== CACHE_NAME)
+                        .map((name) => {
+                            console.log('🗑️ Deleting:', name);
                             return caches.delete(name);
                         })
                 );
             })
             .then(() => {
-                console.log('✅ Service Worker: Activated');
+                console.log('✅ SW: Activated');
                 return self.clients.claim();
             })
     );
 });
 
-self.addEventListener('fetch', event => {
+// ===== Fetch =====
+self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // تجاهل الطلبات دي:
-    // 1. مش GET
-    // 2. Supabase (لازم يكون دايمًا online)
-    // 3. Chrome extensions
-    if (request.method !== 'GET' ||
-        url.hostname.includes('supabase.co') ||
-        url.protocol === 'chrome-extension:') {
+    if (request.method !== 'GET') return;
+    if (url.hostname.includes('supabase')) return;
+    if (url.protocol === 'chrome-extension:') return;
+
+    // CDN: Cache-First
+    if (url.hostname.includes('cdnjs.cloudflare.com') ||
+        url.hostname.includes('fonts.googleapis.com') ||
+        url.hostname.includes('fonts.gstatic.com') ||
+        url.hostname.includes('unpkg.com') ||
+        url.hostname.includes('jsdelivr.net')) {
+
+        event.respondWith(
+            caches.match(request).then((cached) => {
+                if (cached) return cached;
+
+                return fetch(request).then((response) => {
+                    if (response && response.status === 200) {
+                        const cloned = response.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(request, cloned);
+                        });
+                    }
+                    return response;
+                }).catch(() => null);
+            })
+        );
         return;
     }
 
+    // Local: Network-First
     event.respondWith(
-        caches.match(request)
-            .then(cachedResponse => {
-                if (cachedResponse) {
-                    fetch(request)
-                        .then(response => {
-                            if (response && response.status === 200) {
-                                caches.open(RUNTIME_CACHE).then(cache => {
-                                    cache.put(request, response.clone());
-                                });
-                            }
-                        })
-                        .catch(() => { /* offline - مفيش مشكلة */ });
-                    
-                    return cachedResponse;
-                }
-
-                return fetch(request)
-                    .then(response => {
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
-
-                        const responseToCache = response.clone();
-                        caches.open(RUNTIME_CACHE).then(cache => {
-                            cache.put(request, responseToCache);
-                        });
-
-                        return response;
-                    })
-                    .catch(error => {
-                        console.warn('⚠️ Fetch failed for:', request.url);
-                        
-                        if (request.destination === 'document') {
-                            return caches.match('./index.html');
-                        }
-                        
-                        throw error;
+        fetch(request)
+            .then((response) => {
+                if (response && response.status === 200 && response.type === 'basic') {
+                    const cloned = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(request, cloned);
                     });
+                }
+                return response;
+            })
+            .catch(() => {
+                return caches.match(request).then((cached) => {
+                    if (cached) return cached;
+
+                    if (request.headers.get('accept')?.includes('text/html')) {
+                        return caches.match(`${BASE_PATH}/offline.html`);
+                    }
+                });
             })
     );
 });
 
-self.addEventListener('message', event => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
+// ===== Message =====
+self.addEventListener('message', (event) => {
+    if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
 
-console.log('✅ Service Worker loaded');
+console.log('✅ SW loaded:', CACHE_VERSION);

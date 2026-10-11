@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لا يوجد اتصال | متجرنا</title>
+    <link rel="icon" type="image/svg+xml" href="/Merch/favicon.svg">
+    <link rel="manifest" href="/Merch/manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA -->
+<link rel="manifest" href="/Merch/manifest.json">
+<meta name="theme-color" content="#ff6b6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="متجرنا">
+<link rel="apple-touch-icon" sizes="180x180" href="/Merch/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/Merch/icons/favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="/Merch/favicon.svg">
+
+<!-- SEO -->
+<meta name="description" content="متجرنا - تسوق أونلاين بأفضل الأسعار. منتجات أصلية وتوصيل سريع لجميع المحافظات.">
+<meta name="keywords" content="متجر, تسوق, إلكترونيات, أونلاين, مصر">
+<meta name="author" content="متجرنا">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="متجرنا - تسوق أونلاين">
+<meta property="og:description" content="منتجات أصلية بأفضل الأسعار">
+<meta property="og:url" content="https://mohamdis860-boop.github.io/Merch/">
+<meta property="og:image" content="https://mohamdis860-boop.github.io/Merch/icons/web-app-manifest-512x512.png">
+<meta property="og:locale" content="ar_EG">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="متجرنا - تسوق أونلاين">
+<meta name="twitter:description" content="منتجات أصلية بأفضل الأسعار">
+<meta name="twitter:image" content="https://mohamdis860-boop.github.io/Merch/icons/web-app-manifest-512x512.png">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://mohamdis860-boop.github.io/Merch/">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-wrapper {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(108, 92, 231, 0.15));
+            border: 2px dashed rgba(255, 107, 107, 0.4);
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .btn-retry {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-retry i {
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .tips {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-align: right;
+        }
+
+        .tips h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tips ul {
+            list-style: none;
+        }
+
+        .tips ul li {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips ul li i {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="offline-container">
+        <div class="icon-wrapper">
+            <i class="fas fa-wifi"></i>
+        </div>
+
+        <h1>لا يوجد اتصال</h1>
+
+        <p>
+            يبدو إن النت قطع في الوقت الحالي.<br>
+            اتأكد من اتصالك وحاول تاني.
+        </p>
+
+        <button class="btn-retry" onclick="window.location.reload()">
+            <i class="fas fa-redo"></i>
+            حاول تاني
+        </button>
+
+        <div class="tips">
+            <h3>💡 نصائح سريعة:</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> اتأكد من الواي فاي</li>
+                <li><i class="fas fa-check"></i> جرب تفتح الموقع من تطبيق تاني</li>
+                <li><i class="fas fa-check"></i> استنى شوية وجرب تاني</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
