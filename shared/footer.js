@@ -171,6 +171,7 @@
                     <h4>خدمة العملاء</h4>
                     <ul>
                         <li><a href="${BASE}Pages/contact.html">تواصل معنا</a></li>
+                        <li><a href="${BASE}Pages/order-tracking.html">تتبع الطلب</a></li>
                         <li><a href="${BASE}Support/faq.html">الأسئلة الشائعة</a></li>
                         <li><a href="${BASE}Support/terms.html">الشروط والأحكام</a></li>
                         <li><a href="${BASE}Support/privacy.html">سياسة الخصوصية</a></li>
