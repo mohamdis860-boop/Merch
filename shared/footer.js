@@ -1,10 +1,9 @@
 /* ==================== shared/footer.js ==================== */
-/* الفوتر + Back to Top + Theme + Compare + Scroll Fix + PWA */
+/* الفوتر + Back to Top + Theme + Compare + Scroll Fix */
 
 (function() {
     'use strict';
 
-    // ===== تحديد مسار الأساس =====
     function getBasePath() {
         const path = window.location.pathname;
         if (path.includes('/Pages/') || path.includes('/Auth/') ||
@@ -18,11 +17,7 @@
 
     const BASE = getBasePath();
 
-    // ============================================
-    // ===== حقن ملفات CSS =====
-    // ============================================
-
-    // 1. scroll-fix.css (مهم — لإصلاح white flash)
+    // ===== 1. حقن scroll-fix.css (مهم — لإصلاح white flash) =====
     function injectScrollFixCSS() {
         if (document.querySelector('link[data-scroll-fix-css]')) return;
 
@@ -33,7 +28,7 @@
         document.head.appendChild(link);
     }
 
-    // 2. theme.css
+    // ===== 2. حقن theme.css =====
     function injectThemeCSS() {
         if (document.querySelector('link[data-theme-css]')) return;
 
@@ -44,7 +39,7 @@
         document.head.appendChild(link);
     }
 
-    // 3. compare-bar.css
+    // ===== 3. حقن compare-bar.css =====
     function injectCompareCSS() {
         if (document.querySelector('link[data-compare-css]')) return;
 
@@ -55,24 +50,14 @@
         document.head.appendChild(link);
     }
 
-    // 4. pwa.css
-    function injectPWACSS() {
-        if (document.querySelector('link[data-pwa-css]')) return;
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = BASE + 'shared/pwa.css';
-        link.setAttribute('data-pwa-css', 'true');
-        document.head.appendChild(link);
-    }
-
-    // 5. inline style للـ white flash (احتياطي)
+    // ===== 4. inline style للـ white flash (احتياطي) =====
     function injectScrollFixInline() {
         if (document.querySelector('style[data-scroll-fix-inline]')) return;
 
         const style = document.createElement('style');
         style.setAttribute('data-scroll-fix-inline', 'true');
         style.textContent = `
+            /* Fix White Flash on Scroll */
             html {
                 background-color: #0a0a1a !important;
                 overscroll-behavior: none;
@@ -98,11 +83,7 @@
         document.head.appendChild(style);
     }
 
-    // ============================================
-    // ===== حقن ملفات JS =====
-    // ============================================
-
-    // 1. theme.js
+    // ===== 5. حقن theme.js =====
     function injectThemeJS() {
         if (document.querySelector('script[data-theme-js]')) return;
 
@@ -113,7 +94,7 @@
         document.body.appendChild(script);
     }
 
-    // 2. compare.js + compare-bar.js (بالترتيب)
+    // ===== 6. حقن compare.js + compare-bar.js =====
     function injectCompareJS() {
         if (document.querySelector('script[data-compare-js]')) return;
 
@@ -131,20 +112,7 @@
         };
     }
 
-    // 3. pwa.js
-    function injectPWAJS() {
-        if (document.querySelector('script[data-pwa-js]')) return;
-
-        const script = document.createElement('script');
-        script.src = BASE + 'shared/pwa.js';
-        script.setAttribute('data-pwa-js', 'true');
-        script.async = false;
-        document.body.appendChild(script);
-    }
-
-    // ============================================
     // ===== بناء الفوتر =====
-    // ============================================
     function buildFooter() {
         if (document.querySelector('.footer-main')) return;
 
@@ -228,9 +196,7 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
     }
 
-    // ============================================
     // ===== بناء زر Back to Top =====
-    // ============================================
     function buildBackToTop() {
         if (document.querySelector('.back-to-top')) return;
 
@@ -273,9 +239,7 @@
         toggleBtn();
     }
 
-    // ============================================
     // ===== التهيئة =====
-    // ============================================
     function init() {
         // 1. إصلاح الـ white flash — الأول
         injectScrollFixInline();
@@ -284,7 +248,6 @@
         // 2. باقي الـ CSS
         injectThemeCSS();
         injectCompareCSS();
-        injectPWACSS();
 
         // 3. الفوتر + Back to Top
         buildFooter();
@@ -293,7 +256,6 @@
         // 4. الـ JS
         injectThemeJS();
         injectCompareJS();
-        injectPWAJS();
     }
 
     if (document.readyState === 'loading') {
@@ -302,5 +264,5 @@
         init();
     }
 
-    console.log('✅ Footer + Back to Top + Theme + Compare + Scroll Fix + PWA loaded');
+    console.log('✅ Footer + Back to Top + Theme + Compare + Scroll Fix loaded');
 })();
